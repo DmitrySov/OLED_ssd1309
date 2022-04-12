@@ -53,6 +53,58 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void write_OLED(uint8_t data)
+{
+	GPIO_TypeDef* data_ports[] = {D0_GPIO_Port, D1_GPIO_Port, D2_GPIO_Port,
+			D3_GPIO_Port, D4_GPIO_Port, D5_GPIO_Port, D6_GPIO_Port, D7_GPIO_Port};
+	uint16_t data_pin[] = {D0_Pin, D1_Pin, D2_Pin, D3_Pin, D4_Pin, D5_Pin, D6_Pin, D7_Pin};
+
+	for(uint8_t i = 0; i<8; i++)
+	{
+	HAL_GPIO_WritePin(data_ports[i], data_pin[i], data & (1 << i));
+	}
+
+}
+void Reset_ssd1309(void)
+{
+	HAL_GPIO_WritePin(RES_GPIO_Port, RES_Pin, GPIO_PIN_SET);
+	HAL_Delay(3);
+	HAL_GPIO_WritePin(RES_GPIO_Port, RES_Pin, GPIO_PIN_RESET);
+	HAL_Delay(3);
+	HAL_GPIO_WritePin(RES_GPIO_Port, RES_Pin, GPIO_PIN_SET);
+}
+
+void SendCommand(uint8_t Data)
+{
+	HAL_GPIO_WritePin(D_C_GPIO_Port, D_C_Pin, GPIO_PIN_RESET);
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_RESET);
+	HAL_Delay(1);
+	write_OLED(Data);
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_RESET);
+}
+
+void SendData (uint8_t Data)
+{
+	HAL_GPIO_WritePin(D_C_GPIO_Port, D_C_Pin, GPIO_PIN_SET);
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_RESET);
+	HAL_Delay(1);
+	write_OLED(Data);
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_RESET);
+}
+
+void Clear_Screen(void)
+{
+	for(uint8_t i = 0; i < 8; i++)
+	{
+		SendCommand(0xB0+i);
+		for (uint8_t j = 0; j < 128; j++) SendData(0);
+	}
+}
+
 
 /* USER CODE END 0 */
 
@@ -85,6 +137,25 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+  Reset_ssd1309();
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, GPIO_PIN_RESET);  // CS = 0
+  SendCommand(0xAE);
+  Clear_Screen();
+  SendCommand(0xB0);
+  SendCommand(0x81);
+  SendCommand(0x7F);
+  SendCommand(0xAF);
+  HAL_Delay(100);
+
+  SendCommand(0x20);
+  SendCommand(0x01);			//  Vertical Addressing Mode;
+  SendCommand(0x21);			//  Область вывода - от 0 до 127 столбца;
+  SendCommand(0x00);
+  SendCommand(0x7F);
+  SendCommand(0x22);			//  Область вывода - от  до  строки;
+  SendCommand(0x01);
+  SendCommand(0x03);
+  SendCommand(0xA1);
 
   /* USER CODE END 2 */
 
@@ -93,7 +164,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-D0_Pin;
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
