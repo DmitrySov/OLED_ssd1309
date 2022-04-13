@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "font_16.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -82,7 +82,7 @@ void SendCommand(uint8_t Data)
 	HAL_Delay(1);
 	write_OLED(Data);
 	HAL_Delay(1);
-	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_SET);
 }
 
 void SendData (uint8_t Data)
@@ -93,7 +93,7 @@ void SendData (uint8_t Data)
 	HAL_Delay(1);
 	write_OLED(Data);
 	HAL_Delay(1);
-	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_SET);
 }
 
 void Clear_Screen(void)
@@ -105,6 +105,36 @@ void Clear_Screen(void)
 	}
 }
 
+void Output_Char_16pt(uint8_t out_char)
+{
+	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
+
+	begin_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][1];
+	width_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][0];
+	end_bitmap = begin_bitmap + width_bitmap * 3;
+
+	for (i = begin_bitmap; i < end_bitmap; i++)
+	{
+		SendData(microsoftSansSerif_16ptBitmaps[i]);
+	}
+	for (i = 0; i < 4*3; i++)
+	{
+		SendData(0x00);
+	}
+}
+
+void Output_String(const char *string)
+{
+
+	while (*string != 0)
+	{
+		if (*string < 0x7F)
+		{
+			Output_Char_16pt(*string);
+		}
+		string++;
+	}
+}
 
 /* USER CODE END 0 */
 
@@ -139,24 +169,30 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Reset_ssd1309();
   HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, GPIO_PIN_RESET);  // CS = 0
-  SendCommand(0xAE);
+  SendCommand(0xAE);	// display disable
   Clear_Screen();
-  SendCommand(0xB0);
-  SendCommand(0x81);
-  SendCommand(0x7F);
-  SendCommand(0xAF);
+  SendCommand(0xB0);	// Set the page start address (by B0h to B7h)
+
+  SendCommand(0x81);	// Set Contrast Control(from 00h to FFh)
+  SendCommand(0x50);	// (RESET = 7Fh)
+
+  SendCommand(0xAF);	// display enable
   HAL_Delay(100);
 
-  SendCommand(0x20);
-  SendCommand(0x01);			//  Vertical Addressing Mode;
-  SendCommand(0x21);			//  Область вывода - от 0 до 127 столбца;
-  SendCommand(0x00);
-  SendCommand(0x7F);
-  SendCommand(0x22);			//  Область вывода - от  до  строки;
-  SendCommand(0x01);
-  SendCommand(0x03);
-  SendCommand(0xA1);
+  SendCommand(0x20);	//  Set Memory Addressing Mode
+  SendCommand(0x01);	//  Vertical Addressing Mode;
 
+  SendCommand(0x21);	//  Set Column Address
+  SendCommand(0x00);	//  Область вывода - от 0 до 127 столбца;
+  SendCommand(0x7F);	//  127
+
+  SendCommand(0x22);	// Page start Address;
+  SendCommand(0x01);	//  Область вывода - от  до  строки;
+  SendCommand(0x03);
+
+  SendCommand(0xA1);	// Set Segment Re-map;
+
+  Output_String("     16.83 V");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -225,29 +261,29 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, D0_Pin|D1_Pin|D2_Pin|D3_Pin
+                          |D4_Pin|D5_Pin|D6_Pin|D7_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
-                          |GPIO_PIN_7, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, RD_E_Pin|WR_Pin|CS_Pin|D_C_Pin
+                          |RES_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PD0 PD1 PD2 PD3
-                           PD4 PD5 PD6 PD7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
+  /*Configure GPIO pins : D0_Pin D1_Pin D2_Pin D3_Pin
+                           D4_Pin D5_Pin D6_Pin D7_Pin */
+  GPIO_InitStruct.Pin = D0_Pin|D1_Pin|D2_Pin|D3_Pin
+                          |D4_Pin|D5_Pin|D6_Pin|D7_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB3 PB4 PB5 PB6
-                           PB7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
-                          |GPIO_PIN_7;
+  /*Configure GPIO pins : RD_E_Pin WR_Pin CS_Pin D_C_Pin
+                           RES_Pin */
+  GPIO_InitStruct.Pin = RD_E_Pin|WR_Pin|CS_Pin|D_C_Pin
+                          |RES_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
