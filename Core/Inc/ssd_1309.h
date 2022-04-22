@@ -2,7 +2,7 @@
  * ssd_1309.h
  *
  *  Created on: 14 апр. 2022 г.
- *      Author: sovetnikov
+ *      Author: Sovetnikov
  */
 
  #ifndef SSD_1309_SSD_1309_H_
@@ -25,25 +25,20 @@
 #define SSD1306_WIDTH            128
 #define SSD1306_HEIGHT           64
 
-
-//static uint8_t pixelBuffer[SSD1306_BUFFER_SIZE];
 /* Functions -----------------------------------------------------------------*/
- void SSD1309_init();
- void Write_OLED(uint8_t data);
+ void SSD1309_init(void);
  void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortValue);
  void Reset_ssd1309(void);
  void SendCommand(uint8_t Data);
  void SendData (uint8_t Data);
  void Clear_Screen(void);
- void Update_Sreen(void);
- void Write_ScreenBuf(void);
- //static void SetPixel(uint8_t x, uint8_t y);
- void Output_Char_16pt(uint8_t out_char);
- void Output_String(const char *string);
- void SSD1309_DrawFilledRect(uint8_t xStart, uint8_t xEnd, uint8_t yStart, uint8_t yEnd);
- void SSD1306_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1);
- void SSD1306_DrawPixel(uint16_t x, uint16_t y);
- void init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
  void Clear_Sector_x_y(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
+ void Init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
+ void Output_Char_16pt(uint8_t out_char);
+ void Output_Char_8pt(uint8_t out_char);
+ void Output_String_16pt(const char *string);
+ void Output_String_8pt(const char *string);
+
+
 
  #endif /* SSD_1309_SSD_1309_H_ */

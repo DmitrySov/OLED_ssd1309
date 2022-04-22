@@ -4,10 +4,13 @@
  *  Created on: 14 апр. 2022 г.
  *      Author: Sovetnikov
  */
-/*_____ I N C L U D E S ____________________________________________________*/
+ /* Includes ------------------------------------------------------------------*/
 #include "ssd_1309.h"
 
-/*_____ M A C R O S ________________________________________________________*/
+/* Declarations and definitions ----------------------------------------------*/
+
+
+/* Functions -----------------------------------------------------------------*/
 
 
 /*----------------------------------------------------------------------------------
@@ -60,7 +63,7 @@
 /*----------------------------------------------------------------------------------
  * Function:		Reset_ssd1309
  *----------------------------------------------------------------------------------
- * description:		set the RES# pin LOW value (logical low level), wait at least 3us
+ * description:		Set the RES# pin LOW value (logical low level), wait at least 3us
  * parameters:		-
  *
  * on return:		-
@@ -74,23 +77,23 @@
  /*----------------------------------------------------------------------------------
   * Function:		SendCommand
   *----------------------------------------------------------------------------------
-  * description:	SendCommand
-  * parameters:		-Сommands are sent with the corresponding command table 9-1 (datasheet)
+  * description:	Сommands are sent with the corresponding command table 9-1 (datasheet)
+  * parameters:		-uint8_t Command
   *
   * on return:		-
   ------------------------------------------------------------------------------------*/
- void SendCommand(uint8_t Data)
+ void SendCommand(uint8_t Command)
  {
     HAL_GPIO_WritePin(D_C_GPIO_Port, D_C_Pin, GPIO_PIN_RESET);
  	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_RESET);
- 	LL_GPIO_WriteOutputPort(GPIOD, Data);
+ 	LL_GPIO_WriteOutputPort(GPIOD, Command);
  	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_SET);
  }
  /*----------------------------------------------------------------------------------
-   * Function:		SendCommand
+   * Function:		SendData
    *----------------------------------------------------------------------------------
-   * description:	SendData
-   * parameters:	-Data transmission on the display
+   * description:	Data transmission on the display
+   * parameters:	-uint8_t Data
    *
    * on return:		-
    ------------------------------------------------------------------------------------*/
@@ -101,7 +104,15 @@
  	LL_GPIO_WriteOutputPort(GPIOD, Data);
  	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_SET);
  }
- /*----------------------------------------------------------------------------*/
+ /*----------------------------------------------------------------------------------
+   * Function:		Clear_Screen
+   *----------------------------------------------------------------------------------
+   * description:	Сleaning the full display(vertically), pages are cleared first,
+   * 				then columns
+   * parameters:	-
+   *
+   * on return:		-
+   ------------------------------------------------------------------------------------*/
  void Clear_Screen(void)
  {
 	  uint8_t i = 0;
@@ -114,7 +125,15 @@
 	 	  	}
 	     }
  }
- /*----------------------------------------------------------------------------*/
+ /*----------------------------------------------------------------------------------
+   * Function:		Clear_Sector_x_y
+   *----------------------------------------------------------------------------------
+   * description:	Clearing the display by coordinates (vertically),
+   * 				pages are cleared first, then columns
+   * parameters:	-uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2
+   *
+   * on return:		-
+   ------------------------------------------------------------------------------------*/
   void Clear_Sector_x_y(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2)
    {
   	 SendCommand(0x21);			//  Область вывода - от 0 до 127 столбца;
@@ -133,8 +152,15 @@
   	 	  	}
   	     }
    }
-/*----------------------------------------------------------------------------*/
- void init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2)
+/*----------------------------------------------------------------------------------
+ * Function:		init_sector
+ *----------------------------------------------------------------------------------
+ * description:	initializing the display by coordinates
+ * parameters:	-uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2
+ *
+ * on return:	-
+ ------------------------------------------------------------------------------------*/
+ void Init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2)
  {
 	 SendCommand(0x21);			//  Область вывода - от 0 до 127 столбца;
 	 SendCommand(x1);
@@ -143,10 +169,14 @@
 	 SendCommand(y1);
 	 SendCommand(y2);
  }
-
-
-
-
+ /*----------------------------------------------------------------------------------
+  * Function:		Output_Char_16pt
+  *----------------------------------------------------------------------------------
+  * description:
+  * parameters:		-uint8_t out_char
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
  void Output_Char_16pt(uint8_t out_char)
  {
  	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
@@ -164,8 +194,40 @@
  		SendData(0x00);
  	}
  }
+ /*----------------------------------------------------------------------------------
+  * Function:		Output_Char_8pt(uint8_t out_char)
+  *----------------------------------------------------------------------------------
+  * description:
+  * parameters:		-uint8_t out_char
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
+ void Output_Char_8pt(uint8_t out_char)
+  {
+  	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
- void Output_String(const char *string)
+  	begin_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][1];
+  	width_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][0];
+  	end_bitmap = begin_bitmap + width_bitmap * 3;
+
+  	for (i = begin_bitmap; i < end_bitmap; i++)
+  	{
+  		SendData(microsoftSansSerif_16ptBitmaps[i]);
+  	}
+  	for (i = 0; i < 4*3; i++)
+  	{
+  		SendData(0x00);
+  	}
+  }
+ /*----------------------------------------------------------------------------------
+  * Function:		Output_String_16pt
+  *----------------------------------------------------------------------------------
+  * description:
+  * parameters:		-const char *string
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
+ void Output_String_16pt(const char *string)
  {
 
  	while (*string != 0)
@@ -173,6 +235,26 @@
  		if (*string < 0x7F)
  		{
  			Output_Char_16pt(*string);
+ 		}
+ 		string++;
+ 	}
+ }
+ /*----------------------------------------------------------------------------------
+  * Function:		Output_String_8pt
+  *----------------------------------------------------------------------------------
+  * description:
+  * parameters:		-const char *string
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
+ void Output_String_8pt(const char *string)
+ {
+
+ 	while (*string != 0)
+ 	{
+ 		if (*string < 0x7F)
+ 		{
+ 			Output_Char_8pt(*string);
  		}
  		string++;
  	}

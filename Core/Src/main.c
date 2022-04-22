@@ -68,6 +68,7 @@ static void MX_SPI1_Init(void);
 uint32_t val_timer;
 float time = 0.0;
 char buf[6];
+uint8_t tx_date = 1;
 /* USER CODE END 0 */
 
 /**
@@ -107,16 +108,16 @@ int main(void)
  // HAL_Delay(100);
   Clear_Screen();
 
-  init_sector(0x00, 0x7F, 0x05, 0x07);
-  Output_String("Hello World");
+  Init_sector(0x00, 0x7F, 0x05, 0x07);
+  Output_String_16pt("Hello World");
 
-  init_sector(0x02, 0x3E, 0x02, 0x04);
-  Output_String("time=");
+  Init_sector(0x02, 0x3E, 0x02, 0x04);
+  Output_String_16pt("time=");
 
-  init_sector(0x3F, 0x7F, 0x02, 0x04);
+  Init_sector(0x3F, 0x7F, 0x02, 0x04);
   sprintf(buf, "%0.1f", time);
-  Output_String(buf);
-
+  Output_String_16pt(buf);
+ // HAL_SPI_Transmit_IT(&hspi1, &tx_date, 1);
  //Clear_Screen();
   /* USER CODE END 2 */
 
@@ -369,7 +370,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
 
+}
 /* USER CODE END 4 */
 
 /**
