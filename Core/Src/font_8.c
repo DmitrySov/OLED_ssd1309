@@ -2,8 +2,6 @@
 //  Font data for Microsoft Sans Serif 8pt
 //
 #include "font_8.h"
-#include "stdio.h"
-#include <stdint.h>
 // Character bitmaps for Microsoft Sans Serif 8pt
 const uint8_t microsoftSansSerif_8ptBitmaps[] =
 {
@@ -1326,7 +1324,7 @@ const uint8_t microsoftSansSerif_8ptBitmaps[] =
 
 // Character descriptors for Microsoft Sans Serif 8pt
 // { [Char width in bits], [Offset into microsoftSansSerif_8ptCharBitmaps in bytes] }
-const FONT_CHAR_INFO microsoftSansSerif_8ptDescriptors[] =
+const uint16_t microsoftSansSerif_8ptDescriptors[95][2] =
 {
 	{1, 0}, 		// !
 	{4, 12}, 		// "

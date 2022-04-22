@@ -18,8 +18,7 @@ typedef struct {
 // Font data for Microsoft Sans Serif 8pt
 extern const uint8_t microsoftSansSerif_8ptBitmaps[];
 //extern const FONT_INFO microsoftSansSerif_8ptFontInfo;
-extern const FONT_CHAR_INFO microsoftSansSerif_8ptDescriptors[];
-
+extern const uint16_t microsoftSansSerif_8ptDescriptors[95][2];
 
 
 #endif /* FONT_8_H_ */

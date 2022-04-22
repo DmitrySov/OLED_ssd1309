@@ -109,14 +109,14 @@ int main(void)
   Clear_Screen();
 
   Init_sector(0x00, 0x7F, 0x05, 0x07);
-  Output_String_16pt("Hello World");
+  Output_String_8pt("Hello World");
 
   Init_sector(0x02, 0x3E, 0x02, 0x04);
-  Output_String_16pt("time=");
+  Output_String_8pt("time=");
 
   Init_sector(0x3F, 0x7F, 0x02, 0x04);
   sprintf(buf, "%0.1f", time);
-  Output_String_16pt(buf);
+  Output_String_8pt(buf);
  // HAL_SPI_Transmit_IT(&hspi1, &tx_date, 1);
  //Clear_Screen();
   /* USER CODE END 2 */

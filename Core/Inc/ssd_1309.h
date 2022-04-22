@@ -15,6 +15,7 @@
  #include <stdbool.h>
  #include <string.h>
  #include "font_16.h"
+ #include "font_8.h"
 
  /* Declarations and definitions ----------------------------------------------*/
  #define SSD1309_X_SIZE                                128

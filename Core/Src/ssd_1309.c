@@ -206,13 +206,13 @@
   {
   	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
-  	begin_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][1];
-  	width_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][0];
+  	begin_bitmap = microsoftSansSerif_8ptDescriptors[out_char -' '][1];
+  	width_bitmap = microsoftSansSerif_8ptDescriptors[out_char -' '][0];
   	end_bitmap = begin_bitmap + width_bitmap * 3;
 
   	for (i = begin_bitmap; i < end_bitmap; i++)
   	{
-  		SendData(microsoftSansSerif_16ptBitmaps[i]);
+  		SendData(microsoftSansSerif_8ptBitmaps[i]);
   	}
   	for (i = 0; i < 4*3; i++)
   	{
