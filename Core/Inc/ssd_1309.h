@@ -15,7 +15,10 @@
  #include <stdbool.h>
  #include <string.h>
  #include "font_16.h"
+ #include "font_14.h"
  #include "font_8.h"
+
+
 
  /* Declarations and definitions ----------------------------------------------*/
  #define SSD1309_X_SIZE                                128
@@ -36,8 +39,10 @@
  void Clear_Sector_x_y(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
  void Init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
  void Output_Char_16pt(uint8_t out_char);
+ void Output_Char_14pt(uint8_t out_char);
  void Output_Char_8pt(uint8_t out_char);
  void Output_String_16pt(const char *string);
+ void Output_String_14pt(const char *string);
  void Output_String_8pt(const char *string);
 
 

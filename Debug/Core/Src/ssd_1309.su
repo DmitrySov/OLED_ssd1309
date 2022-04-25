@@ -8,5 +8,7 @@ ssd_1309.c:137:8:Clear_Sector_x_y	32	static
 ssd_1309.c:163:7:Init_sector	24	static
 ssd_1309.c:180:7:Output_Char_16pt	24	static
 ssd_1309.c:205:7:Output_Char_8pt	24	static
-ssd_1309.c:230:7:Output_String_16pt	16	static
-ssd_1309.c:250:7:Output_String_8pt	16	static
+ssd_1309.c:231:7:Output_Char_14pt	24	static
+ssd_1309.c:257:7:Output_String_16pt	16	static
+ssd_1309.c:277:7:Output_String_8pt	16	static
+ssd_1309.c:297:8:Output_String_14pt	16	static

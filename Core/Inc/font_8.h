@@ -10,11 +10,6 @@
 #include "font_8.h"
 #include <stdint.h>
 
-typedef struct {
-	unsigned char width;
-	unsigned short offset;
-} FONT_CHAR_INFO;
-
 // Font data for Microsoft Sans Serif 8pt
 extern const uint8_t microsoftSansSerif_8ptBitmaps[];
 //extern const FONT_INFO microsoftSansSerif_8ptFontInfo;

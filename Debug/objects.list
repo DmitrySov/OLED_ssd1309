@@ -1,3 +1,5 @@
+"./Core/Src/16qwe.o"
+"./Core/Src/font_14.o"
 "./Core/Src/font_16.o"
 "./Core/Src/font_8.o"
 "./Core/Src/main.o"

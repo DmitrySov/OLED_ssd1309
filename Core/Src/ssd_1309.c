@@ -189,7 +189,7 @@
  	{
  		SendData(microsoftSansSerif_16ptBitmaps[i]);
  	}
- 	for (i = 0; i < 4*3; i++)
+ 	for (i = 0; i < 12; i++)
  	{
  		SendData(0x00);
  	}
@@ -204,17 +204,44 @@
   ------------------------------------------------------------------------------------*/
  void Output_Char_8pt(uint8_t out_char)
   {
-  	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
+  	uint16_t begin_bitmap, end_bitmap, /*width_bitmap,*/ i;
 
   	begin_bitmap = microsoftSansSerif_8ptDescriptors[out_char -' '][1];
-  	width_bitmap = microsoftSansSerif_8ptDescriptors[out_char -' '][0];
-  	end_bitmap = begin_bitmap + width_bitmap * 3;
+  	//width_bitmap = microsoftSansSerif_8ptDescriptors[out_char -' '][0];
+  	//end_bitmap = begin_bitmap + width_bitmap+12;
+  	end_bitmap = begin_bitmap + 12;
 
   	for (i = begin_bitmap; i < end_bitmap; i++)
   	{
   		SendData(microsoftSansSerif_8ptBitmaps[i]);
   	}
   	for (i = 0; i < 4*3; i++)
+  	{
+  		SendData(0x00);
+  	}
+  }
+ /*----------------------------------------------------------------------------------
+  * Function:		Output_Char_14pt(uint8_t out_char)
+  *----------------------------------------------------------------------------------
+  * description:
+  * parameters:		-uint8_t out_char
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
+ void Output_Char_14pt(uint8_t out_char)
+  {
+  	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
+
+  	begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
+  	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
+  	end_bitmap = begin_bitmap + width_bitmap * 3;
+
+
+  	for (i = begin_bitmap; i < end_bitmap; i++)
+  	{
+  		SendData(microsoftSansSerif_14ptBitmaps[i]);
+  	}
+  	for (i = 0; i < 3*4; i++)
   	{
   		SendData(0x00);
   	}
@@ -259,5 +286,24 @@
  		string++;
  	}
  }
+ /*----------------------------------------------------------------------------------
+   * Function:		Output_String_14pt
+   *----------------------------------------------------------------------------------
+   * description:
+   * parameters:		-const char *string
+   *
+   * on return:		-
+   ------------------------------------------------------------------------------------*/
+  void Output_String_14pt(const char *string)
+  {
 
+  	while (*string != 0)
+  	{
+  		if (*string < 0x7F)
+  		{
+  			Output_Char_14pt(*string);
+  		}
+  		string++;
+  	}
+  }
 
