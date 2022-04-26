@@ -113,8 +113,8 @@ int main(void)
   Init_sector(0x00, 0x7F, 0x05, 0x07);
   Output_String_16pt("Hello World");
 
-  Init_sector(0x00, 0x7F, 0x02, 0x04);
-  Output_String_14pt("time");
+  Init_sector(0x00, 0x7F, 0x03, 0x04);
+  Output_String_8pt("Hello World");
 
   /*Init_sector(0x3F, 0x7F, 0x02, 0x04);
   sprintf(buf, "%0.1f", time);
