@@ -8,10 +8,10 @@
 #include "ssd_1309.h"
 
 /* Declarations and definitions ----------------------------------------------*/
-
+static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE];
 
 /* Functions -----------------------------------------------------------------*/
-
+static void SetPixel(uint8_t x, uint8_t y);
 
 /*----------------------------------------------------------------------------------
  * Function:		SSD1309_init
@@ -121,7 +121,7 @@
 	 	  SendCommand(0xB0+i);
 	 	  for (uint8_t i = 0; i < 8; i++)
 	 	  	{
-	 		  SendData(0x0);
+	 		  SendData(0x00);
 	 	  	}
 	     }
  }
@@ -304,5 +304,39 @@
   		}
   		string++;
   	}
+  }
+
+  void SSD1309_DrawFilledRect(uint8_t xStart, uint8_t xEnd, uint8_t yStart, uint8_t yEnd)
+  {
+    for (uint8_t i = xStart; i < xEnd; i++)
+    {
+      for (uint8_t j = yStart; j <  yEnd; j++)
+      {
+        SetPixel(i, j);
+      }
+    }
+  }
+
+  static void SetPixel(uint8_t x, uint8_t y)
+  {
+    pixelBuffer[x + (y / 8) * SSD1309_X_SIZE] |= (1 << (y % 8));
+  }
+
+  void SSD1309_ClearScreen(void)
+  {
+    for (uint16_t i = 0; i < SSD1309_BUFFER_SIZE; i++)
+    {
+      pixelBuffer[i] = 0x00;
+    }
+    SSD1309_UpdateScreen();
+  }
+
+  void SSD1309_UpdateScreen(void)
+  {
+	  for(uint8_t i = 0; i < SSD1309_BUFFER_SIZE; i++)
+	  {
+		  SendData(pixelBuffer[i]);
+	  }
+
   }
 
