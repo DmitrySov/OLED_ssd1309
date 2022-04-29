@@ -141,22 +141,13 @@ int main(void)
 				Init_sector(0x00, 0x7F, 0x05, 0x06);
 				Output_String_8pt("Hello World");
 				flag_wait = 1;
-				//time_key1_press = HAL_GetTick();
-				//if ((HAL_GetTick() - time_key1_press) > 300)
-				//{
 				flag_str = 1;
-				//}
-
 			}
 			else if(flag_str == 1)
 			{
 				Clear_Sector_x_y(0x00, 0x7F, 0x05, 0x07);
-				//time_key1_press = HAL_GetTick();
-				//if ((HAL_GetTick() - time_key1_press) > 500)
-				//{
 				flag_wait = 1;
-					flag_str = 0;
-				//}
+				flag_str = 0;
 			}
 
 		 }
