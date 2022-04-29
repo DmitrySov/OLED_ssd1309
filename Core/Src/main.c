@@ -174,26 +174,6 @@ int main(void)
 	         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 	 }
 
-	  /*	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
-	  {
-	    flag_key1_press = 0;
-	    // действие на нажатие
-	    Init_sector(0x00, 0x7F, 0x05, 0x06);
-	    Output_String_8pt("Hello World");
-	    time_key1_press = HAL_GetTick();
-	  }
-
-	  if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
-	  {
-	    flag_key1_press = 1;
-	  }
-
-	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_RESET)
-	   {
-		  Clear_Sector_x_y(0x00, 0x7F, 0x05, 0x07);
-	   }*/
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
