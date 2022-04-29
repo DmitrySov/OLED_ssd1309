@@ -110,27 +110,94 @@ int main(void)
  // HAL_Delay(100);
   Clear_Screen();
 
-  Init_sector(0x00, 0x7F, 0x05, 0x07);
-  Output_String_16pt("Hello World");
-
-  Init_sector(0x00, 0x7F, 0x03, 0x04);
-  Output_String_8pt("Hello World");
-
-  /*Init_sector(0x3F, 0x7F, 0x02, 0x04);
-  sprintf(buf, "%0.1f", time);
-  Output_String_16pt(buf);*/
  // HAL_SPI_Transmit_IT(&hspi1, &tx_date, 1);
- //Clear_Screen();
+
+  uint8_t flag_key1_press = 1;
+  uint8_t flag_wait = 1;
+  uint32_t time_key1_press = 0;
+  uint8_t flag_str = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if( (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && flag_key1_press)
+	 	{
+		  flag_key1_press = 0;
+		  flag_wait = 0;
+		  time_key1_press = HAL_GetTick();
+		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
+	 	}
+
+	 if(flag_wait == 0 && ((HAL_GetTick() - time_key1_press) > 50))
+	   {
+		 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
+		 {
+
+			if(flag_str == 0)
+			{
+				HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				Init_sector(0x00, 0x7F, 0x05, 0x06);
+				Output_String_8pt("Hello World");
+				flag_wait = 1;
+				//time_key1_press = HAL_GetTick();
+				//if ((HAL_GetTick() - time_key1_press) > 300)
+				//{
+				flag_str = 1;
+				//}
+
+			}
+			else if(flag_str == 1)
+			{
+				Clear_Sector_x_y(0x00, 0x7F, 0x05, 0x07);
+				//time_key1_press = HAL_GetTick();
+				//if ((HAL_GetTick() - time_key1_press) > 500)
+				//{
+				flag_wait = 1;
+					flag_str = 0;
+				//}
+			}
+
+		 }
+		 else
+		 {
+			 flag_wait = 1;
+			 flag_key1_press = 1;
+		 }
+	   }
+
+
+	   if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
+	 {
+	         flag_key1_press = 1;
+	         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+	 }
+
+	  /*	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	  {
+	    flag_key1_press = 0;
+	    // действие на нажатие
+	    Init_sector(0x00, 0x7F, 0x05, 0x06);
+	    Output_String_8pt("Hello World");
+	    time_key1_press = HAL_GetTick();
+	  }
+
+	  if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
+	  {
+	    flag_key1_press = 1;
+	  }
+
+	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_RESET)
+	   {
+		  Clear_Sector_x_y(0x00, 0x7F, 0x05, 0x07);
+	   }*/
+
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
   }
   /* USER CODE END 3 */
 }
@@ -329,9 +396,17 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_3, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
@@ -343,6 +418,32 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, RD_E_Pin|WR_Pin|CS_Pin|D_C_Pin
                           |RES_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin : PC3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA1 PA3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PE7 PE8 PE9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PD13 */
   GPIO_InitStruct.Pin = GPIO_PIN_13;

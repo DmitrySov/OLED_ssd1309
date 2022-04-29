@@ -142,13 +142,13 @@
   	 SendCommand(0x22);			//  Область вывода - от  до  строки;
   	 SendCommand(y1);
   	 SendCommand(y2);
-  	  uint8_t i = 0;
-  	 for(uint8_t j =0; j < 128; j++)
+
+  	 for(uint8_t j = x1; j <= x2; j++)
   	     {
-  	 	  SendCommand(0xB0+i);
-  	 	  for (uint8_t i = 0; i < 8; i++)
+  	 	  for (uint8_t i = y1; i <= y2; i++)
   	 	  	{
   	 		  SendData(0x0);
+  	 		  SendCommand(0xB0+i);
   	 	  	}
   	     }
    }
