@@ -8,7 +8,8 @@
 #include "ssd_1309.h"
 
 /* Declarations and definitions ----------------------------------------------*/
-static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE];
+static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
+
 
 /* Functions -----------------------------------------------------------------*/
 static void SetPixel(uint8_t x, uint8_t y);
@@ -30,6 +31,43 @@ static void SetPixel(uint8_t x, uint8_t y);
 	SendCommand(0xAE);	// display off
 	Clear_Screen();
 
+	/*SendCommand(0xD5);
+	SendCommand(0x80);
+
+	SendCommand(0x8D);
+	SendCommand(0x14);
+
+	SendCommand(0x40);
+
+	SendCommand(0xA1);
+
+	SendCommand(0xC8);
+
+	SendCommand(0xDA);
+	SendCommand(0x12);
+
+	SendCommand(0xA8);
+	SendCommand(0x3F);
+
+	SendCommand(0xD3);
+	SendCommand(0x00);
+
+	SendCommand(0x20);
+	SendCommand(0x01);
+
+	SendCommand(0x22);
+	SendCommand(0x00);
+	SendCommand(0x07);
+
+	SendCommand(0x81);
+	SendCommand(0x7F);
+
+	SendCommand(0xA4);
+	SendCommand(0xA6);
+	SendCommand(0xAF);*/
+
+	//SendCommand(0xB0);
+   // SendCommand(0x81);
 	SendCommand(0xB0);
 	SendCommand(0x81);
 	SendCommand(0x7F);			//  яркость;
@@ -44,6 +82,8 @@ static void SetPixel(uint8_t x, uint8_t y);
 	SendCommand(0x22);			//  Область вывода - от  до  строки;
 	SendCommand(0x00);
 	SendCommand(0x07);
+	//SendCommand(0xDA); //
+   // SendCommand(0x12); //
 	SendCommand(0xA1);
 
  }
@@ -340,3 +380,41 @@ static void SetPixel(uint8_t x, uint8_t y);
 
   }
 
+  void SSD1309_UpdateScreen_new(void)
+  {
+	  for(uint8_t m = 0; m < 8; m++)
+	  {
+		  SendCommand(0xB0+m);
+		  SendCommand(0x00);
+		  SendCommand(0x10);
+		  //Write_Multi(0x40, &pixelBuffer[SSD1309_WIDTH * m], SSD1309_WIDTH);
+		  SSD1309_UpdateScreen();
+	  }
+
+  }
+ /* uint8_t dt[256];
+  void Write_Multi(uint8_t reg, uint8_t* data, uint16_t count)
+  {
+	  dt[0] = reg;
+	  for(uint8_t i = 0; i < count; i++)
+	  {
+		  dt[i+1] = data[i];
+	  }
+
+	  for(uint8_t i = 0; i < count+1; i++)
+	  	  {
+	  		  SendData(dt[i]);
+	  	  }
+  }*/
+  void Cursor_Screen(void)
+  {
+ 	  uint8_t i = 0;
+ 	 for(uint8_t j =0; j < 2; j++)
+ 	     {
+ 	 	  SendCommand(0xB5+i);
+ 	 	  for (uint8_t i = 0; i < 2; i++)
+ 	 	  	{
+ 	 		  SendData(0x03);
+ 	 	  	}
+ 	     }
+  }

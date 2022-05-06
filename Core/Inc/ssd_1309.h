@@ -25,7 +25,8 @@
  #define SSD1309_Y_SIZE                                64
  #define SSD1309_BUFFER_SIZE                          (SSD1309_X_SIZE *  SSD1309_Y_SIZE) / 8
 
-
+/* SSD1306 data buffer */
+//static uint8_t SSD1309_Buffer[SSD1309_WIDTH * SSD1309_HEIGHT / 8];
 #define SSD1309_WIDTH            128
 #define SSD1309_HEIGHT           64
 
@@ -47,8 +48,8 @@
  void SSD1309_DrawFilledRect(uint8_t xStart, uint8_t xEnd, uint8_t yStart, uint8_t yEnd);
  void SSD1309_ClearScreen(void);
  void SSD1309_UpdateScreen(void);
-
-
+ void SSD1309_UpdateScreen_new(void);
+ void Cursor_Screen(void);
 
 
  #endif /* SSD_1309_SSD_1309_H_ */

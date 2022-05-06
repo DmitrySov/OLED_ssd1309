@@ -108,9 +108,8 @@ int main(void)
 
   SSD1309_init();
  // HAL_Delay(100);
-  Init_sector(0x00, 0x7F, 0x05, 0x06);
   Clear_Screen();
-  Output_String_8pt("string");
+//  SSD1309_ClearScreen();
  // HAL_SPI_Transmit_IT(&hspi1, &tx_date, 1);
 
   /*uint8_t flag_key1_press = 1;
@@ -118,13 +117,35 @@ int main(void)
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
   /* USER CODE END 2 */
-  //SSD1309_DrawFilledRect(0, 64, 1, 7);
+  SendCommand(0xAE);
+  SendCommand(0x20);
+  SendCommand(0x10);
+  SendCommand(0xA4);
+  SendCommand(0xAF);
+
+  SendCommand(0x21);
+  SendCommand(0x00);
+  SendCommand(0x03);
+  SendCommand(0x22);
+  SendCommand(0x00);
+  SendCommand(0x03);
+
+
+ // Cursor_Screen();
+
+ SSD1309_DrawFilledRect(0x00, 0x03, 0x00, 0x03);
+
+  SSD1309_UpdateScreen();
+
+ // HAL_Delay(300);
+ // SSD1309_ClearScreen();
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
 
-	 /* if( (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && flag_key1_press)
+	/*  if( (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && flag_key1_press)
 	 	{
 		  flag_key1_press = 0;
 		  flag_wait = 0;
@@ -165,8 +186,8 @@ int main(void)
 	 {
 	         flag_key1_press = 1;
 	         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-	 }*/
-
+	 }
+*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
