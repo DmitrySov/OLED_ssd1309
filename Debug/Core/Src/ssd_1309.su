@@ -14,7 +14,6 @@ ssd_1309.c:316:7:Output_String_8pt	16	static
 ssd_1309.c:336:8:Output_String_14pt	16	static
 ssd_1309.c:349:8:SSD1309_DrawFilledRect	32	static
 ssd_1309.c:360:15:SetPixel	16	static
-ssd_1309.c:365:8:SSD1309_ClearScreen	16	static
-ssd_1309.c:374:8:SSD1309_UpdateScreen	16	static
-ssd_1309.c:383:8:SSD1309_UpdateScreen_new	16	static
-ssd_1309.c:409:8:Cursor_Screen	16	static
+ssd_1309.c:370:8:SSD1309_ClearScreen	16	static
+ssd_1309.c:379:8:SSD1309_UpdateScreen	16	static
+ssd_1309.c:388:8:Cursor_Screen	16	static

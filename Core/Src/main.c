@@ -118,27 +118,27 @@ int main(void)
   uint8_t flag_str = 0;*/
   /* USER CODE END 2 */
   SendCommand(0xAE);
-  SendCommand(0x20);
-  SendCommand(0x10);
-  SendCommand(0xA4);
-  SendCommand(0xAF);
+   SendCommand(0x20);
+   SendCommand(0x00);
+   SendCommand(0xA4);
+   SendCommand(0xAF);
 
-  SendCommand(0x21);
-  SendCommand(0x00);
-  SendCommand(0x03);
-  SendCommand(0x22);
-  SendCommand(0x00);
-  SendCommand(0x03);
+   SendCommand(0x21);
+   SendCommand(0x00);
+   SendCommand(0x7F);
+   SendCommand(0x22);
+   SendCommand(0x00);
+   SendCommand(0x07);
 
-
- // Cursor_Screen();
-
- SSD1309_DrawFilledRect(0x00, 0x03, 0x00, 0x03);
+  SSD1309_DrawFilledRect(0x01, 0x7F, 0x01, 0x040);
 
   SSD1309_UpdateScreen();
 
- // HAL_Delay(300);
- // SSD1309_ClearScreen();
+  //SSD1309_DrawFilledRect(0x01, 0x7F, 0x03F, 0x40);
+  //SSD1309_UpdateScreen();
+
+  HAL_Delay(1000);
+  SSD1309_ClearScreen();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

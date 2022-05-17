@@ -359,12 +359,17 @@ static void SetPixel(uint8_t x, uint8_t y);
 
   static void SetPixel(uint8_t x, uint8_t y)
   {
+	  if(x >= SSD1309_WIDTH || y >= SSD1309_HEIGHT)
+	        {
+	            // Don't write outside the buffer
+	            return;
+	        }
     pixelBuffer[x + (y / 8) * SSD1309_X_SIZE] |= (1 << (y % 8));
   }
 
   void SSD1309_ClearScreen(void)
   {
-    for (uint16_t i = 0; i < SSD1309_BUFFER_SIZE; i++)
+    for (uint16_t i = 0; i <= SSD1309_BUFFER_SIZE; i++)
     {
       pixelBuffer[i] = 0x00;
     }
@@ -373,39 +378,13 @@ static void SetPixel(uint8_t x, uint8_t y);
 
   void SSD1309_UpdateScreen(void)
   {
-	  for(uint8_t i = 0; i < SSD1309_BUFFER_SIZE; i++)
+	  for(uint16_t i = 0; i <= SSD1309_BUFFER_SIZE; i++)
 	  {
 		  SendData(pixelBuffer[i]);
 	  }
 
   }
 
-  void SSD1309_UpdateScreen_new(void)
-  {
-	  for(uint8_t m = 0; m < 8; m++)
-	  {
-		  SendCommand(0xB0+m);
-		  SendCommand(0x00);
-		  SendCommand(0x10);
-		  //Write_Multi(0x40, &pixelBuffer[SSD1309_WIDTH * m], SSD1309_WIDTH);
-		  SSD1309_UpdateScreen();
-	  }
-
-  }
- /* uint8_t dt[256];
-  void Write_Multi(uint8_t reg, uint8_t* data, uint16_t count)
-  {
-	  dt[0] = reg;
-	  for(uint8_t i = 0; i < count; i++)
-	  {
-		  dt[i+1] = data[i];
-	  }
-
-	  for(uint8_t i = 0; i < count+1; i++)
-	  	  {
-	  		  SendData(dt[i]);
-	  	  }
-  }*/
   void Cursor_Screen(void)
   {
  	  uint8_t i = 0;
@@ -418,3 +397,4 @@ static void SetPixel(uint8_t x, uint8_t y);
  	 	  	}
  	     }
   }
+
