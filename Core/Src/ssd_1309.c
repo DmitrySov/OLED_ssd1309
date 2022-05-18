@@ -10,11 +10,22 @@
 /* Declarations and definitions ----------------------------------------------*/
 static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
 
-// Screen object
-static SSD1306_t SSD1306;
 /* Functions -----------------------------------------------------------------*/
 static void SetPixel(uint8_t x, uint8_t y);
 
+SSD1306_t SSD1306 = {
+  .MaskX1 = 0,
+  .MaskY1 = 0,
+  .MaskX2 = SSD1309_WIDTH,
+  .MaskY2 = SSD1309_HEIGHT,
+  .Inverted = 0,
+  // .Dirty = 0,
+  /*.Ticks = 0,
+  .Frames = 0,
+  .FPS = 0*/
+};
+
+uint16_t width;
 /*----------------------------------------------------------------------------------
  * Function:		SSD1309_init
  *----------------------------------------------------------------------------------
@@ -294,6 +305,7 @@ static void SetPixel(uint8_t x, uint8_t y);
   		   SetPixel(i, j);
   		}
   	}
+
   /*	for (i = 0; i < 3*4; i++)
   	{
   		SendData(0x00);
@@ -417,7 +429,7 @@ static void SetPixel(uint8_t x, uint8_t y);
   // ch       => char om weg te schrijven
   // Font     => Font waarmee we gaan schrijven
   // color    => Black or White
-  char ssd1306_WriteChar(char ch, FontDef Font) {
+ /* char ssd1306_WriteChar(char ch, FontDef Font) {
       uint32_t i, j;
       //uint32_t i, b, j;
       // Check if character is valid
@@ -462,10 +474,47 @@ static void SetPixel(uint8_t x, uint8_t y);
 
       // Everything ok
       return *str;
+  }*/
+
+  void SSD1306_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font,  SSD1306_COLOR_t color, SSD1306_DRAW_t mode)
+  {
+      int16_t x0, y0, b;
+      // Translate font to screen buffer
+      for (y0 = 0; y0 < Font->height; y0++)
+      {
+          b = Font->data[(ch - 32) * Font->height + y0];
+          for (x0 = 0; x0 < Font->width; x0++)
+          {
+               if ((b << x0) & 0x8000)
+              {
+            	 SSD1306_DrawPixel(x + x0, y + y0, (SSD1306_COLOR_t) color);
+              }
+             else if (mode == SSD1306_OVERRIDE)
+              {
+                SSD1306_DrawPixel(x + x0, y + y0, (SSD1306_COLOR_t) !color);
+              }
+          }
+      }
   }
 
-   // Position the cursor
-  void ssd1306_SetCursor(uint8_t x, uint8_t y) {
-      SSD1306.CurrentX = x;
-      SSD1306.CurrentY = y;
+  void SSD1306_DrawPixel(int16_t x, int16_t y, SSD1306_COLOR_t color) {
+    if (x < SSD1306.MaskX1 ||
+        y < SSD1306.MaskY1 ||
+        x >= SSD1306.MaskX2 ||
+        y >= SSD1306.MaskY2) {
+      /* Error */
+      return;
+    }
+
+    if (SSD1306.Inverted) {
+      color = (SSD1306_COLOR_t)!color;
+    }
+
+    if(color == SSD1306_WHITE) {
+    	pixelBuffer[1+ x + (y >> 3) * SSD1309_WIDTH] |= (1 << (y % 8));
+    } else {
+    	pixelBuffer[1+ x + (y >> 3) * SSD1309_WIDTH] &= ~(1 << (y % 8));
+    }
+
+  //  SSD1306.Dirty = 1;
   }

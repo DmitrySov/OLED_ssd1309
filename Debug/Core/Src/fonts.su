@@ -1,0 +1,2 @@
+fonts.c:304:10:Font_GetStringHeight	16	static
+fonts.c:308:10:Font_GetStringWidth	24	static

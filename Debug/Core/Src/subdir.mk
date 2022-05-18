@@ -8,9 +8,8 @@ C_SRCS += \
 ../Core/Src/font_14.c \
 ../Core/Src/font_16.c \
 ../Core/Src/font_8.c \
+../Core/Src/fonts.c \
 ../Core/Src/main.c \
-../Core/Src/ssd1306_fonts.c \
-../Core/Src/ssd1306_tests.c \
 ../Core/Src/ssd_1309.c \
 ../Core/Src/stm32f4xx_hal_msp.c \
 ../Core/Src/stm32f4xx_it.c \
@@ -22,9 +21,8 @@ OBJS += \
 ./Core/Src/font_14.o \
 ./Core/Src/font_16.o \
 ./Core/Src/font_8.o \
+./Core/Src/fonts.o \
 ./Core/Src/main.o \
-./Core/Src/ssd1306_fonts.o \
-./Core/Src/ssd1306_tests.o \
 ./Core/Src/ssd_1309.o \
 ./Core/Src/stm32f4xx_hal_msp.o \
 ./Core/Src/stm32f4xx_it.o \
@@ -36,9 +34,8 @@ C_DEPS += \
 ./Core/Src/font_14.d \
 ./Core/Src/font_16.d \
 ./Core/Src/font_8.d \
+./Core/Src/fonts.d \
 ./Core/Src/main.d \
-./Core/Src/ssd1306_fonts.d \
-./Core/Src/ssd1306_tests.d \
 ./Core/Src/ssd_1309.d \
 ./Core/Src/stm32f4xx_hal_msp.d \
 ./Core/Src/stm32f4xx_it.d \
@@ -54,7 +51,7 @@ Core/Src/%.o: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/font_14.d ./Core/Src/font_14.o ./Core/Src/font_16.d ./Core/Src/font_16.o ./Core/Src/font_8.d ./Core/Src/font_8.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/ssd1306_fonts.d ./Core/Src/ssd1306_fonts.o ./Core/Src/ssd1306_tests.d ./Core/Src/ssd1306_tests.o ./Core/Src/ssd_1309.d ./Core/Src/ssd_1309.o ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o
+	-$(RM) ./Core/Src/font_14.d ./Core/Src/font_14.o ./Core/Src/font_16.d ./Core/Src/font_16.o ./Core/Src/font_8.d ./Core/Src/font_8.o ./Core/Src/fonts.d ./Core/Src/fonts.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/ssd_1309.d ./Core/Src/ssd_1309.o ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o
 
 .PHONY: clean-Core-2f-Src
 

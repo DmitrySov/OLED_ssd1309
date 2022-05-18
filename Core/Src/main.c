@@ -26,10 +26,9 @@
 #include "font_16.h"
 #include "font_8.h"
 #include "font_14.h"
+#include "fonts.h"
 #include "ssd_1309.h"
 
-#include "ssd1306_fonts.h"
-#include "ssd1306_tests.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -112,19 +111,14 @@ int main(void)
  // HAL_Delay(100);
   Clear_Screen();
 //  SSD1309_ClearScreen();
- // HAL_SPI_Transmit_IT(&hspi1, &tx_date, 1);
 
   /*uint8_t flag_key1_press = 1;
   uint8_t flag_wait = 1;
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
+  SSD1306_WriteChar(1, 1, 'H', &Font_7x10, SSD1306_WHITE, SSD1306_OVERRIDE);
+  HAL_Delay(100);
   /* USER CODE END 2 */
-  /*uint8_t y = 0;
-#ifdef SSD1306_INCLUDE_FONT_6x8
-    ssd1306_SetCursor(2, y);
-    ssd1306_WriteString("Font 6x8", Font_6x8);
-    #endif*/
-  ssd1306_TestFonts();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
