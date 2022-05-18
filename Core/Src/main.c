@@ -116,7 +116,7 @@ int main(void)
   uint8_t flag_wait = 1;
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
-  SSD1306_WriteChar(1, 1, 'H', &Font_7x10, SSD1306_WHITE, SSD1306_OVERRIDE);
+  SSD1306_WriteString(1, 1, "H", &Font_7x10, SSD1306_WHITE, SSD1306_OVERRIDE);
   HAL_Delay(100);
   /* USER CODE END 2 */
 

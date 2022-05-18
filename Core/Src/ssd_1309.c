@@ -518,3 +518,40 @@ uint16_t width;
 
   //  SSD1306.Dirty = 1;
   }
+
+  void SSD1306_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font, SSD1306_COLOR_t color, SSD1306_DRAW_t mode)
+  {
+      int16_t l = strlen(str);
+      if (
+          (x + l*Font->width < SSD1306.MaskX1) ||
+          (SSD1306.MaskX2 < x) ||
+          (y + Font->height < SSD1306.MaskY1) ||
+          (SSD1306.MaskY2 < y)
+      ){
+        return;
+      }
+
+      int16_t fx = (SSD1306.MaskX1 - x) / Font->width;
+      int16_t rx = (x - SSD1306.MaskX2) / Font->width;
+      char* estr = str + l;
+      int16_t n = 0;
+
+
+      // cut off characters which are out of masking box
+      if (fx > 0) {
+          str += fx;
+          x += fx*Font->width;
+      }
+
+      if (rx > 0) {
+        estr -= rx;
+      }
+
+      // Write until null-byte or the first cutoff char
+      while (*str && str < estr)
+      {
+          SSD1306_WriteChar(x + n*Font->width, y, *str, Font, color, mode);
+          n++;
+          str++;
+      }
+  }

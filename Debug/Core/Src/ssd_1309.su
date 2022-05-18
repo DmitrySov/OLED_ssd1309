@@ -19,3 +19,4 @@ ssd_1309.c:405:8:SSD1309_UpdateScreen	16	static
 ssd_1309.c:414:8:Cursor_Screen	16	static
 ssd_1309.c:479:8:SSD1306_WriteChar	32	static
 ssd_1309.c:500:8:SSD1306_DrawPixel	16	static
+ssd_1309.c:522:8:SSD1306_WriteString	48	static
