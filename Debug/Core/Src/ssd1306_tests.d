@@ -1,4 +1,5 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
+Core/Src/ssd1306_tests.o: ../Core/Src/ssd1306_tests.c \
+ ../Core/Inc/ssd_1309.h ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -29,10 +30,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Inc/font_16.h ../Core/Inc/font_16.h ../Core/Inc/font_8.h \
- ../Core/Inc/font_8.h ../Core/Inc/font_14.h ../Core/Inc/font_14.h \
- ../Core/Inc/ssd_1309.h ../Core/Inc/main.h ../Core/Inc/ssd1306_fonts.h \
+ ../Core/Inc/font_16.h ../Core/Inc/font_14.h ../Core/Inc/font_8.h \
  ../Core/Inc/ssd1306_fonts.h ../Core/Inc/ssd1306_tests.h
+
+../Core/Inc/ssd_1309.h:
 
 ../Core/Inc/main.h:
 
@@ -98,21 +99,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Core/Inc/font_16.h:
 
-../Core/Inc/font_16.h:
-
-../Core/Inc/font_8.h:
-
-../Core/Inc/font_8.h:
-
 ../Core/Inc/font_14.h:
 
-../Core/Inc/font_14.h:
-
-../Core/Inc/ssd_1309.h:
-
-../Core/Inc/main.h:
-
-../Core/Inc/ssd1306_fonts.h:
+../Core/Inc/font_8.h:
 
 ../Core/Inc/ssd1306_fonts.h:
 

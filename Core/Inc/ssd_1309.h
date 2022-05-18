@@ -17,6 +17,7 @@
  #include "font_16.h"
  #include "font_14.h"
  #include "font_8.h"
+ #include "ssd1306_fonts.h"
 
 
 
@@ -29,7 +30,15 @@
 //static uint8_t SSD1309_Buffer[SSD1309_WIDTH * SSD1309_HEIGHT / 8];
 #define SSD1309_WIDTH            128
 #define SSD1309_HEIGHT           64
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Struct to store transformations
+typedef struct {
+    uint16_t CurrentX;
+    uint16_t CurrentY;
+    uint8_t Initialized;
+    uint8_t DisplayOn;
+} SSD1306_t;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Functions -----------------------------------------------------------------*/
  void SSD1309_init(void);
  void LL_GPIO_WriteOutputPort(GPIO_TypeDef *GPIOx, uint32_t PortValue);
@@ -51,5 +60,8 @@
  void SSD1309_UpdateScreen_new(void);
  void Cursor_Screen(void);
 
+ char ssd1306_WriteChar(char ch, FontDef Font);
+ char ssd1306_WriteString(char* str, FontDef Font);
+ void ssd1306_SetCursor(uint8_t x, uint8_t y);
 
  #endif /* SSD_1309_SSD_1309_H_ */

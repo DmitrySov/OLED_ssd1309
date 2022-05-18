@@ -10,7 +10,8 @@
 /* Declarations and definitions ----------------------------------------------*/
 static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
 
-
+// Screen object
+static SSD1306_t SSD1306;
 /* Functions -----------------------------------------------------------------*/
 static void SetPixel(uint8_t x, uint8_t y);
 
@@ -53,7 +54,7 @@ static void SetPixel(uint8_t x, uint8_t y);
 	SendCommand(0x00);
 
 	SendCommand(0x20);
-	SendCommand(0x01);
+	SendCommand(0x00);
 
 	SendCommand(0x22);
 	SendCommand(0x00);
@@ -85,6 +86,10 @@ static void SetPixel(uint8_t x, uint8_t y);
 	//SendCommand(0xDA); //
    // SendCommand(0x12); //
 	SendCommand(0xA1);
+
+	// Set default values for screen object
+	  /* SSD1306.CurrentX = 0;
+	    SSD1306.CurrentY = 0;*/
 
  }
  /*----------------------------------------------------------------------------*/
@@ -269,21 +274,30 @@ static void SetPixel(uint8_t x, uint8_t y);
   ------------------------------------------------------------------------------------*/
  void Output_Char_14pt(uint8_t out_char)
   {
-  	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
+  	uint16_t width_bitmap;
+  	//uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
-  	begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
+  	//begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
   	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
-  	end_bitmap = begin_bitmap + width_bitmap * 3;
+  	//end_bitmap = begin_bitmap + width_bitmap * 3;
 
 
-  	for (i = begin_bitmap; i < end_bitmap; i++)
+  	  /*for (i = begin_bitmap; i < end_bitmap; i++)
   	{
   		SendData(microsoftSansSerif_14ptBitmaps[i]);
+  	}*/
+
+  	  for(uint16_t i = 0; i <= width_bitmap; i++)
+  	{
+  		for(uint8_t j = 0; j <= 24; j++)
+  		{
+  		   SetPixel(i, j);
+  		}
   	}
-  	for (i = 0; i < 3*4; i++)
+  /*	for (i = 0; i < 3*4; i++)
   	{
   		SendData(0x00);
-  	}
+  	}*/
   }
  /*----------------------------------------------------------------------------------
   * Function:		Output_String_16pt
@@ -398,3 +412,60 @@ static void SetPixel(uint8_t x, uint8_t y);
  	     }
   }
 
+
+  // Draw 1 char to the screen buffer
+  // ch       => char om weg te schrijven
+  // Font     => Font waarmee we gaan schrijven
+  // color    => Black or White
+  char ssd1306_WriteChar(char ch, FontDef Font) {
+      uint32_t i, j;
+      //uint32_t i, b, j;
+      // Check if character is valid
+      if (ch < 32 || ch > 126)
+          return 0;
+
+      // Check remaining space on current line
+      if (SSD1309_WIDTH < (SSD1306.CurrentX + Font.FontWidth) ||
+          SSD1309_HEIGHT < (SSD1306.CurrentY + Font.FontHeight))
+      {
+          // Not enough space on current line
+          return 0;
+      }
+
+      // Use the font to write
+      for(i = 0; i < Font.FontHeight; i++) {
+         // b = Font.data[(ch - 32) * Font.FontHeight + i];
+          for(j = 0; j < Font.FontWidth; j++) {
+            	  SetPixel(j, i);
+          }
+      }
+
+      // The current space is now taken
+       SSD1306.CurrentX += Font.FontWidth;
+
+      // Return written char for validation
+      return ch;
+  }
+
+  // Write full string to screenbuffer
+  char ssd1306_WriteString(char* str, FontDef Font) {
+      // Write until null-byte
+      while (*str) {
+          if (ssd1306_WriteChar(*str, Font) != *str) {
+              // Char could not be written
+              return *str;
+          }
+
+          // Next char
+          str++;
+      }
+
+      // Everything ok
+      return *str;
+  }
+
+   // Position the cursor
+  void ssd1306_SetCursor(uint8_t x, uint8_t y) {
+      SSD1306.CurrentX = x;
+      SSD1306.CurrentY = y;
+  }

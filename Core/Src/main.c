@@ -28,6 +28,8 @@
 #include "font_14.h"
 #include "ssd_1309.h"
 
+#include "ssd1306_fonts.h"
+#include "ssd1306_tests.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,40 +119,30 @@ int main(void)
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
   /* USER CODE END 2 */
-  SendCommand(0xAE);
-   SendCommand(0x20);
-   SendCommand(0x00);
-   SendCommand(0xA4);
-   SendCommand(0xAF);
-
-   SendCommand(0x21);
-   SendCommand(0x00);
-   SendCommand(0x7F);
-   SendCommand(0x22);
-   SendCommand(0x00);
-   SendCommand(0x07);
-
-  SSD1309_DrawFilledRect(0x01, 0x7F, 0x01, 0x040);
-
-  SSD1309_UpdateScreen();
-
-  //SSD1309_DrawFilledRect(0x01, 0x7F, 0x03F, 0x40);
-  //SSD1309_UpdateScreen();
-
-  HAL_Delay(1000);
-  SSD1309_ClearScreen();
+  /*uint8_t y = 0;
+#ifdef SSD1306_INCLUDE_FONT_6x8
+    ssd1306_SetCursor(2, y);
+    ssd1306_WriteString("Font 6x8", Font_6x8);
+    #endif*/
+  ssd1306_TestFonts();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  /*if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
+		  {
+		  	  Init_sector(0x00, 0x7F, 0x05, 0x06);
+		      Output_String_8pt("street");
+		  }*/
 
-	/*  if( (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && flag_key1_press)
+
+
+	 /* if( (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && flag_key1_press)
 	 	{
 		  flag_key1_press = 0;
 		  flag_wait = 0;
 		  time_key1_press = HAL_GetTick();
-		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
 	 	}
 
 	 if(flag_wait == 0 && ((HAL_GetTick() - time_key1_press) > 50))
@@ -162,7 +154,7 @@ int main(void)
 			{
 				HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 				Init_sector(0x00, 0x7F, 0x05, 0x06);
-				Output_String_8pt("Hello World");
+				Output_String_8pt("street");
 				flag_wait = 1;
 				flag_str = 1;
 			}
@@ -186,8 +178,8 @@ int main(void)
 	 {
 	         flag_key1_press = 1;
 	         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-	 }
-*/
+	 }*/
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
