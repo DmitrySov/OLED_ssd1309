@@ -476,7 +476,7 @@ uint16_t width;
       return *str;
   }*/
 
-  void SSD1306_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font,  SSD1306_COLOR_t color, SSD1306_DRAW_t mode)
+  void SSD1306_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font)
   {
       int16_t x0, y0, b;
       // Translate font to screen buffer
@@ -485,73 +485,15 @@ uint16_t width;
           b = Font->data[(ch - 32) * Font->height + y0];
           for (x0 = 0; x0 < Font->width; x0++)
           {
-               if ((b << x0) & 0x8000)
+              // if ((b << x0) & 0x8000)
+             // {
+            	 SetPixel(x + x0, y + y0);
+             // }
+           /*  else if (mode == SSD1306_OVERRIDE)
               {
-            	 SSD1306_DrawPixel(x + x0, y + y0, (SSD1306_COLOR_t) color);
-              }
-             else if (mode == SSD1306_OVERRIDE)
-              {
-                SSD1306_DrawPixel(x + x0, y + y0, (SSD1306_COLOR_t) !color);
-              }
+                SetPixel(x + x0, y + y0, (SSD1306_COLOR_t) !color);
+              }*/
           }
       }
   }
 
-  void SSD1306_DrawPixel(int16_t x, int16_t y, SSD1306_COLOR_t color) {
-    if (x < SSD1306.MaskX1 ||
-        y < SSD1306.MaskY1 ||
-        x >= SSD1306.MaskX2 ||
-        y >= SSD1306.MaskY2) {
-      /* Error */
-      return;
-    }
-
-    if (SSD1306.Inverted) {
-      color = (SSD1306_COLOR_t)!color;
-    }
-
-    if(color == SSD1306_WHITE) {
-    	pixelBuffer[1+ x + (y >> 3) * SSD1309_WIDTH] |= (1 << (y % 8));
-    } else {
-    	pixelBuffer[1+ x + (y >> 3) * SSD1309_WIDTH] &= ~(1 << (y % 8));
-    }
-
-  //  SSD1306.Dirty = 1;
-  }
-
-  void SSD1306_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font, SSD1306_COLOR_t color, SSD1306_DRAW_t mode)
-  {
-      int16_t l = strlen(str);
-      if (
-          (x + l*Font->width < SSD1306.MaskX1) ||
-          (SSD1306.MaskX2 < x) ||
-          (y + Font->height < SSD1306.MaskY1) ||
-          (SSD1306.MaskY2 < y)
-      ){
-        return;
-      }
-
-      int16_t fx = (SSD1306.MaskX1 - x) / Font->width;
-      int16_t rx = (x - SSD1306.MaskX2) / Font->width;
-      char* estr = str + l;
-      int16_t n = 0;
-
-
-      // cut off characters which are out of masking box
-      if (fx > 0) {
-          str += fx;
-          x += fx*Font->width;
-      }
-
-      if (rx > 0) {
-        estr -= rx;
-      }
-
-      // Write until null-byte or the first cutoff char
-      while (*str && str < estr)
-      {
-          SSD1306_WriteChar(x + n*Font->width, y, *str, Font, color, mode);
-          n++;
-          str++;
-      }
-  }
