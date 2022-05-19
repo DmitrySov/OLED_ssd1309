@@ -87,7 +87,7 @@ uint16_t width;
 	HAL_Delay(100);
 
 	SendCommand(0x20);
-	SendCommand(0x01);			//  Vertical Addressing Mode;
+	SendCommand(0x00);			//  Vertical Addressing Mode;
 	SendCommand(0x21);			//  Область вывода - от 0 до 127 столбца;
 	SendCommand(0x00);
 	SendCommand(0x7F);
@@ -475,9 +475,26 @@ uint16_t width;
       // Everything ok
       return *str;
   }*/
+  char SSD1309_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font) {
+  	/* Write characters */
+  	while (*str) {
+  		/* Write character by character */
+  		if (SSD1309_WriteChar(x, y, *str, Font) != *str) {
+  			/* Return error */
+  			return *str;
+  		}
 
-  void SSD1306_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font)
+  		/* Increase string pointer */
+  		str++;
+  	}
+
+  	/* Everything OK, zero should be returned */
+  	return *str;
+  }
+
+  void SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font)
   {
+
       int16_t x0, y0, b;
       // Translate font to screen buffer
       for (y0 = 0; y0 < Font->height; y0++)
@@ -485,10 +502,10 @@ uint16_t width;
           b = Font->data[(ch - 32) * Font->height + y0];
           for (x0 = 0; x0 < Font->width; x0++)
           {
-              // if ((b << x0) & 0x8000)
-             // {
+               if ((b << x0) & 0x8000)
+              {
             	 SetPixel(x + x0, y + y0);
-             // }
+              }
            /*  else if (mode == SSD1306_OVERRIDE)
               {
                 SetPixel(x + x0, y + y0, (SSD1306_COLOR_t) !color);

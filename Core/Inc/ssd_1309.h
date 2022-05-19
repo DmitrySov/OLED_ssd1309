@@ -78,7 +78,8 @@ typedef enum {
  void SSD1309_UpdateScreen_new(void);
  void Cursor_Screen(void);
 
- void SSD1306_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font);
+ char SSD1309_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font);
+ void SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font);
 
  /*char ssd1306_WriteChar(char ch, FontDef Font);
  char ssd1306_WriteString(char* str, FontDef Font);
