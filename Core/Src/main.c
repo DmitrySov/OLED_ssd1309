@@ -117,7 +117,7 @@ int main(void)
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
 
-  SSD1309_WriteString(0, 0, "Hew", &Font_16x26);
+  SSD1309_WriteString(0, 0, "H", &Font_16x26);
   SSD1309_UpdateScreen();
   HAL_Delay(100);
   /* USER CODE END 2 */

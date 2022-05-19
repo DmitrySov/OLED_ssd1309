@@ -13,19 +13,8 @@ static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
 /* Functions -----------------------------------------------------------------*/
 static void SetPixel(uint8_t x, uint8_t y);
 
-SSD1306_t SSD1306 = {
-  .MaskX1 = 0,
-  .MaskY1 = 0,
-  .MaskX2 = SSD1309_WIDTH,
-  .MaskY2 = SSD1309_HEIGHT,
-  .Inverted = 0,
-  // .Dirty = 0,
-  /*.Ticks = 0,
-  .Frames = 0,
-  .FPS = 0*/
-};
-
-uint16_t width;
+/* Private variable -----------------------------------------------------------------*/
+static SSD1309_t SSD1309;
 /*----------------------------------------------------------------------------------
  * Function:		SSD1309_init
  *----------------------------------------------------------------------------------
@@ -43,43 +32,6 @@ uint16_t width;
 	SendCommand(0xAE);	// display off
 	Clear_Screen();
 
-	/*SendCommand(0xD5);
-	SendCommand(0x80);
-
-	SendCommand(0x8D);
-	SendCommand(0x14);
-
-	SendCommand(0x40);
-
-	SendCommand(0xA1);
-
-	SendCommand(0xC8);
-
-	SendCommand(0xDA);
-	SendCommand(0x12);
-
-	SendCommand(0xA8);
-	SendCommand(0x3F);
-
-	SendCommand(0xD3);
-	SendCommand(0x00);
-
-	SendCommand(0x20);
-	SendCommand(0x00);
-
-	SendCommand(0x22);
-	SendCommand(0x00);
-	SendCommand(0x07);
-
-	SendCommand(0x81);
-	SendCommand(0x7F);
-
-	SendCommand(0xA4);
-	SendCommand(0xA6);
-	SendCommand(0xAF);*/
-
-	//SendCommand(0xB0);
-   // SendCommand(0x81);
 	SendCommand(0xB0);
 	SendCommand(0x81);
 	SendCommand(0x7F);			//  яркость;
@@ -424,57 +376,6 @@ uint16_t width;
  	     }
   }
 
-
-  // Draw 1 char to the screen buffer
-  // ch       => char om weg te schrijven
-  // Font     => Font waarmee we gaan schrijven
-  // color    => Black or White
- /* char ssd1306_WriteChar(char ch, FontDef Font) {
-      uint32_t i, j;
-      //uint32_t i, b, j;
-      // Check if character is valid
-      if (ch < 32 || ch > 126)
-          return 0;
-
-      // Check remaining space on current line
-      if (SSD1309_WIDTH < (SSD1306.CurrentX + Font.FontWidth) ||
-          SSD1309_HEIGHT < (SSD1306.CurrentY + Font.FontHeight))
-      {
-          // Not enough space on current line
-          return 0;
-      }
-
-      // Use the font to write
-      for(i = 0; i < Font.FontHeight; i++) {
-         // b = Font.data[(ch - 32) * Font.FontHeight + i];
-          for(j = 0; j < Font.FontWidth; j++) {
-            	  SetPixel(j, i);
-          }
-      }
-
-      // The current space is now taken
-       SSD1306.CurrentX += Font.FontWidth;
-
-      // Return written char for validation
-      return ch;
-  }
-
-  // Write full string to screenbuffer
-  char ssd1306_WriteString(char* str, FontDef Font) {
-      // Write until null-byte
-      while (*str) {
-          if (ssd1306_WriteChar(*str, Font) != *str) {
-              // Char could not be written
-              return *str;
-          }
-
-          // Next char
-          str++;
-      }
-
-      // Everything ok
-      return *str;
-  }*/
   char SSD1309_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font) {
   	/* Write characters */
   	while (*str) {
@@ -492,10 +393,17 @@ uint16_t width;
   	return *str;
   }
 
-  void SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font)
+  char SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font)
   {
-
       int16_t x0, y0, b;
+      /* Check available space in LCD */
+      	if (
+      		SSD1309_WIDTH <= (SSD1309.CurrentX + Font->width) ||
+      		SSD1309_HEIGHT <= (SSD1309.CurrentY + Font->height)
+      	) {
+      		/* Error */
+      		return 0;
+      	}
       // Translate font to screen buffer
       for (y0 = 0; y0 < Font->height; y0++)
       {
@@ -506,11 +414,9 @@ uint16_t width;
               {
             	 SetPixel(x + x0, y + y0);
               }
-           /*  else if (mode == SSD1306_OVERRIDE)
-              {
-                SetPixel(x + x0, y + y0, (SSD1306_COLOR_t) !color);
-              }*/
           }
       }
+     /* Return character written */
+     return ch;
   }
 

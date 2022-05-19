@@ -26,35 +26,15 @@
  #define SSD1309_Y_SIZE                                64
  #define SSD1309_BUFFER_SIZE                          (SSD1309_X_SIZE *  SSD1309_Y_SIZE) / 8
 
-/* SSD1306 data buffer */
-//static uint8_t SSD1309_Buffer[SSD1309_WIDTH * SSD1309_HEIGHT / 8];
 #define SSD1309_WIDTH            128
 #define SSD1309_HEIGHT           64
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Struct to store transformations
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* Private SSD1309 structure */
 typedef struct {
-  int16_t MaskX1;
-  int16_t MaskY1;
-  int16_t MaskX2;
-  int16_t MaskY2;
-  uint8_t Inverted;
-//  uint8_t Dirty;
-  /*int16_t Ticks;
-  uint8_t Frames;
-  uint8_t FPS;*/
-} SSD1306_t;
+	uint16_t CurrentX;
+	uint16_t CurrentY;
 
-typedef enum {
-  SSD1306_BLACK = 0x00,
-  SSD1306_WHITE = 0x01
-} SSD1306_COLOR_t;
-
-typedef enum {
-  SSD1306_OVERRIDE = 0x00,
-  SSD1306_TRANSPARENT = 0x01
-} SSD1306_DRAW_t;
-
+} SSD1309_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Functions -----------------------------------------------------------------*/
@@ -79,7 +59,7 @@ typedef enum {
  void Cursor_Screen(void);
 
  char SSD1309_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font);
- void SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font);
+ char SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font);
 
  /*char ssd1306_WriteChar(char ch, FontDef Font);
  char ssd1306_WriteString(char* str, FontDef Font);
