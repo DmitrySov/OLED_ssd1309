@@ -28,6 +28,7 @@
 #include "font_14.h"
 #include "fonts.h"
 #include "ssd_1309.h"
+#include "menu.h"
 
 /* USER CODE END Includes */
 
@@ -117,17 +118,18 @@ int main(void)
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
   //SSD1309_DrawFilledRect(0x01, 0x7F, 25, 3);
-  SSD1306_GotoXY(0, 40);
-  SSD1309_WriteChar('9', &Font_7x10);
+  /*SSD1306_GotoXY(0, 20);
+  SSD1309_WriteString("Welcome", &Font_7x10);*/
+  //main_menu();
 
-  SSD1309_UpdateScreen();
-  HAL_Delay(100);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  main_menu();
+
 	  /*if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
 		  {
 		  	  Init_sector(0x00, 0x7F, 0x05, 0x06);

@@ -37,26 +37,26 @@ static SSD1309_t SSD1309;
 	SendCommand(0x7F);			//  яркость;
 	//////////////////
 	SendCommand(0xC8);		//Remapped (C0h / C8h)
+	SendCommand(0x00); //---set low column address
+	SendCommand(0x10); //---set high column address
 	/////////////////
 	SendCommand(0xAF);
 	HAL_Delay(100);
 
 	SendCommand(0x20);
-	SendCommand(0x00);			//  Vertical Addressing Mode;
+	SendCommand(0x10);			//  Vertical Addressing Mode;
 	SendCommand(0x21);			//  Область вывода - от 0 до 127 столбца;
 	SendCommand(0x00);
 	SendCommand(0x7F);
 	SendCommand(0x22);			//  Область вывода - от  до  строки;
 	SendCommand(0x00);
 	SendCommand(0x07);
-	//SendCommand(0xDA); //
-   // SendCommand(0x12); //
+
 	SendCommand(0xA1);
 
 	// Set default values for screen object
 	   SSD1309.CurrentX = 0;
 	   SSD1309.CurrentY = 0;
-
  }
  /*----------------------------------------------------------------------------*/
   /**
