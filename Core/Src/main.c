@@ -110,7 +110,7 @@ int main(void)
 
   SSD1309_init();
  // HAL_Delay(100);
-  Clear_Screen();
+  //Clear_Screen();
 //  SSD1309_ClearScreen();
 
   /*uint8_t flag_key1_press = 1;
