@@ -117,34 +117,9 @@ int main(void)
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
   //SSD1309_DrawFilledRect(0x01, 0x7F, 25, 3);
+  SSD1306_GotoXY(0, 40);
+  SSD1309_WriteChar('9', &Font_7x10);
 
-  SSD1309_WriteChar(0, 0, 'H', &Font_7x10);
-  SSD1309_WriteChar(10, 1, 'H', &Font_7x10);
-  SSD1309_WriteChar(20, 2, 'H', &Font_7x10);
-  SSD1309_WriteChar(30, 3, 'H', &Font_7x10);
-  SSD1309_WriteChar(40, 4, 'H', &Font_7x10);
-  SSD1309_WriteChar(50, 5, 'H', &Font_7x10);
-  	SSD1309_WriteChar(60, 6, 'H', &Font_7x10);
-    SSD1309_WriteChar(70, 7, 'H', &Font_7x10);
-    SSD1309_WriteChar(80, 8, 'H', &Font_7x10);
-    SSD1309_WriteChar(90, 9, 'H', &Font_7x10);
-    SSD1309_WriteChar(100, 10, 'H', &Font_7x10);
-    SSD1309_WriteChar(110, 11, 'H', &Font_7x10);
-    SSD1309_WriteChar(120, 12, 'H', &Font_7x10);
-
-    SSD1309_WriteChar(0, 11, 'H', &Font_7x10);
-      SSD1309_WriteChar(10, 12, 'H', &Font_7x10);
-      /*SSD1309_WriteChar(20, 2, 'H', &Font_7x10);
-      SSD1309_WriteChar(30, 3, 'H', &Font_7x10);
-      SSD1309_WriteChar(40, 4, 'H', &Font_7x10);
-      SSD1309_WriteChar(50, 5, 'H', &Font_7x10);
-      	SSD1309_WriteChar(60, 6, 'H', &Font_7x10);
-        SSD1309_WriteChar(70, 7, 'H', &Font_7x10);
-        SSD1309_WriteChar(80, 8, 'H', &Font_7x10);
-        SSD1309_WriteChar(90, 9, 'H', &Font_7x10);
-        SSD1309_WriteChar(100, 10, 'H', &Font_7x10);
-        SSD1309_WriteChar(110, 11, 'H', &Font_7x10);
-        SSD1309_WriteChar(120, 12, 'H', &Font_7x10);*/
   SSD1309_UpdateScreen();
   HAL_Delay(100);
   /* USER CODE END 2 */

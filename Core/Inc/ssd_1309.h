@@ -33,7 +33,6 @@
 typedef struct {
 	uint16_t CurrentX;
 	uint16_t CurrentY;
-
 } SSD1309_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,11 +57,9 @@ typedef struct {
  void SSD1309_UpdateScreen_new(void);
  void Cursor_Screen(void);
 
- char SSD1309_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font);
- char SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font);
+ char SSD1309_WriteString(char* str, FontDef_t* Font);
+ char SSD1309_WriteChar(char ch, FontDef_t* Font);
 
- /*char ssd1306_WriteChar(char ch, FontDef Font);
- char ssd1306_WriteString(char* str, FontDef Font);
- void ssd1306_SetCursor(uint8_t x, uint8_t y);*/
+ void SSD1306_GotoXY(uint16_t x, uint16_t y);
 
  #endif /* SSD_1309_SSD_1309_H_ */

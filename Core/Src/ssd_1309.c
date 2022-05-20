@@ -35,6 +35,9 @@ static SSD1309_t SSD1309;
 	SendCommand(0xB0);
 	SendCommand(0x81);
 	SendCommand(0x7F);			//  яркость;
+	//////////////////
+	SendCommand(0xC8);		//Remapped (C0h / C8h)
+	/////////////////
 	SendCommand(0xAF);
 	HAL_Delay(100);
 
@@ -51,8 +54,8 @@ static SSD1309_t SSD1309;
 	SendCommand(0xA1);
 
 	// Set default values for screen object
-	  /* SSD1306.CurrentX = 0;
-	    SSD1306.CurrentY = 0;*/
+	   SSD1309.CurrentX = 0;
+	   SSD1309.CurrentY = 0;
 
  }
  /*----------------------------------------------------------------------------*/
@@ -203,6 +206,42 @@ static SSD1309_t SSD1309;
  	}
  }
  /*----------------------------------------------------------------------------------
+  * Function:		Output_Char_14pt(uint8_t out_char)
+  *----------------------------------------------------------------------------------
+  * description:
+  * parameters:		-uint8_t out_char
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
+ void Output_Char_14pt(uint8_t out_char)
+  {
+  	uint16_t width_bitmap, height, begin_bitmap, end_bitmap;
+  	//uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
+
+  	begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
+  	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
+  	height = 3;
+
+  	end_bitmap = begin_bitmap + width_bitmap * height;
+  	  /*for (i = begin_bitmap; i < end_bitmap; i++)
+  	{
+  		SendData(microsoftSansSerif_14ptBitmaps[i]);
+  	}*/
+
+  	  for(uint16_t i = 0; i <= width_bitmap; i++)
+  	{
+  		for(uint8_t j = 0; j <= 24; j++)
+  		{
+  		   SetPixel(i, j);
+  		}
+  	}
+
+  /*	for (i = 0; i < 3*4; i++)
+  	{
+  		SendData(0x00);
+  	}*/
+  }
+ /*----------------------------------------------------------------------------------
   * Function:		Output_Char_8pt(uint8_t out_char)
   *----------------------------------------------------------------------------------
   * description:
@@ -227,42 +266,7 @@ static SSD1309_t SSD1309;
   		SendData(0x00);
   	}
   }
- /*----------------------------------------------------------------------------------
-  * Function:		Output_Char_14pt(uint8_t out_char)
-  *----------------------------------------------------------------------------------
-  * description:
-  * parameters:		-uint8_t out_char
-  *
-  * on return:		-
-  ------------------------------------------------------------------------------------*/
- void Output_Char_14pt(uint8_t out_char)
-  {
-  	uint16_t width_bitmap;
-  	//uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
-  	//begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
-  	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
-  	//end_bitmap = begin_bitmap + width_bitmap * 3;
-
-
-  	  /*for (i = begin_bitmap; i < end_bitmap; i++)
-  	{
-  		SendData(microsoftSansSerif_14ptBitmaps[i]);
-  	}*/
-
-  	  for(uint16_t i = 0; i <= width_bitmap; i++)
-  	{
-  		for(uint8_t j = 0; j <= 24; j++)
-  		{
-  		   SetPixel(i, j);
-  		}
-  	}
-
-  /*	for (i = 0; i < 3*4; i++)
-  	{
-  		SendData(0x00);
-  	}*/
-  }
  /*----------------------------------------------------------------------------------
   * Function:		Output_String_16pt
   *----------------------------------------------------------------------------------
@@ -376,36 +380,36 @@ static SSD1309_t SSD1309;
  	     }
   }
 
-  char SSD1309_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font) {
+ // char SSD1309_WriteString(int16_t x, int16_t y, char* str, FontDef_t* Font) {
   	/* Write characters */
-  	while (*str) {
+  //	while (*str) {
   		/* Write character by character */
-  		if (SSD1309_WriteChar(x, y, *str, Font) != *str) {
+  	//	if (SSD1309_WriteChar(x, y, *str, Font) != *str) {
   			/* Return error */
-  			return *str;
-  		}
+  	//		return *str;
+  	//	}
 
   		/* Increase string pointer */
-  		str++;
-  	}
+  	//	str++;
+  	//}
 
   	/* Everything OK, zero should be returned */
-  	return *str;
-  }
+  //	return *str;
+ // }
 
-  char SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font)
-  {
-      int16_t x0, y0, b;
+//  char SSD1309_WriteChar(int16_t x, int16_t y, char ch, FontDef_t* Font)
+ // {
+     // int16_t x0, y0, b;
       /* Check available space in LCD */
-      	if (
-      		SSD1309_WIDTH <= (SSD1309.CurrentX + Font->width) ||
-      		SSD1309_HEIGHT <= (SSD1309.CurrentY + Font->height)
-      	) {
+      	//if (
+      	//	SSD1309_WIDTH <= (SSD1309.CurrentX + Font->width) ||
+      	//	SSD1309_HEIGHT <= (SSD1309.CurrentY + Font->height)
+      //	) {
       		/* Error */
-      		return 0;
-      	}
-      // Translate font to screen buffer
-      for (y0 = 0; y0 < Font->height; y0++)
+      	//	return 0;
+      	//}
+      /* Translate font to screen buffer*/
+     /* for (y0 = 0; y0 < Font->height; y0++)
       {
           b = Font->data[(ch - 32) * Font->height + y0];
           for (x0 = 0; x0 < Font->width; x0++)
@@ -415,8 +419,60 @@ static SSD1309_t SSD1309;
             	 SetPixel(x + x0, y + y0);
               }
           }
-      }
-     /* Return character written */
-     return ch;
-  }
+      }*/
+      /*Return character written */
+   //  return ch;
+  //}
 
+
+  char SSD1309_WriteString(char* str, FontDef_t* Font) {
+    	/* Write characters */
+    	while (*str) {
+    		/* Write character by character */
+    		if (SSD1309_WriteChar(*str, Font) != *str) {
+    			/* Return error */
+    			return *str;
+    		}
+    		/* Increase string pointer */
+    		str++;
+    	}
+
+    	/* Everything OK, zero should be returned */
+    	return *str;
+    }
+
+    char SSD1309_WriteChar(char ch, FontDef_t* Font)
+    {
+        int16_t x0, y0, b;
+        /* Check available space in LCD */
+        	if (
+        		SSD1309_WIDTH <= (SSD1309.CurrentX + Font->width) ||
+        		SSD1309_HEIGHT <= (SSD1309.CurrentY + Font->height)
+        	) {
+        		/* Error */
+        		return 0;
+        	}
+         /*Translate font to screen buffer*/
+        for (y0 = 0; y0 < Font->height; y0++)
+        {
+            b = Font->data[(ch - 32) * Font->height + y0];
+            for (x0 = 0; x0 < Font->width; x0++)
+            {
+                 if ((b << x0) & 0x8000)
+                {
+              	 SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
+                }
+            }
+        }
+       /* Increase pointer */
+          SSD1309.CurrentX += Font->width;
+       /* Return character written */
+       return ch;
+    }
+/////////////////////////////////////////////////////////////
+    void SSD1306_GotoXY(uint16_t x, uint16_t y) {
+    	/* Set write pointers */
+    	SSD1309.CurrentX = x;
+    	SSD1309.CurrentY = y;
+    }
+///////////////////////////////////////////////////////////
