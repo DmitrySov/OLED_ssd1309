@@ -476,3 +476,46 @@ static SSD1309_t SSD1309;
     	SSD1309.CurrentY = y;
     }
 ///////////////////////////////////////////////////////////
+    void ssd1306_DrawCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r) {
+      int32_t x = -par_r;
+      int32_t y = 0;
+      int32_t err = 2 - 2 * par_r;
+      int32_t e2;
+
+      if (par_x >= SSD1309_WIDTH || par_y >= SSD1309_HEIGHT) {
+        return;
+      }
+
+        do {
+          SetPixel(par_x - x, par_y + y);
+          SetPixel(par_x + x, par_y + y);
+          SetPixel(par_x + x, par_y - y);
+          SetPixel(par_x - x, par_y - y);
+            e2 = err;
+            if (e2 <= y) {
+                y++;
+                err = err + (y * 2 + 1);
+                if(-x == y && e2 <= x) {
+                  e2 = 0;
+                }
+                else
+                {
+                  /*nothing to do*/
+                }
+            }
+            else
+            {
+              /*nothing to do*/
+            }
+            if(e2 > x) {
+              x++;
+              err = err + (x * 2 + 1);
+            }
+            else
+            {
+              /*nothing to do*/
+            }
+        } while(x <= 0);
+
+        return;
+    }

@@ -62,4 +62,5 @@ typedef struct {
 
  void SSD1306_GotoXY(uint16_t x, uint16_t y);
 
+ void ssd1306_DrawCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r);
  #endif /* SSD_1309_SSD_1309_H_ */

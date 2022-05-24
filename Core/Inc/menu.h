@@ -14,11 +14,19 @@
 #include "ssd_1309.h"
 //------------------------------------------------
 typedef enum {
-  MENU_STATE = 0,
-  MENU_STATE_WAIT,
-  MENU_STATE_MAIN,
-}MENU_StateTypeDef;
+  MENU_1_STATE_IDLE = 0,
+  MENU_1_STATE_WAIT,
+  MENU_1_STATE_MAIN,
+}MENU1_StateTypeDef;
+
+typedef enum{
+  MENU_2_STATE_IDLE = 0,
+  MENU_2_STATE_WAIT,
+  MENU_2_STATE_WAIT_1,
+  MENU_2_STATE_WAIT_2,
+}MENU2_StateTypeDef;
 
 void main_menu(void);
+void NextMenuProcess(void);
 
 #endif /* INC_MENU_H_ */

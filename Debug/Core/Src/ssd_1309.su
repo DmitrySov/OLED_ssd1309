@@ -20,3 +20,4 @@ ssd_1309.c:370:8:Cursor_Screen	16	static
 ssd_1309.c:428:8:SSD1309_WriteString	16	static
 ssd_1309.c:444:10:SSD1309_WriteChar	24	static
 ssd_1309.c:473:10:SSD1306_GotoXY	16	static
+ssd_1309.c:479:10:ssd1306_DrawCircle	32	static
