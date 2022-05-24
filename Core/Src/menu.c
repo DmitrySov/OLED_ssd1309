@@ -75,8 +75,9 @@ void NextMenuProcess(void)
 			SSD1306_GotoXY(10, 30);
 			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 			SSD1309_UpdateScreen();
+			break;
 		}
-		break;
+
 	case MENU_2_STATE_WAIT_1: //запуск главного меню
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
 		{
@@ -93,13 +94,15 @@ void NextMenuProcess(void)
 			SSD1306_GotoXY(10, 30);
 			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 			SSD1309_UpdateScreen();
+			break;
 		}
 		//NextMenuProcess();
-		break;
+		//break;
 	case MENU_2_STATE_WAIT_2: //запуск главного меню
-			//city = MENU_2_STATE_WAIT_2;
+
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
 		{
+			city = MENU_2_STATE_WAIT_3;
 			SSD1309_init();
 			SSD1309_ClearScreen();
 			ssd1306_DrawCircle(3, 33, 2);
@@ -112,9 +115,17 @@ void NextMenuProcess(void)
 			SSD1306_GotoXY(10, 30);
 			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 			SSD1309_UpdateScreen();
+			break;
 		}
 			//NextMenuProcess();
+			//break;
+	case MENU_2_STATE_WAIT_3:
+
+		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
+		{
+			city = MENU_2_STATE_IDLE;
 			break;
+		}
    }
   HAL_Delay(50);
  }

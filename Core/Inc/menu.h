@@ -24,6 +24,7 @@ typedef enum{
   MENU_2_STATE_WAIT,
   MENU_2_STATE_WAIT_1,
   MENU_2_STATE_WAIT_2,
+  MENU_2_STATE_WAIT_3,
 }MENU2_StateTypeDef;
 
 void main_menu(void);
