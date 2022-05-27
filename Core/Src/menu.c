@@ -16,6 +16,14 @@ void main_menu(void)
 	{
 		case MENU_1_STATE_IDLE:
 			country = MENU_1_STATE_WAIT;
+				SendCommand(0x20);
+				SendCommand(0x10);
+				SendCommand(0x21);
+				SendCommand(0x00);
+				SendCommand(0x7F);
+				SendCommand(0x22);
+				SendCommand(0x00);
+				SendCommand(0x07);
 			SSD1309_ClearScreen();
 			SSD1306_GotoXY(0, 0);
 			SSD1309_WriteString("Russia", &Font_7x10);
@@ -57,6 +65,8 @@ void NextMenuProcess(void)
 		SSD1309_WriteString("Kazan", &Font_7x10);
 		SSD1306_GotoXY(10, 30);
 		SSD1309_WriteString("Ekaterinburg", &Font_7x10);
+		SSD1306_GotoXY(10, 40);
+		SSD1309_WriteString("Syzran", &Font_7x10);
 		SSD1309_UpdateScreen();
 		button_set_gpio_A0 = 0;
 		break;
@@ -92,6 +102,8 @@ void NextMenuProcess(void)
 			SSD1309_WriteString("Kazan", &Font_7x10);
 			SSD1306_GotoXY(10, 30);
 			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
+			SSD1306_GotoXY(10, 40);
+			SSD1309_WriteString("Syzran", &Font_7x10);
 			SSD1309_UpdateScreen();
 			button_set_gpio_E7 = 0;
 			//break;
@@ -124,6 +136,8 @@ void NextMenuProcess(void)
 				SSD1309_WriteString("Kazan", &Font_7x10);
 				SSD1306_GotoXY(10, 30);
 				SSD1309_WriteString("Ekaterinburg", &Font_7x10);
+				SSD1306_GotoXY(10, 40);
+				SSD1309_WriteString("Syzran", &Font_7x10);
 				SSD1309_UpdateScreen();
 				button_set_gpio_E8 = 0;
 				//break;
@@ -131,92 +145,12 @@ void NextMenuProcess(void)
 	if (button_set_gpio_E9 == 1)
 		{
 			button_set_gpio_E9 = 0;
-			main_menu();
-
-				//break;
+			city = MENU_2_STATE_EXIT;
 		}
 
-	/*case MENU_2_STATE_WAIT_1:
-		button_rattle_GPIO_A0();
-		button_rattle_GPIO_E7();
-		button_rattle_GPIO_E8();
-		button_rattle_GPIO_E9();
-		if (button_set_gpio_E9 == 1)
-		{
-			city = MENU_2_STATE_WAIT_2;
-				SendCommand(0x20);
-				SendCommand(0x10);
-				SendCommand(0x21);
-				SendCommand(0x00);
-				SendCommand(0x7F);
-				SendCommand(0x22);
-				SendCommand(0x00);
-				SendCommand(0x07);
-			SSD1309_ClearScreen();
-			ssd1306_DrawCircle(3, 13, 2);
-			SSD1306_GotoXY(10, 0);
-			SSD1309_WriteString("Moscow", &Font_7x10);
-			SSD1306_GotoXY(10, 10);
-			SSD1309_WriteString("Saint Petersburg", &Font_7x10);
-			SSD1306_GotoXY(10, 20);
-			SSD1309_WriteString("Kazan", &Font_7x10);
-			SSD1306_GotoXY(10, 30);
-			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
-			SSD1309_UpdateScreen();
-			button_set_gpio_A0 = 0;
-			break;
-		}
-		//NextMenuProcess();
-		//break;
-	case MENU_2_STATE_WAIT_2:
-		button_rattle_GPIO_A0();
-		if (button_set_gpio_E9 == 1) {
-			city = MENU_2_STATE_WAIT_1;
-			SendCommand(0x20);
-			SendCommand(0x10);
-			SendCommand(0x21);
-			SendCommand(0x00);
-			SendCommand(0x7F);
-			SendCommand(0x22);
-			SendCommand(0x00);
-			SendCommand(0x07);
-			SSD1309_ClearScreen();
-			ssd1306_DrawCircle(3, 33, 2);
-			SSD1306_GotoXY(10, 0);
-			SSD1309_WriteString("Moscow", &Font_7x10);
-			SSD1306_GotoXY(10, 10);
-			SSD1309_WriteString("Saint Petersburg", &Font_7x10);
-			SSD1306_GotoXY(10, 20);
-			SSD1309_WriteString("Kazan", &Font_7x10);
-			SSD1306_GotoXY(10, 30);
-			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
-			SSD1309_UpdateScreen();
-			button_set_gpio_E9 = 0;
-			break;
-		}
-		if (button_set_gpio_E8 == 1) {
-			SendCommand(0x20);
-			SendCommand(0x10);
-			SendCommand(0x21);
-			SendCommand(0x00);
-			SendCommand(0x7F);
-			SendCommand(0x22);
-			SendCommand(0x00);
-			SendCommand(0x07);
-			SSD1309_ClearScreen();
-			ssd1306_DrawCircle(3, 23, 2);
-			SSD1306_GotoXY(10, 0);
-			SSD1309_WriteString("Moscow", &Font_7x10);
-			SSD1306_GotoXY(10, 10);
-			SSD1309_WriteString("Saint Petersburg", &Font_7x10);
-			SSD1306_GotoXY(10, 20);
-			SSD1309_WriteString("Kazan", &Font_7x10);
-			SSD1306_GotoXY(10, 30);
-			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
-			SSD1309_UpdateScreen();
-			button_set_gpio_E9 = 0;
-			break;
-		}*/
+	case MENU_2_STATE_EXIT:
+		city = MENU_1_STATE_IDLE;
+			return;
 
 			//NextMenuProcess();
 			//break;
