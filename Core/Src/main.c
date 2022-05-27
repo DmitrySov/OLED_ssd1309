@@ -141,8 +141,6 @@ int main(void)
 		      Output_String_8pt("street");
 		  }*/
 
-
-
 	 /* if( (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && flag_key1_press)
 	 	{
 		  flag_key1_press = 0;

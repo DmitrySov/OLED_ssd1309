@@ -1,3 +1,6 @@
-menu.c:8:6:main_menu	8	static
-menu.c:34:6:NextMenuProcess	8	static
-menu.c:188:7:button_rattle	8	static
+menu.c:13:6:main_menu	8	static
+menu.c:39:6:NextMenuProcess	8	static
+menu.c:236:7:button_rattle_GPIO_A0	8	static
+menu.c:283:7:button_rattle_GPIO_E7	8	static
+menu.c:302:7:button_rattle_GPIO_E8	8	static
+menu.c:320:7:button_rattle_GPIO_E9	8	static

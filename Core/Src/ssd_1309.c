@@ -215,26 +215,53 @@ static SSD1309_t SSD1309;
   ------------------------------------------------------------------------------------*/
  void Output_Char_14pt(uint8_t out_char)
   {
+	 //int16_t x0, y0, b;
+	         /* Check available space in LCD */
+	         	/*if (
+	         		SSD1309_WIDTH <= (SSD1309.CurrentX + Font->width) ||
+	         		SSD1309_HEIGHT <= (SSD1309.CurrentY + Font->height)
+	         	) {*/
+	         		/* Error */
+	         	//	return 0;
+	         //	}
+	          /*Translate font to screen buffer*/
+	         /*for (y0 = 0; y0 < Font->height; y0++)
+	         {
+	             b = Font->data[(ch - 32) * Font->height + y0];
+	             for (x0 = 0; x0 < Font->width; x0++)
+	             {
+
+	               	 SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
+	                 }
+	             }
+	         }*/
+	        /* Increase pointer */
+	       //    SSD1309.CurrentX += Font->width;
   	uint16_t width_bitmap, height, begin_bitmap, end_bitmap;
+  	int16_t b, *data;
+  	uint8_t x0, y0;
   	//uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
   	begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
   	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
   	height = 3;
 
-  	end_bitmap = begin_bitmap + width_bitmap * height;
-  	  /*for (i = begin_bitmap; i < end_bitmap; i++)
-  	{
-  		SendData(microsoftSansSerif_14ptBitmaps[i]);
-  	}*/
+  	end_bitmap = (begin_bitmap + width_bitmap * height) - 1;
 
-  	  for(uint16_t i = 0; i <= width_bitmap; i++)
+  	for(x0 = begin_bitmap; x0 < end_bitmap; x0++)      //записываем значения в массив;
   	{
-  		for(uint8_t j = 0; j <= 24; j++)
+  		b = data[begin_bitmap + x0];
+  		for(y0 = 0; y0 < 8; y0++)
   		{
-  		   SetPixel(i, j);
+
+  			if ((b << y0) & 0x80)
+  		   {
+
+  				SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
+  		   }
   		}
   	}
+
 
   /*	for (i = 0; i < 3*4; i++)
   	{

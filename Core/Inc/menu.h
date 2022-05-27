@@ -29,6 +29,10 @@ typedef enum{
 
 void main_menu(void);
 void NextMenuProcess(void);
-void button_rattle(void);
+void button_rattle_GPIO_A0(void);
+void button_rattle_GPIO_E7(void);
+void button_rattle_GPIO_E8(void);
+void button_rattle_GPIO_E9(void);
+
 
 #endif /* INC_MENU_H_ */

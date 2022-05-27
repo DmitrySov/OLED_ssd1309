@@ -3,25 +3,30 @@
 MENU1_StateTypeDef country = MENU_1_STATE_IDLE;
 MENU2_StateTypeDef city = MENU_2_STATE_IDLE;
 
-uint8_t button_set = 0;
+uint8_t button_set_gpio_A0 = 0;
+uint8_t button_set_gpio_E7 = 0;
+uint8_t button_set_gpio_E8 = 0;
+uint8_t button_set_gpio_E9 = 0;
+
+int8_t i = 3;
 //----------------------------------------------
 void main_menu(void)
 {
 	switch (country)
 	{
-		case MENU_1_STATE_IDLE: //старт программы
+		case MENU_1_STATE_IDLE:
 			country = MENU_1_STATE_WAIT;
 			SSD1309_ClearScreen();
 			SSD1306_GotoXY(0, 0);
 			SSD1309_WriteString("Russia", &Font_7x10);
 			SSD1309_UpdateScreen();
 			break;
-		case MENU_1_STATE_WAIT: //ждем запуска главного меню
-				button_rattle();							//
-			if (button_set == 1)
+		case MENU_1_STATE_WAIT:
+			button_rattle_GPIO_A0();							// button click processing
+			if (button_set_gpio_A0 == 1)							// button_set - flag on the button status
 			{
 				country = MENU_1_STATE_MAIN;
-				button_set = 0;
+				button_set_gpio_A0 = 0;
 			}
 			break;
 		case MENU_1_STATE_MAIN: //запуск главного меню
@@ -37,7 +42,8 @@ void NextMenuProcess(void)
  {
   switch (city)
   {
-	case MENU_2_STATE_IDLE: //старт программы
+
+	case MENU_2_STATE_IDLE:
 		city = MENU_2_STATE_WAIT;
 		SSD1309_init();
 		SSD1309_ClearScreen();
@@ -52,24 +58,18 @@ void NextMenuProcess(void)
 		SSD1306_GotoXY(10, 30);
 		SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 		SSD1309_UpdateScreen();
-		button_set = 0;
+		button_set_gpio_A0 = 0;
 		break;
-	case MENU_2_STATE_WAIT: //ждем запуска главного меню
-         button_rattle();
+	case MENU_2_STATE_WAIT:
+		button_rattle_GPIO_A0();
+		button_rattle_GPIO_E7();
+		button_rattle_GPIO_E8();
+		button_rattle_GPIO_E9();
 		//if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
-	if (button_set == 1)
+	if (button_set_gpio_E7 == 1)
 		{
-			city = MENU_2_STATE_WAIT_1;
-			//SSD1309_init();
-		        SendCommand(0xB0);
-				SendCommand(0x81);
-				SendCommand(0x7F);
-				//////////////////
-				SendCommand(0xC8);
-				SendCommand(0x00);
-				SendCommand(0x10);
-				/////////////////
 
+			//city = MENU_2_STATE_WAIT_1;
 				SendCommand(0x20);
 				SendCommand(0x10);
 				SendCommand(0x21);
@@ -78,7 +78,80 @@ void NextMenuProcess(void)
 				SendCommand(0x22);
 				SendCommand(0x00);
 				SendCommand(0x07);
+			SSD1309_ClearScreen();
+				i = i+10;
+			     if(i < 53)
+			     { ssd1306_DrawCircle(3, i, 2);}
+			     else{i = 3;}
+			ssd1306_DrawCircle(3, i, 2);
+			SSD1306_GotoXY(10, 0);
+			SSD1309_WriteString("Moscow", &Font_7x10);
+			SSD1306_GotoXY(10, 10);
+			SSD1309_WriteString("Saint Petersburg", &Font_7x10);
+			SSD1306_GotoXY(10, 20);
+			SSD1309_WriteString("Kazan", &Font_7x10);
+			SSD1306_GotoXY(10, 30);
+			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
+			SSD1309_UpdateScreen();
+			button_set_gpio_E7 = 0;
+			//break;
+		}
+	if (button_set_gpio_E8 == 1)
+		{
+		        //city = MENU_2_STATE_WAIT_1;
+				SendCommand(0x20);
+				SendCommand(0x10);
+				SendCommand(0x21);
+				SendCommand(0x00);
+				SendCommand(0x7F);
+				SendCommand(0x22);
+				SendCommand(0x00);
+				SendCommand(0x07);
+				SSD1309_ClearScreen();
+				i = i - 10;
+				if(i < 0)
+				{i = 53;}
+				//if (i < 54) {
+					ssd1306_DrawCircle(3, i, 2);
+				/*} else {
+					i = 3;
+				}*/
+				SSD1306_GotoXY(10, 0);
+				SSD1309_WriteString("Moscow", &Font_7x10);
+				SSD1306_GotoXY(10, 10);
+				SSD1309_WriteString("Saint Petersburg", &Font_7x10);
+				SSD1306_GotoXY(10, 20);
+				SSD1309_WriteString("Kazan", &Font_7x10);
+				SSD1306_GotoXY(10, 30);
+				SSD1309_WriteString("Ekaterinburg", &Font_7x10);
+				SSD1309_UpdateScreen();
+				button_set_gpio_E8 = 0;
+				//break;
+		}
+	if (button_set_gpio_E9 == 1)
+		{
+			button_set_gpio_E9 = 0;
+			main_menu();
 
+				//break;
+		}
+
+	/*case MENU_2_STATE_WAIT_1:
+		button_rattle_GPIO_A0();
+		button_rattle_GPIO_E7();
+		button_rattle_GPIO_E8();
+		button_rattle_GPIO_E9();
+		if (button_set_gpio_E9 == 1)
+		{
+			city = MENU_2_STATE_WAIT_2;
+				SendCommand(0x20);
+				SendCommand(0x10);
+				SendCommand(0x21);
+				SendCommand(0x00);
+				SendCommand(0x7F);
+				SendCommand(0x22);
+				SendCommand(0x00);
+				SendCommand(0x07);
 			SSD1309_ClearScreen();
 			ssd1306_DrawCircle(3, 13, 2);
 			SSD1306_GotoXY(10, 0);
@@ -90,72 +163,23 @@ void NextMenuProcess(void)
 			SSD1306_GotoXY(10, 30);
 			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 			SSD1309_UpdateScreen();
-			button_set = 0;
-			break;
-		}
-
-	case MENU_2_STATE_WAIT_1: //запуск главного меню
-			button_rattle();
-		if (button_set == 1)
-		{
-			city = MENU_2_STATE_WAIT_2;
-				//SSD1309_init();
-				SendCommand(0xB0);
-				SendCommand(0x81);
-				SendCommand(0x7F);
-				//////////////////
-				SendCommand(0xC8);
-				SendCommand(0x00);
-				SendCommand(0x10);
-				/////////////////
-
-				SendCommand(0x20);
-				SendCommand(0x10);
-				SendCommand(0x21);
-				SendCommand(0x00);
-				SendCommand(0x7F);
-				SendCommand(0x22);
-				SendCommand(0x00);
-				SendCommand(0x07);
-			SSD1309_ClearScreen();
-			ssd1306_DrawCircle(3, 23, 2);
-			SSD1306_GotoXY(10, 0);
-			SSD1309_WriteString("Moscow", &Font_7x10);
-			SSD1306_GotoXY(10, 10);
-			SSD1309_WriteString("Saint Petersburg", &Font_7x10);
-			SSD1306_GotoXY(10, 20);
-			SSD1309_WriteString("Kazan", &Font_7x10);
-			SSD1306_GotoXY(10, 30);
-			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
-			SSD1309_UpdateScreen();
-			button_set = 0;
+			button_set_gpio_A0 = 0;
 			break;
 		}
 		//NextMenuProcess();
 		//break;
-	case MENU_2_STATE_WAIT_2: //запуск главного меню
-		    button_rattle();
-		if (button_set == 1)
-		{
-			city = MENU_2_STATE_WAIT_3;
-			//SSD1309_init();
-				SendCommand(0xB0);
-				SendCommand(0x81);
-				SendCommand(0x7F);
-				//////////////////
-				SendCommand(0xC8);
-				SendCommand(0x00);
-				SendCommand(0x10);
-				/////////////////
-
-				SendCommand(0x20);
-				SendCommand(0x10);
-				SendCommand(0x21);
-				SendCommand(0x00);
-				SendCommand(0x7F);
-				SendCommand(0x22);
-				SendCommand(0x00);
-				SendCommand(0x07);
+	case MENU_2_STATE_WAIT_2:
+		button_rattle_GPIO_A0();
+		if (button_set_gpio_E9 == 1) {
+			city = MENU_2_STATE_WAIT_1;
+			SendCommand(0x20);
+			SendCommand(0x10);
+			SendCommand(0x21);
+			SendCommand(0x00);
+			SendCommand(0x7F);
+			SendCommand(0x22);
+			SendCommand(0x00);
+			SendCommand(0x07);
 			SSD1309_ClearScreen();
 			ssd1306_DrawCircle(3, 33, 2);
 			SSD1306_GotoXY(10, 0);
@@ -167,27 +191,51 @@ void NextMenuProcess(void)
 			SSD1306_GotoXY(10, 30);
 			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 			SSD1309_UpdateScreen();
-			button_set = 0;
+			button_set_gpio_E9 = 0;
 			break;
 		}
+		if (button_set_gpio_E8 == 1) {
+			SendCommand(0x20);
+			SendCommand(0x10);
+			SendCommand(0x21);
+			SendCommand(0x00);
+			SendCommand(0x7F);
+			SendCommand(0x22);
+			SendCommand(0x00);
+			SendCommand(0x07);
+			SSD1309_ClearScreen();
+			ssd1306_DrawCircle(3, 23, 2);
+			SSD1306_GotoXY(10, 0);
+			SSD1309_WriteString("Moscow", &Font_7x10);
+			SSD1306_GotoXY(10, 10);
+			SSD1309_WriteString("Saint Petersburg", &Font_7x10);
+			SSD1306_GotoXY(10, 20);
+			SSD1309_WriteString("Kazan", &Font_7x10);
+			SSD1306_GotoXY(10, 30);
+			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
+			SSD1309_UpdateScreen();
+			button_set_gpio_E9 = 0;
+			break;
+		}*/
+
 			//NextMenuProcess();
 			//break;
-	case MENU_2_STATE_WAIT_3:
-		button_rattle();
-		if(button_set == 1)
+	/*case MENU_2_STATE_WAIT_3:
+		button_rattle_GPIO_A0();
+		if(button_set_gpio_A0 == 1)
 		{
 			city = MENU_2_STATE_IDLE;
 
 			break;
-		}
+		}*/
    }
   HAL_Delay(50);
  }
 }
 
- void button_rattle (void)
+ void button_rattle_GPIO_A0 (void)
  {
-	 static uint8_t flag_key1_press = 1;
+	 /*static uint8_t flag_key1_press = 1;
 	   static uint8_t flag_wait = 1;
 	   static uint32_t time_key1_press = 0;
 	  // uint8_t flag_str = 0;
@@ -214,5 +262,76 @@ void NextMenuProcess(void)
 	   if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
 	 {
 	         flag_key1_press = 1;
+	 }*/
+	 static uint8_t flag_key1_press = 1;
+	 static uint32_t time_key1_press = 0;
+
+	 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 {
+	   flag_key1_press = 0;
+	   // действие на нажатие
+	   button_set_gpio_A0 = 1;
+	   time_key1_press = HAL_GetTick();
+	 }
+
+	 if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
+	 {
+	   flag_key1_press = 1;
 	 }
 }
+
+ void button_rattle_GPIO_E7 (void)
+ {
+	 static uint8_t flag_key1_press = 1;
+	 	 static uint32_t time_key1_press = 0;
+
+	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_7) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 	 {
+	 	   flag_key1_press = 0;
+	 	   // действие на нажатие
+	 	   button_set_gpio_E7 = 1;
+	 	   time_key1_press = HAL_GetTick();
+	 	 }
+
+	 	 if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
+	 	 {
+	 	   flag_key1_press = 1;
+	 	 }
+ }
+
+ void button_rattle_GPIO_E8 (void)
+ {
+	 static uint8_t flag_key1_press = 1;
+	 	 static uint32_t time_key1_press = 0;
+
+	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_8) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 	 {
+	 	   flag_key1_press = 0;
+	 	   // действие на нажатие
+	 	   button_set_gpio_E8 = 1;
+	 	   time_key1_press = HAL_GetTick();
+	 	 }
+
+	 	 if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
+	 	 {
+	 	   flag_key1_press = 1;
+	 	 }
+ }
+ void button_rattle_GPIO_E9 (void)
+ {
+	 static uint8_t flag_key1_press = 1;
+	 	 static uint32_t time_key1_press = 0;
+
+	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_9) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 	 {
+	 	   flag_key1_press = 0;
+	 	   // действие на нажатие
+	 	   button_set_gpio_E9 = 1;
+	 	   time_key1_press = HAL_GetTick();
+	 	 }
+
+	 	 if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
+	 	 {
+	 	   flag_key1_press = 1;
+	 	 }
+ }
