@@ -135,54 +135,6 @@ int main(void)
   {
 	  main_menu();
 
-	  /*if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
-		  {
-		  	  Init_sector(0x00, 0x7F, 0x05, 0x06);
-		      Output_String_8pt("street");
-		  }*/
-
-	 /* if( (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && flag_key1_press)
-	 	{
-		  flag_key1_press = 0;
-		  flag_wait = 0;
-		  time_key1_press = HAL_GetTick();
-	 	}
-
-	 if(flag_wait == 0 && ((HAL_GetTick() - time_key1_press) > 50))
-	   {
-		 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
-		 {
-
-			if(flag_str == 0)
-			{
-				HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
-				Init_sector(0x00, 0x7F, 0x05, 0x06);
-				Output_String_8pt("street");
-				flag_wait = 1;
-				flag_str = 1;
-			}
-			else if(flag_str == 1)
-			{
-				Clear_Sector_x_y(0x00, 0x7F, 0x05, 0x07);
-				flag_wait = 1;
-				flag_str = 0;
-			}
-
-		 }
-		 else
-		 {
-			 flag_wait = 1;
-			 flag_key1_press = 1;
-		 }
-	   }
-
-
-	   if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
-	 {
-	         flag_key1_press = 1;
-	         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-	 }*/
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

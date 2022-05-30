@@ -2,6 +2,11 @@
 
 MENU1_StateTypeDef country = MENU_1_STATE_IDLE;
 MENU2_StateTypeDef city = MENU_2_STATE_IDLE;
+MENU3_MOSCOW_StateTypedef moscow = MENU_3_0_STATE_IDLE;
+MENU3_SAINT_PETERSBURG_StateTypedef st_peter = MENU_3_1_STATE_IDLE;
+MENU3_KAZAN_StateTypedef kazan = MENU_3_2_STATE_IDLE;
+MENU3_EKATERINBURG_StateTypedef ekatburg = MENU_3_3_STATE_IDLE;
+MENU3_SYZRAN_StateTypedef syzran = MENU_3_4_STATE_IDLE;
 
 uint8_t button_set_gpio_A0 = 0;
 uint8_t button_set_gpio_E7 = 0;
@@ -39,12 +44,12 @@ void main_menu(void)
 			break;
 		case MENU_1_STATE_MAIN: //запуск главного меню
 			city = MENU_2_STATE_IDLE;
-			NextMenuProcess();
+			NextMenuProcess1();
 			break;
 	}
   HAL_Delay(50);
 }
-void NextMenuProcess(void)
+void NextMenuProcess1(void)
 {
 	while (1)
  {
@@ -90,7 +95,7 @@ void NextMenuProcess(void)
 				SendCommand(0x07);
 			SSD1309_ClearScreen();
 				i = i+10;
-			     if(i <= 53)
+			     if(i <= 43)
 			     { ssd1306_DrawCircle(3, i, 2);}
 			     else{i = 3;}
 			ssd1306_DrawCircle(3, i, 2);
@@ -106,6 +111,17 @@ void NextMenuProcess(void)
 			SSD1309_WriteString("Syzran", &Font_7x10);
 			SSD1309_UpdateScreen();
 			button_set_gpio_E7 = 0;
+
+
+			if (button_set_gpio_A0 == 1)		// Moscow
+			{
+				button_set_gpio_A0 = 0;
+				if(i == 13)
+				{
+					city = MENU_2_STATE_P0;
+					break;
+				}
+			}
 			//break;
 		}
 	if (button_set_gpio_E8 == 1)
@@ -122,12 +138,8 @@ void NextMenuProcess(void)
 				SSD1309_ClearScreen();
 				i = i-10;
 				if(i < 0)
-				{i = 53;}
-				//if (i < 54) {
-					ssd1306_DrawCircle(3, i, 2);
-				/*} else {
-					i = 3;
-				}*/
+				{i = 43;}
+				ssd1306_DrawCircle(3, i, 2);
 				SSD1306_GotoXY(10, 0);
 				SSD1309_WriteString("Moscow", &Font_7x10);
 				SSD1306_GotoXY(10, 10);
@@ -149,24 +161,126 @@ void NextMenuProcess(void)
 		}
 	break;
 
-case MENU_2_STATE_EXIT:
+	case MENU_2_STATE_EXIT:
 	country = MENU_1_STATE_IDLE;
 			return;
-
-			//NextMenuProcess();
-			//break;
-	/*case MENU_2_STATE_WAIT_3:
-		button_rattle_GPIO_A0();
-		if(button_set_gpio_A0 == 1)
-		{
-			city = MENU_2_STATE_IDLE;
-
-			break;
-		}*/
+/******************************************************/
+	case MENU_2_STATE_P0:
+		moscow = MENU_3_0_STATE_IDLE;
+		NextMenuProcess2_0();
+		break;
+/******************************************************/
+	/*case MENU_2_STATE_P1:
+		st_peter = MENU_3_1_STATE_IDLE;
+		NextMenuProcess2_1();
+		break;*/
+/******************************************************/
+	/*case MENU_2_STATE_P2:
+		kazan = MENU_3_2_STATE_IDLE;
+		NextMenuProcess2_2();
+		break;*/
+/******************************************************/
+	/*case MENU_3_STATE_P3:
+		ekatburg = MENU_3_3_STATE_IDLE;
+		NextMenuProcess2_3();
+		break;*/
+/******************************************************/
+	/*case MENU_3_STATE_P4:
+		ekatburg = MENU_3_4_STATE_IDLE;
+		NextMenuProcess2_4();
+		break;*/
    }
   HAL_Delay(50);
  }
 }
+
+void NextMenuProcess2_0(void)
+{
+	while (1)
+ {
+  switch (moscow)
+  {
+  case MENU_3_0_STATE_IDLE:
+	moscow = MENU_3_0_STATE_WAIT;
+	SSD1309_init();
+	SSD1309_ClearScreen();
+
+	ssd1306_DrawCircle(3, 3, 2);
+	SSD1306_GotoXY(10, 0);
+	SSD1309_WriteString("Arbat", &Font_7x10);
+	SSD1306_GotoXY(10, 10);
+	SSD1309_WriteString("Tverskaya", &Font_7x10);
+	SSD1306_GotoXY(10, 20);
+	SSD1309_WriteString("Bolotnaya", &Font_7x10);
+	SSD1306_GotoXY(10, 30);
+	SSD1309_WriteString("Pyatnitskaya", &Font_7x10);
+	SSD1309_UpdateScreen();
+
+	   break;
+/*	case MENU_3_0_STATE_WAIT:
+			button_rattle_GPIO_E9();							// button click processing
+			if (button_set_gpio_E9 == 1)							// button_set - flag on the button status
+			{
+				country = MENU_3_0_STATE_EXIT;
+				button_set_gpio_E9 = 0;
+			}
+			break;
+	case MENU_3_0_STATE_EXIT: //запуск главного меню
+			city = MENU_2_STATE_IDLE;
+			NextMenuProcess1();
+			break;*/
+  }
+  HAL_Delay(50);
+ }
+}
+
+/*void NextMenuProcess2_1(void)
+{
+	while (1)
+ {
+  switch (st_peter)
+  {
+
+  }
+  HAL_Delay(50);
+ }
+}
+
+void NextMenuProcess2_2(void)
+{
+	while (1)
+ {
+  switch (kazan)
+  {
+
+  }
+  HAL_Delay(50);
+ }
+}
+
+void NextMenuProcess2_3(void)
+{
+	while (1)
+ {
+  switch (ekatburg)
+  {
+
+  }
+  HAL_Delay(50);
+ }
+}
+
+void NextMenuProcess2_4(void)
+{
+	while (1)
+ {
+  switch (syzran)
+  {
+
+  }
+  HAL_Delay(50);
+ }
+}*/
 
  void button_rattle_GPIO_A0 (void)
  {
