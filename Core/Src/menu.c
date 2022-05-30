@@ -90,7 +90,7 @@ void NextMenuProcess(void)
 				SendCommand(0x07);
 			SSD1309_ClearScreen();
 				i = i+10;
-			     if(i < 53)
+			     if(i <= 53)
 			     { ssd1306_DrawCircle(3, i, 2);}
 			     else{i = 3;}
 			ssd1306_DrawCircle(3, i, 2);
@@ -120,7 +120,7 @@ void NextMenuProcess(void)
 				SendCommand(0x00);
 				SendCommand(0x07);
 				SSD1309_ClearScreen();
-				i = i - 10;
+				i = i-10;
 				if(i < 0)
 				{i = 53;}
 				//if (i < 54) {
@@ -147,9 +147,10 @@ void NextMenuProcess(void)
 			button_set_gpio_E9 = 0;
 			city = MENU_2_STATE_EXIT;
 		}
+	break;
 
-	case MENU_2_STATE_EXIT:
-		city = MENU_1_STATE_IDLE;
+case MENU_2_STATE_EXIT:
+	country = MENU_1_STATE_IDLE;
 			return;
 
 			//NextMenuProcess();
