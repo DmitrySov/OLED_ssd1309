@@ -76,7 +76,7 @@ void NextMenuProcess1(void)
 		button_set_gpio_A0 = 0;
 		break;
 	case MENU_2_STATE_WAIT:
-		button_rattle_GPIO_A0();
+		//button_rattle_GPIO_A0();
 		button_rattle_GPIO_E7();
 		button_rattle_GPIO_E8();
 		button_rattle_GPIO_E9();
@@ -111,18 +111,6 @@ void NextMenuProcess1(void)
 			SSD1309_WriteString("Syzran", &Font_7x10);
 			SSD1309_UpdateScreen();
 			button_set_gpio_E7 = 0;
-
-
-			if (button_set_gpio_A0 == 1)		// Moscow
-			{
-				button_set_gpio_A0 = 0;
-				if(i == 13)
-				{
-					city = MENU_2_STATE_P0;
-					break;
-				}
-			}
-			//break;
 		}
 	if (button_set_gpio_E8 == 1)
 		{
@@ -159,7 +147,25 @@ void NextMenuProcess1(void)
 			button_set_gpio_E9 = 0;
 			city = MENU_2_STATE_EXIT;
 		}
+
+		if (i == 3)
+		{
+			//button_set_gpio_E7 = 0;
+			city = MENU_2_STATE_ENTER;
+		}
+
+
 	break;
+
+	case MENU_2_STATE_ENTER:
+		button_rattle_GPIO_A0();
+		city = MENU_2_STATE_WAIT;
+		if (button_set_gpio_A0 == 1) {
+			city = MENU_2_STATE_P0;
+			button_set_gpio_A0 = 0;
+		}
+
+    break;
 
 	case MENU_2_STATE_EXIT:
 	country = MENU_1_STATE_IDLE;
@@ -284,7 +290,7 @@ void NextMenuProcess2_4(void)
 
  void button_rattle_GPIO_A0 (void)
  {
-	 /*static uint8_t flag_key1_press = 1;
+	/* static uint8_t flag_key1_press = 1;
 	   static uint8_t flag_wait = 1;
 	   static uint32_t time_key1_press = 0;
 	  // uint8_t flag_str = 0;
@@ -299,7 +305,7 @@ void NextMenuProcess2_4(void)
 	   {
 		 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
 		 {
-			button_set = 1;
+			button_set_gpio_A0 = 1;
 		 }
 		 else
 		 {
@@ -312,6 +318,7 @@ void NextMenuProcess2_4(void)
 	 {
 	         flag_key1_press = 1;
 	 }*/
+
 	 static uint8_t flag_key1_press = 1;
 	 static uint32_t time_key1_press = 0;
 
@@ -384,3 +391,4 @@ void NextMenuProcess2_4(void)
 	 	   flag_key1_press = 1;
 	 	 }
  }
+

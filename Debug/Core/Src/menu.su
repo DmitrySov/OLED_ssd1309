@@ -1,7 +1,7 @@
 menu.c:18:6:main_menu	8	static
 menu.c:52:6:NextMenuProcess1	8	static
-menu.c:197:6:NextMenuProcess2_0	8	static
-menu.c:285:7:button_rattle_GPIO_A0	8	static
-menu.c:332:7:button_rattle_GPIO_E7	8	static
-menu.c:351:7:button_rattle_GPIO_E8	8	static
-menu.c:369:7:button_rattle_GPIO_E9	8	static
+menu.c:203:6:NextMenuProcess2_0	8	static
+menu.c:291:7:button_rattle_GPIO_A0	8	static
+menu.c:339:7:button_rattle_GPIO_E7	8	static
+menu.c:358:7:button_rattle_GPIO_E8	8	static
+menu.c:376:7:button_rattle_GPIO_E9	8	static
