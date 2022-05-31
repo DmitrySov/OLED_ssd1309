@@ -76,7 +76,7 @@ void NextMenuProcess1(void)
 		button_set_gpio_A0 = 0;
 		break;
 	case MENU_2_STATE_WAIT:
-		//button_rattle_GPIO_A0();
+		button_rattle_GPIO_A0();
 		button_rattle_GPIO_E7();
 		button_rattle_GPIO_E8();
 		button_rattle_GPIO_E9();
@@ -148,13 +148,10 @@ void NextMenuProcess1(void)
 			city = MENU_2_STATE_EXIT;
 		}
 
-		if (i == 3)
+/*		if (i == 3)
 		{
-			//button_set_gpio_E7 = 0;
 			city = MENU_2_STATE_ENTER;
 		}
-
-
 	break;
 
 	case MENU_2_STATE_ENTER:
@@ -163,7 +160,15 @@ void NextMenuProcess1(void)
 		if (button_set_gpio_A0 == 1) {
 			city = MENU_2_STATE_P0;
 			button_set_gpio_A0 = 0;
-		}
+		}*/
+
+	if (button_set_gpio_A0 == 1)
+
+	{
+		city = MENU_2_STATE_P0;
+		button_set_gpio_A0 = 0;
+	}
+
 
     break;
 
@@ -171,10 +176,18 @@ void NextMenuProcess1(void)
 	country = MENU_1_STATE_IDLE;
 			return;
 /******************************************************/
-	case MENU_2_STATE_P0:
+	/*case MENU_2_STATE_P0:
 		moscow = MENU_3_0_STATE_IDLE;
 		NextMenuProcess2_0();
-		break;
+		break;*/
+	case MENU_2_STATE_P0:
+		if(i == 3)
+		{
+			moscow = MENU_3_0_STATE_IDLE;
+		    NextMenuProcess2_0();
+			break;
+		}
+
 /******************************************************/
 	/*case MENU_2_STATE_P1:
 		st_peter = MENU_3_1_STATE_IDLE;
