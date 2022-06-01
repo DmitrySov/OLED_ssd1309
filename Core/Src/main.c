@@ -133,7 +133,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  main_menu();
+	  main_menu1();
 
     /* USER CODE END WHILE */
 

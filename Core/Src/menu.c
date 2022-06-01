@@ -15,7 +15,7 @@ uint8_t button_set_gpio_E9 = 0;
 
 int8_t i = 3;
 //----------------------------------------------
-void main_menu(void)
+void main_menu1(void)
 {
 	switch (country)
 	{
@@ -44,12 +44,12 @@ void main_menu(void)
 			break;
 		case MENU_1_STATE_MAIN: //запуск главного меню
 			city = MENU_2_STATE_IDLE;
-			NextMenuProcess1();
+			NextMenuProcess2();
 			break;
 	}
   HAL_Delay(50);
 }
-void NextMenuProcess1(void)
+void NextMenuProcess2(void)
 {
 	while (1)
  {
@@ -184,36 +184,44 @@ void NextMenuProcess1(void)
 		if(i == 3)
 		{
 			moscow = MENU_3_0_STATE_IDLE;
-		    NextMenuProcess2_0();
+		    NextMenuProcess3_0();
 			break;
 		}
+	//case MENU_2_STATE_P1:
 
-/******************************************************/
-	/*case MENU_2_STATE_P1:
-		st_peter = MENU_3_1_STATE_IDLE;
-		NextMenuProcess2_1();
-		break;*/
-/******************************************************/
-	/*case MENU_2_STATE_P2:
-		kazan = MENU_3_2_STATE_IDLE;
-		NextMenuProcess2_2();
-		break;*/
-/******************************************************/
-	/*case MENU_3_STATE_P3:
-		ekatburg = MENU_3_3_STATE_IDLE;
-		NextMenuProcess2_3();
-		break;*/
-/******************************************************/
-	/*case MENU_3_STATE_P4:
-		ekatburg = MENU_3_4_STATE_IDLE;
-		NextMenuProcess2_4();
-		break;*/
+		if(i == 13)
+		{
+			st_peter = MENU_3_1_STATE_IDLE;
+			NextMenuProcess3_1();
+			break;
+		}
+	//case MENU_2_STATE_P2:
+		if(i == 23)
+		{
+			kazan = MENU_3_2_STATE_IDLE;
+			NextMenuProcess3_2();
+			break;
+		}
+	//case MENU_3_STATE_P3:
+		if(i == 33)
+		{
+			ekatburg = MENU_3_3_STATE_IDLE;
+			NextMenuProcess3_3();
+			break;
+		}
+	//case MENU_3_STATE_P4:
+		if(i == 43)
+		{
+			syzran = MENU_3_4_STATE_IDLE;
+			NextMenuProcess3_4();
+			break;
+		}
    }
   HAL_Delay(50);
  }
 }
 
-void NextMenuProcess2_0(void)
+void NextMenuProcess3_0(void)
 {
 	while (1)
  {
@@ -253,53 +261,156 @@ void NextMenuProcess2_0(void)
  }
 }
 
-/*void NextMenuProcess2_1(void)
+void NextMenuProcess3_1(void)
 {
 	while (1)
  {
   switch (st_peter)
   {
+	case MENU_3_1_STATE_IDLE:
+	st_peter = MENU_3_1_STATE_WAIT;
+	SSD1309_init();
+	SSD1309_ClearScreen();
 
+	ssd1306_DrawCircle(3, 3, 2);
+	SSD1306_GotoXY(10, 0);
+	SSD1309_WriteString("Nevsky", &Font_7x10);
+	SSD1306_GotoXY(10, 10);
+	SSD1309_WriteString("Gorokhovaya", &Font_7x10);
+	SSD1306_GotoXY(10, 20);
+	SSD1309_WriteString("Kazanskaya", &Font_7x10);
+	SSD1306_GotoXY(10, 30);
+	SSD1309_WriteString("Sadovaya", &Font_7x10);
+	SSD1309_UpdateScreen();
+
+	   break;
+/*	case MENU_3_1_STATE_WAIT:
+			button_rattle_GPIO_E9();							// button click processing
+			if (button_set_gpio_E9 == 1)							// button_set - flag on the button status
+			{
+				country = MENU_3_0_STATE_EXIT;
+				button_set_gpio_E9 = 0;
+			}
+			break;
+	case MENU_3_1_STATE_EXIT: //запуск главного меню
+			city = MENU_2_STATE_IDLE;
+			NextMenuProcess1();
+			break;*/
   }
   HAL_Delay(50);
  }
 }
 
-void NextMenuProcess2_2(void)
+void NextMenuProcess3_2(void)
 {
 	while (1)
  {
   switch (kazan)
   {
+  case MENU_3_2_STATE_IDLE:
+  	kazan = MENU_3_2_STATE_WAIT;
+  	SSD1309_init();
+  	SSD1309_ClearScreen();
 
+  	ssd1306_DrawCircle(3, 3, 2);
+  	SSD1306_GotoXY(10, 0);
+  	SSD1309_WriteString("Bauman", &Font_7x10);
+  	SSD1306_GotoXY(10, 10);
+  	SSD1309_WriteString("Tatarstan", &Font_7x10);
+  	SSD1306_GotoXY(10, 20);
+  	SSD1309_WriteString("Ershova", &Font_7x10);
+  	SSD1309_UpdateScreen();
+  	break;
+  /*	case MENU_3_2_STATE_WAIT:
+  			button_rattle_GPIO_E9();							// button click processing
+  			if (button_set_gpio_E9 == 1)							// button_set - flag on the button status
+  			{
+  				country = MENU_3_0_STATE_EXIT;
+  				button_set_gpio_E9 = 0;
+  			}
+  			break;
+  	case MENU_3_2_STATE_EXIT: //запуск главного меню
+  			city = MENU_2_STATE_IDLE;
+  			NextMenuProcess1();
+  			break;*/
   }
   HAL_Delay(50);
  }
 }
 
-void NextMenuProcess2_3(void)
+void NextMenuProcess3_3(void)
 {
 	while (1)
  {
   switch (ekatburg)
   {
+  case MENU_3_3_STATE_IDLE:
+    	ekatburg = MENU_3_3_STATE_WAIT;
+    	SSD1309_init();
+    	SSD1309_ClearScreen();
 
+    	ssd1306_DrawCircle(3, 3, 2);
+    	SSD1306_GotoXY(10, 0);
+    	SSD1309_WriteString("Chelyuskintsev", &Font_7x10);
+    	SSD1306_GotoXY(10, 10);
+    	SSD1309_WriteString("East", &Font_7x10);
+    	SSD1306_GotoXY(10, 20);
+    	SSD1309_WriteString("Repina", &Font_7x10);
+    	SSD1309_UpdateScreen();
+    	break;
+    /*	case MENU_3_3_STATE_WAIT:
+    			button_rattle_GPIO_E9();							// button click processing
+    			if (button_set_gpio_E9 == 1)							// button_set - flag on the button status
+    			{
+    				country = MENU_3_0_STATE_EXIT;
+    				button_set_gpio_E9 = 0;
+    			}
+    			break;
+    	case MENU_3_3_STATE_EXIT: //запуск главного меню
+    			city = MENU_2_STATE_IDLE;
+    			NextMenuProcess1();
+    			break;*/
   }
   HAL_Delay(50);
  }
 }
 
-void NextMenuProcess2_4(void)
+void NextMenuProcess3_4(void)
 {
 	while (1)
  {
   switch (syzran)
   {
+  case MENU_3_4_STATE_IDLE:
+      	syzran = MENU_3_4_STATE_WAIT;
+      	SSD1309_init();
+      	SSD1309_ClearScreen();
 
+      	ssd1306_DrawCircle(3, 3, 2);
+      	SSD1306_GotoXY(10, 0);
+      	SSD1309_WriteString("Uritsky", &Font_7x10);
+      	SSD1306_GotoXY(10, 10);
+      	SSD1309_WriteString("Chapaeva", &Font_7x10);
+      	SSD1306_GotoXY(10, 20);
+      	SSD1309_WriteString("Sovetskaya", &Font_7x10);
+      	SSD1309_UpdateScreen();
+      	break;
+      /*	case MENU_3_4_STATE_WAIT:
+      			button_rattle_GPIO_E9();							// button click processing
+      			if (button_set_gpio_E9 == 1)							// button_set - flag on the button status
+      			{
+      				country = MENU_3_0_STATE_EXIT;
+      				button_set_gpio_E9 = 0;
+      			}
+      			break;
+      	case MENU_3_4_STATE_EXIT: //запуск главного меню
+      			city = MENU_2_STATE_IDLE;
+      			NextMenuProcess1();
+      			break;*/
   }
   HAL_Delay(50);
  }
-}*/
+}
 
  void button_rattle_GPIO_A0 (void)
  {

@@ -38,7 +38,7 @@ typedef enum{
 	Pyatnitskaya,*/
 	 MENU_3_0_STATE_IDLE = 0,
 	 MENU_3_0_STATE_WAIT,
-	 MENU_3_0_STATE_EXIT,
+	 /*MENU_3_0_STATE_EXIT,*/
 }MENU3_MOSCOW_StateTypedef;
 
 typedef enum{
@@ -48,7 +48,7 @@ typedef enum{
 	Sadovaya,*/
 	MENU_3_1_STATE_IDLE = 0,
     MENU_3_1_STATE_WAIT,
-    MENU_3_1_STATE_EXIT,
+    //MENU_3_1_STATE_EXIT,
 }MENU3_SAINT_PETERSBURG_StateTypedef;
 
 typedef enum{
@@ -57,7 +57,7 @@ typedef enum{
 	Ershova,*/
 	MENU_3_2_STATE_IDLE = 0,
 	MENU_3_2_STATE_WAIT,
-	MENU_3_2_STATE_EXIT,
+	//MENU_3_2_STATE_EXIT,
 }MENU3_KAZAN_StateTypedef;
 
 typedef enum{
@@ -66,7 +66,7 @@ typedef enum{
 	Repina,*/
 	MENU_3_3_STATE_IDLE = 0,
 	MENU_3_3_STATE_WAIT,
-	MENU_3_3_STATE_EXIT,
+	//MENU_3_3_STATE_EXIT,
 }MENU3_EKATERINBURG_StateTypedef;
 
 typedef enum{
@@ -75,15 +75,16 @@ typedef enum{
 	Sovetskaya,*/
 	MENU_3_4_STATE_IDLE = 0,
 	MENU_3_4_STATE_WAIT,
-	MENU_3_4_STATE_EXIT,
+	//MENU_3_4_STATE_EXIT,
 }MENU3_SYZRAN_StateTypedef;
 
-void main_menu(void);
-void NextMenuProcess1(void);
-void NextMenuProcess2_0(void);
-void NextMenuProcess2_1(void);
-void NextMenuProcess2_3(void);
-void NextMenuProcess2_4(void);
+void main_menu_1(void);
+void NextMenuProcess2(void);
+void NextMenuProcess3_0(void);
+void NextMenuProcess3_1(void);
+void NextMenuProcess3_2(void);
+void NextMenuProcess3_3(void);
+void NextMenuProcess3_4(void);
 void button_rattle_GPIO_A0(void);
 void button_rattle_GPIO_E7(void);
 void button_rattle_GPIO_E8(void);
