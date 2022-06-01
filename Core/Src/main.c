@@ -124,8 +124,9 @@ int main(void)
  SSD1309_WriteString("Welcome", &Font_7x10);
  SSD1306_GotoXY(0, 20);
  SSD1309_WriteString("Welcome", &Font_7x10);*/
- //SSD1309_UpdateScreen();
-  //main_menu();
+  SSD1309_DrawFilledRect(0, 127, 0, 63);
+ SSD1309_UpdateScreen();
+
 
   /* USER CODE END 2 */
 
@@ -133,7 +134,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  main_menu1();
+	  //main_menu1();
 
     /* USER CODE END WHILE */
 

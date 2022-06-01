@@ -13,8 +13,16 @@ uint8_t button_set_gpio_E7 = 0;
 uint8_t button_set_gpio_E8 = 0;
 uint8_t button_set_gpio_E9 = 0;
 
-int8_t i = 3;
-//----------------------------------------------
+int8_t i = 3;	// i - starting position of the cursor on the Y axis
+
+/*----------------------------------------------------------------------------------
+  * Function:		NextMenuProcess3_2(void)
+  *----------------------------------------------------------------------------------
+  * description:	Processing the first menu
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
 void main_menu1(void)
 {
 	switch (country)
@@ -34,28 +42,37 @@ void main_menu1(void)
 			SSD1309_WriteString("Russia", &Font_7x10);
 			SSD1309_UpdateScreen();
 			break;
+		/******************************************************/
 		case MENU_1_STATE_WAIT:
-			button_rattle_GPIO_A0();							// button click processing
-			if (button_set_gpio_A0 == 1)							// button_set - flag on the button status
+			button_rattle_GPIO_A0();		// button click processing
+			if (button_set_gpio_A0 == 1)	// button_set - flag on the button status
 			{
 				country = MENU_1_STATE_MAIN;
 				button_set_gpio_A0 = 0;
 			}
 			break;
-		case MENU_1_STATE_MAIN: //запуск главного меню
+		/******************************************************/
+		case MENU_1_STATE_MAIN:
 			city = MENU_2_STATE_IDLE;
 			NextMenuProcess2();
 			break;
 	}
   HAL_Delay(50);
 }
+/*----------------------------------------------------------------------------------
+  * Function:		NextMenuProcess2(void)
+  *----------------------------------------------------------------------------------
+  * description:	Processing the second menu
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
 void NextMenuProcess2(void)
 {
 	while (1)
  {
   switch (city)
   {
-
 	case MENU_2_STATE_IDLE:
 		city = MENU_2_STATE_WAIT;
 		SSD1309_init();
@@ -75,16 +92,15 @@ void NextMenuProcess2(void)
 		SSD1309_UpdateScreen();
 		button_set_gpio_A0 = 0;
 		break;
+	/******************************************************/
 	case MENU_2_STATE_WAIT:
 		button_rattle_GPIO_A0();
 		button_rattle_GPIO_E7();
 		button_rattle_GPIO_E8();
 		button_rattle_GPIO_E9();
-		//if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
-	if (button_set_gpio_E7 == 1)
+	/******************************************************/
+	if (button_set_gpio_E7 == 1) // if the E7 button is pressed, the cursor moves down
 		{
-
-			//city = MENU_2_STATE_WAIT_1;
 				SendCommand(0x20);
 				SendCommand(0x10);
 				SendCommand(0x21);
@@ -96,7 +112,7 @@ void NextMenuProcess2(void)
 			SSD1309_ClearScreen();
 				i = i+10;
 			     if(i <= 43)
-			     { ssd1306_DrawCircle(3, i, 2);}
+			     { ssd1306_DrawCircle(3, i, 2);} // Cursor shift down by i+10, range 3 to 43
 			     else{i = 3;}
 			ssd1306_DrawCircle(3, i, 2);
 			SSD1306_GotoXY(10, 0);
@@ -112,9 +128,9 @@ void NextMenuProcess2(void)
 			SSD1309_UpdateScreen();
 			button_set_gpio_E7 = 0;
 		}
-	if (button_set_gpio_E8 == 1)
+	/******************************************************/
+	if (button_set_gpio_E8 == 1)	// if the E8 button is pressed, the cursor moves up
 		{
-		        //city = MENU_2_STATE_WAIT_1;
 				SendCommand(0x20);
 				SendCommand(0x10);
 				SendCommand(0x21);
@@ -124,10 +140,10 @@ void NextMenuProcess2(void)
 				SendCommand(0x00);
 				SendCommand(0x07);
 				SSD1309_ClearScreen();
-				i = i-10;
-				if(i < 0)
-				{i = 43;}
-				ssd1306_DrawCircle(3, i, 2);
+					i = i-10;
+					if(i < 0)
+					{i = 43;}
+					ssd1306_DrawCircle(3, i, 2); //  Cursor shift up by i-10, range 3 to 43
 				SSD1306_GotoXY(10, 0);
 				SSD1309_WriteString("Moscow", &Font_7x10);
 				SSD1306_GotoXY(10, 10);
@@ -140,77 +156,52 @@ void NextMenuProcess2(void)
 				SSD1309_WriteString("Syzran", &Font_7x10);
 				SSD1309_UpdateScreen();
 				button_set_gpio_E8 = 0;
-				//break;
 		}
-	if (button_set_gpio_E9 == 1)
+	/******************************************************/
+	if (button_set_gpio_E9 == 1) 	// if the E9 button is pressed, back to the start menu
 		{
 			button_set_gpio_E9 = 0;
 			city = MENU_2_STATE_EXIT;
 		}
-
-/*		if (i == 3)
-		{
-			city = MENU_2_STATE_ENTER;
-		}
-	break;
-
-	case MENU_2_STATE_ENTER:
-		button_rattle_GPIO_A0();
-		city = MENU_2_STATE_WAIT;
-		if (button_set_gpio_A0 == 1) {
-			city = MENU_2_STATE_P0;
-			button_set_gpio_A0 = 0;
-		}*/
-
-	if (button_set_gpio_A0 == 1)
+	/******************************************************/
+	if (button_set_gpio_A0 == 1)	// if the A0 button is pressed, open the next menu
 
 	{
 		city = MENU_2_STATE_P0;
 		button_set_gpio_A0 = 0;
 	}
-
-
     break;
-
+    /******************************************************/
 	case MENU_2_STATE_EXIT:
 	country = MENU_1_STATE_IDLE;
 			return;
-/******************************************************/
-	/*case MENU_2_STATE_P0:
-		moscow = MENU_3_0_STATE_IDLE;
-		NextMenuProcess2_0();
-		break;*/
+	/******************************************************/
 	case MENU_2_STATE_P0:
-		if(i == 3)
+		if(i == 3)		// the first line
 		{
 			moscow = MENU_3_0_STATE_IDLE;
 		    NextMenuProcess3_0();
 			break;
 		}
-	//case MENU_2_STATE_P1:
-
-		if(i == 13)
+		if(i == 13)		// the second line
 		{
 			st_peter = MENU_3_1_STATE_IDLE;
 			NextMenuProcess3_1();
 			break;
 		}
-	//case MENU_2_STATE_P2:
-		if(i == 23)
+		if(i == 23)		// the third line
 		{
 			kazan = MENU_3_2_STATE_IDLE;
 			NextMenuProcess3_2();
 			break;
 		}
-	//case MENU_3_STATE_P3:
-		if(i == 33)
+		if(i == 33)		// the fourth line
 		{
 			ekatburg = MENU_3_3_STATE_IDLE;
 			NextMenuProcess3_3();
 			break;
 		}
-	//case MENU_3_STATE_P4:
-		if(i == 43)
+		if(i == 43)		// the fifth line
 		{
 			syzran = MENU_3_4_STATE_IDLE;
 			NextMenuProcess3_4();
@@ -220,7 +211,14 @@ void NextMenuProcess2(void)
   HAL_Delay(50);
  }
 }
-
+/*----------------------------------------------------------------------------------
+  * Function:		NextMenuProcess3_0(void)
+  *----------------------------------------------------------------------------------
+  * description:	Processing the third menu, item 0
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
 void NextMenuProcess3_0(void)
 {
 	while (1)
@@ -260,7 +258,14 @@ void NextMenuProcess3_0(void)
   HAL_Delay(50);
  }
 }
-
+/*----------------------------------------------------------------------------------
+  * Function:		NextMenuProcess3_1(void)
+  *----------------------------------------------------------------------------------
+  * description:	Processing the third menu, item 1
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
 void NextMenuProcess3_1(void)
 {
 	while (1)
@@ -300,7 +305,14 @@ void NextMenuProcess3_1(void)
   HAL_Delay(50);
  }
 }
-
+/*----------------------------------------------------------------------------------
+  * Function:		NextMenuProcess3_2(void)
+  *----------------------------------------------------------------------------------
+  * description:	Processing the third menu, item 2
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
 void NextMenuProcess3_2(void)
 {
 	while (1)
@@ -337,7 +349,14 @@ void NextMenuProcess3_2(void)
   HAL_Delay(50);
  }
 }
-
+/*----------------------------------------------------------------------------------
+  * Function:		NextMenuProcess3_3(void)
+  *----------------------------------------------------------------------------------
+  * description:	Processing the third menu, item 3
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
 void NextMenuProcess3_3(void)
 {
 	while (1)
@@ -374,7 +393,14 @@ void NextMenuProcess3_3(void)
   HAL_Delay(50);
  }
 }
-
+/*----------------------------------------------------------------------------------
+  * Function:		NextMenuProcess3_4(void)
+  *----------------------------------------------------------------------------------
+  * description:	Processing the third menu, item 4
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
 void NextMenuProcess3_4(void)
 {
 	while (1)
@@ -412,6 +438,15 @@ void NextMenuProcess3_4(void)
  }
 }
 
+/*----------------------------------------------------------------------------------
+  * Function:		button_rattle_GPIO_A0 (void)
+  *----------------------------------------------------------------------------------
+  * description:	Getting the state of the button PA0,
+  * 				taking into account the rattle of contacts
+  * parameters:		-
+  *
+  * on return:		-
+  ------------------------------------------------------------------------------------*/
  void button_rattle_GPIO_A0 (void)
  {
 	/* static uint8_t flag_key1_press = 1;
@@ -446,10 +481,10 @@ void NextMenuProcess3_4(void)
 	 static uint8_t flag_key1_press = 1;
 	 static uint32_t time_key1_press = 0;
 
-	 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET && flag_key1_press)
 	 {
 	   flag_key1_press = 0;
-	   // действие на нажатие
+	   // Click Action
 	   button_set_gpio_A0 = 1;
 	   time_key1_press = HAL_GetTick();
 	 }
@@ -459,16 +494,24 @@ void NextMenuProcess3_4(void)
 	   flag_key1_press = 1;
 	 }
 }
-
+ /*----------------------------------------------------------------------------------
+   * Function:		button_rattle_GPIO_E7 (void)
+   *----------------------------------------------------------------------------------
+   * description:	Getting the state of the button PE7,
+   * 				taking into account the rattle of contacts
+   * parameters:		-
+   *
+   * on return:		-
+   ------------------------------------------------------------------------------------*/
  void button_rattle_GPIO_E7 (void)
  {
 	 static uint8_t flag_key1_press = 1;
 	 	 static uint32_t time_key1_press = 0;
 
-	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_7) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_7) == GPIO_PIN_SET && flag_key1_press)
 	 	 {
 	 	   flag_key1_press = 0;
-	 	   // действие на нажатие
+	 	   // Click Action
 	 	   button_set_gpio_E7 = 1;
 	 	   time_key1_press = HAL_GetTick();
 	 	 }
@@ -478,16 +521,24 @@ void NextMenuProcess3_4(void)
 	 	   flag_key1_press = 1;
 	 	 }
  }
-
+ /*----------------------------------------------------------------------------------
+   * Function:		button_rattle_GPIO_E8 (void)
+   *----------------------------------------------------------------------------------
+   * description:	Getting the state of the button PE8,
+   * 				taking into account the rattle of contacts
+   * parameters:		-
+   *
+   * on return:		-
+   ------------------------------------------------------------------------------------*/
  void button_rattle_GPIO_E8 (void)
  {
 	 static uint8_t flag_key1_press = 1;
 	 	 static uint32_t time_key1_press = 0;
 
-	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_8) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_8) == GPIO_PIN_SET && flag_key1_press)
 	 	 {
 	 	   flag_key1_press = 0;
-	 	   // действие на нажатие
+	 	   // Click Action
 	 	   button_set_gpio_E8 = 1;
 	 	   time_key1_press = HAL_GetTick();
 	 	 }
@@ -497,15 +548,24 @@ void NextMenuProcess3_4(void)
 	 	   flag_key1_press = 1;
 	 	 }
  }
+ /*----------------------------------------------------------------------------------
+   * Function:		button_rattle_GPIO_E9 (void)
+   *----------------------------------------------------------------------------------
+   * description:	Getting the state of the button PE9,
+   * 				taking into account the rattle of contacts
+   * parameters:		-
+   *
+   * on return:		-
+   ------------------------------------------------------------------------------------*/
  void button_rattle_GPIO_E9 (void)
  {
 	 static uint8_t flag_key1_press = 1;
 	 	 static uint32_t time_key1_press = 0;
 
-	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_9) == GPIO_PIN_SET && flag_key1_press) // подставить свой пин
+	 	 if(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_9) == GPIO_PIN_SET && flag_key1_press)
 	 	 {
 	 	   flag_key1_press = 0;
-	 	   // действие на нажатие
+	 	   // Click Action
 	 	   button_set_gpio_E9 = 1;
 	 	   time_key1_press = HAL_GetTick();
 	 	 }
