@@ -14,7 +14,7 @@ static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
 static void SetPixel(uint8_t x, uint8_t y);
 
 /* Private variable -----------------------------------------------------------------*/
-//static SSD1309_t SSD1309;
+SSD1309_t SSD1309;
 
 uint16_t CurrentX;
 uint16_t CurrentY;
@@ -59,8 +59,8 @@ uint16_t CurrentY;
 
 	// Set default values for screen object
 
-	   CurrentX = 0;
-	   CurrentY = 0;
+	SSD1309.CurrentX = 0;
+	SSD1309.CurrentY = 0;
  }
  /*----------------------------------------------------------------------------*/
   /**
@@ -519,12 +519,12 @@ uint16_t CurrentY;
                 {
                      if ((b << x0) & 0x8000)
                     {
-                  	 SetPixel(CurrentX + x0, CurrentY + y0);
+                  	 SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
 
                     }
                 }
             }
-            CurrentX += Font->width;
+            SSD1309.CurrentX += Font->width;
            return ch;
         }
 

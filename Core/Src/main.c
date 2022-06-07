@@ -130,7 +130,8 @@ int main(void)
  //SSD1309_WriteChar(symbol, &Font_11x18);
  /*symbol = 'B';
  SSD1309_WriteChar(symbol, &Font_7x10);*/
-  SSD1309_WriteString(" ABCD", &Font_7x10);
+
+  SSD1309_WriteString("ABCD", &Font_7x10);
 
 
  // SSD1309_DrawFilledRect(0, 128, 10, 64);
