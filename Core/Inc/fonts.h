@@ -8,8 +8,8 @@
 //  Structure used to define fonts
 //
 typedef struct {
-    const uint8_t width;    /* Font width in pixels */
-    const uint8_t height;   /* Font height in pixels */
+    uint8_t width;    /* Font width in pixels */
+    uint8_t height;   /* Font height in pixels */
     const int16_t *data;       /* Pointer to data font data array */
 } FontDef_t;
 

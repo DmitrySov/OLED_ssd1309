@@ -32,7 +32,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/font_16.h ../Core/Inc/font_16.h ../Core/Inc/font_8.h \
  ../Core/Inc/font_8.h ../Core/Inc/font_14.h ../Core/Inc/font_14.h \
  ../Core/Inc/fonts.h ../Core/Inc/ssd_1309.h ../Core/Inc/main.h \
- ../Core/Inc/fonts.h ../Core/Inc/menu.h ../Core/Inc/ssd_1309.h
+ ../Core/Inc/fonts.h
 
 ../Core/Inc/main.h:
 
@@ -115,7 +115,3 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/main.h:
 
 ../Core/Inc/fonts.h:
-
-../Core/Inc/menu.h:
-
-../Core/Inc/ssd_1309.h:

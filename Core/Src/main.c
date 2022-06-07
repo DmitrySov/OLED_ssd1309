@@ -28,7 +28,7 @@
 #include "font_14.h"
 #include "fonts.h"
 #include "ssd_1309.h"
-#include "menu.h"
+//#include "menu.h"
 
 /* USER CODE END Includes */
 
@@ -73,6 +73,7 @@ uint32_t val_timer;
 float time = 0.0;
 char buf[6];
 uint8_t tx_date = 1;
+char symbol = '!';
 /* USER CODE END 0 */
 
 /**
@@ -110,23 +111,30 @@ int main(void)
 
   SSD1309_init();
  // HAL_Delay(100);
-//  SSD1309_ClearScreen();
+  //SSD1309_ClearScreen();
 
   /*uint8_t flag_key1_press = 1;
   uint8_t flag_wait = 1;
   uint32_t time_key1_press = 0;
   uint8_t flag_str = 0;*/
  /*ssd1306_DrawCircle(3, 3, 2);
-
  SSD1306_GotoXY(10, 0);
  SSD1309_WriteString("Welcome", &Font_7x10);*/
  /*SSD1306_GotoXY(0, 10);
  SSD1309_WriteString("Welcome", &Font_7x10);
  SSD1306_GotoXY(0, 20);
  SSD1309_WriteString("Welcome", &Font_7x10);*/
-  SSD1309_DrawFilledRect(0, 127, 0, 63);
- SSD1309_UpdateScreen();
 
+ //SSD1306_GotoXY(0, 0);
+
+ //SSD1309_WriteChar(symbol, &Font_11x18);
+ /*symbol = 'B';
+ SSD1309_WriteChar(symbol, &Font_7x10);*/
+  SSD1309_WriteString(" ABCD", &Font_7x10);
+
+
+ // SSD1309_DrawFilledRect(0, 128, 10, 64);
+  SSD1309_UpdateScreen();
 
   /* USER CODE END 2 */
 
