@@ -124,7 +124,7 @@ int main(void)
 
  SSD1306_GotoXY(0, 0);
  /*SSD1309_WriteString("!", &Font_7x10);*/
-  Output_String_14pt("!");
+  Output_String_14pt("SA    Da");
   SSD1309_UpdateScreen();
 
   /* USER CODE END 2 */

@@ -248,26 +248,31 @@ SSD1309_t SSD1309;
   	begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
   	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
   	height = 3;
+  	end_bitmap = begin_bitmap + width_bitmap * 3;
      //SendCommand(0x20);
     // SendCommand(0x01);
+
   	for(x0 = 1; x0 <= width_bitmap; x0++)
   	{
-  		for(y0 = 0; y0 < height; y0++)
+  		for(uint8_t i  = 0; i < height; i++)
   		{
-  			b = microsoftSansSerif_14ptBitmaps[begin_bitmap + y0];
-
-  			//b1 = ((b & 0x0F) << 4) | ((b & 0xF0)  >> 4);
-  			a |= b << ((2 - y0) * 8);
+  			b = microsoftSansSerif_14ptBitmaps[begin_bitmap + i];
+  			a |= b << ((2 - i) * 8);
   		}
+		for (y0 = 0; y0 < 24; y0++)
+		{
+			if ((a >> y0) & 1)
+			{
+				SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
+			}
+		}
+		a = 0;
+		begin_bitmap = begin_bitmap + 3;
 
-  		for(uint8_t i = 0; i < 24; i++)
-  		{
-  			if ( (a>>i) & 1 )
-  			{
-  				SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + i);
-  			}
-  		}
   	}
+
+  	/* Increase pointer */
+  	  SSD1309.CurrentX += width_bitmap;
 
 
   /*	for (i = 0; i < 3*4; i++)
