@@ -364,7 +364,7 @@ SSD1309_t SSD1309;
 
   	while (*string != 0)
   	{
-  		if (*string < 0x7F)
+  		if (*string < 0xFF)
   		{
   			Output_Char_14pt(*string);
   		}

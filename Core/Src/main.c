@@ -126,7 +126,7 @@ int main(void)
 
 
 	/*SSD1309_WriteString("!", &Font_7x10);*/
-  Output_Char_14pt('Í');
+  Output_String_14pt("¿¡");
 
 
 	SSD1309_UpdateScreen();
