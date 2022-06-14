@@ -215,30 +215,8 @@ SSD1309_t SSD1309;
   *
   * on return:		-
   ------------------------------------------------------------------------------------*/
- void Output_Char_14pt(uint8_t out_char)
+ void Output_Char_14pt(char out_char)
   {
-	 //int16_t x0, y0, b;
-	         /* Check available space in LCD */
-	         	/*if (
-	         		SSD1309_WIDTH <= (SSD1309.CurrentX + Font->width) ||
-	         		SSD1309_HEIGHT <= (SSD1309.CurrentY + Font->height)
-	         	) {*/
-	         		/* Error */
-	         	//	return 0;
-	         //	}
-	          /*Translate font to screen buffer*/
-	         /*for (y0 = 0; y0 < Font->height; y0++)
-	         {
-	             b = Font->data[(ch - 32) * Font->height + y0];
-	             for (x0 = 0; x0 < Font->width; x0++)
-	             {
-
-	               	 SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
-	                 }
-	             }
-	         }*/
-	        /* Increase pointer */
-	       //    SSD1309.CurrentX += Font->width;
   	uint16_t width_bitmap, height, begin_bitmap, end_bitmap;
   	uint8_t b, b1;
   	uint32_t a = 0;
@@ -249,8 +227,6 @@ SSD1309_t SSD1309;
   	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
   	height = 3;
   	end_bitmap = begin_bitmap + width_bitmap * 3;
-     //SendCommand(0x20);
-    // SendCommand(0x01);
 
   	for(x0 = 1; x0 <= width_bitmap; x0++)
   	{
@@ -268,17 +244,46 @@ SSD1309_t SSD1309;
 		}
 		a = 0;
 		begin_bitmap = begin_bitmap + 3;
-
   	}
-
   	/* Increase pointer */
-  	  SSD1309.CurrentX += width_bitmap;
+  	  SSD1309.CurrentX += width_bitmap+1;
+  }
+ /*****************************************************/
+ void Output_Char_14pt_Test_russian(uint8_t out_char)
+  {
+  	uint16_t width_bitmap, height, begin_bitmap, end_bitmap;
+  	uint8_t b, b1;
+  	uint32_t a = 0;
+  	uint8_t x0, y0;
+  	//uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
+  	//begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
+  	begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char][1];
+  	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char][0];
+  /*	begin_bitmap = out_char_1;
+  	width_bitmap = out_char_0;*/
+  	height = 3;
+  	end_bitmap = begin_bitmap + width_bitmap * 3;
 
-  /*	for (i = 0; i < 3*4; i++)
+  	for(x0 = 1; x0 <= width_bitmap; x0++)
   	{
-  		SendData(0x00);
-  	}*/
+  		for(uint8_t i  = 0; i < height; i++)
+  		{
+  			b = microsoftSansSerif_14ptBitmaps[begin_bitmap + i];
+  			a |= b << ((2 - i) * 8);
+  		}
+		for (y0 = 0; y0 < 24; y0++)
+		{
+			if ((a >> y0) & 1)
+			{
+				SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
+			}
+		}
+		a = 0;
+		begin_bitmap = begin_bitmap + 3;
+  	}
+  	/* Increase pointer */
+  	  SSD1309.CurrentX += width_bitmap+1;
   }
  /*----------------------------------------------------------------------------------
   * Function:		Output_Char_8pt(uint8_t out_char)

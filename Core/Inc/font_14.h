@@ -12,8 +12,8 @@
 #include <stdint.h>
 
 /* Font data for Microsoft Sans Serif 14pt */
-extern const uint8_t microsoftSansSerif_14ptBitmaps[];
+extern const uint16_t microsoftSansSerif_14ptBitmaps[];
 //extern const FONT_INFO microsoftSansSerif_14ptFontInfo;
-extern const uint16_t microsoftSansSerif_14ptDescriptors[95][2];
+extern const uint16_t microsoftSansSerif_14ptDescriptors[300][2];
 
 #endif /* INC_FONT_14_H_ */

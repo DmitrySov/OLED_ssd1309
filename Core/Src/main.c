@@ -28,6 +28,8 @@
 #include "font_14.h"
 #include "fonts.h"
 #include "ssd_1309.h"
+
+
 //#include "menu.h"
 
 /* USER CODE END Includes */
@@ -122,12 +124,14 @@ int main(void)
  SSD1309_WriteString("Welcome", &Font_7x10);*/
  //SSD1306_GotoXY(0, 10);
 
- SSD1306_GotoXY(0, 0);
- /*SSD1309_WriteString("!", &Font_7x10);*/
-  Output_String_14pt("SA    Da");
-  SSD1309_UpdateScreen();
 
-  /* USER CODE END 2 */
+	/*SSD1309_WriteString("!", &Font_7x10);*/
+  Output_Char_14pt('ê');
+
+
+	SSD1309_UpdateScreen();
+
+	/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

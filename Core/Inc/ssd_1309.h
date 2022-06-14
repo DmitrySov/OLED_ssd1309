@@ -46,7 +46,10 @@ typedef struct {
  void Clear_Sector_x_y(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
  void Init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
  void Output_Char_16pt(uint8_t out_char);
- void Output_Char_14pt(uint8_t out_char);
+ void Output_Char_14pt(char out_char);
+ /***Test******/
+ void Output_Char_14pt_Test_russian(uint8_t out_char);
+ /************/
  void Output_Char_8pt(uint8_t out_char);
  void Output_String_16pt(const char *string);
  void Output_String_14pt(const char *string);
