@@ -112,24 +112,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   SSD1309_init();
- // HAL_Delay(100);
-  //SSD1309_ClearScreen();
-
-  /*uint8_t flag_key1_press = 1;
-  uint8_t flag_wait = 1;
-  uint32_t time_key1_press = 0;
-  uint8_t flag_str = 0;*/
- /*ssd1306_DrawCircle(3, 3, 2);
- SSD1306_GotoXY(10, 0);
- SSD1309_WriteString("Welcome", &Font_7x10);*/
- //SSD1306_GotoXY(0, 10);
-
-
-	/*SSD1309_WriteString("!", &Font_7x10);*/
-  Output_String_14pt("АБ");
-
-
-	SSD1309_UpdateScreen();
+ SSD1309_GotoXY(0, 10);
+ Output_String_14pt("Привет, мир!");
+ SSD1309_UpdateScreen();
 
 	/* USER CODE END 2 */
 

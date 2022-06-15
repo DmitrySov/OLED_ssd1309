@@ -62,8 +62,8 @@ typedef struct {
 
  char SSD1309_WriteString(char* str, FontDef_t* Font);
  char SSD1309_WriteChar(char ch, FontDef_t* Font);
- void SSD1306_GotoXY(uint16_t x, uint16_t y);
+ void SSD1309_GotoXY(uint16_t x, uint16_t y);
 
- void ssd1306_DrawCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r);
+ void ssd1309_DrawCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r);
 
  #endif /* SSD_1309_SSD_1309_H_ */
