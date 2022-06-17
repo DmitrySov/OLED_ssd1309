@@ -30,8 +30,8 @@ Core/Src/fonts.o: ../Core/Src/fonts.c ../Core/Inc/fonts.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Inc/font_16.h ../Core/Inc/font_14.h ../Core/Inc/font_8.h \
- ../Core/Inc/fonts.h
+ ../Core/Inc/font_16.h ../Core/Inc/font_Times_New_Roman.h \
+ ../Core/Inc/main.h ../Core/Inc/font_8.h ../Core/Inc/fonts.h
 
 ../Core/Inc/fonts.h:
 
@@ -101,7 +101,9 @@ Core/Src/fonts.o: ../Core/Src/fonts.c ../Core/Inc/fonts.h \
 
 ../Core/Inc/font_16.h:
 
-../Core/Inc/font_14.h:
+../Core/Inc/font_Times_New_Roman.h:
+
+../Core/Inc/main.h:
 
 ../Core/Inc/font_8.h:
 

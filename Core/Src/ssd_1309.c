@@ -7,6 +7,7 @@
  /* Includes ------------------------------------------------------------------*/
 #include "ssd_1309.h"
 #include "fonts.h"
+#include "font_Times_New_Roman.h"
 /* Declarations and definitions ----------------------------------------------*/
 static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
 
@@ -168,8 +169,8 @@ SSD1309_t SSD1309;
 /*----------------------------------------------------------------------------------
  * Function:		init_sector
  *----------------------------------------------------------------------------------
- * description:	initializing the display by coordinates
- * parameters:	-uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2
+ * description:	- initializing the display by coordinates
+ * parameters:	- uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2
  *
  * on return:	-
  ------------------------------------------------------------------------------------*/
@@ -222,8 +223,8 @@ SSD1309_t SSD1309;
   	uint32_t a = 0;
   	uint8_t x0, y0;
 
-  	begin_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][1];
-  	width_bitmap = microsoftSansSerif_14ptDescriptors[out_char -' '][0];
+  	begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
+  	width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
   	height = 3;
 
   	/* getting bytes horizontally */
@@ -232,11 +233,77 @@ SSD1309_t SSD1309;
   		// writing 3 vertical bytes into one (24-bit)
   		for(uint8_t i  = 0; i < height; i++)
   		{
-  			b = microsoftSansSerif_14ptBitmaps[begin_bitmap + i];
+  			b = timesNewRoman_14ptBitmaps[begin_bitmap + i];
   			a |= b << ((2 - i) * 8);
   		}
   		/* writing 24-bit pixels */
 		for (y0 = 0; y0 < 24; y0++)
+		{
+			if ((a >> y0) & 1)
+			{
+				SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
+			}
+		}
+		a = 0;
+		/* character interval */
+		begin_bitmap = begin_bitmap + 3;
+  	}
+  	/* Increase pointer */
+  	  SSD1309.CurrentX += width_bitmap+1;
+  }
+
+ //void Output_Char_TimesNewRoman(char out_char, TimNewRom PtType)
+ void Output_Char_TimesNewRoman(char out_char, uint8_t pt)
+  {
+  	uint16_t width_bitmap, height, begin_bitmap;
+  	uint8_t b;
+  	uint32_t a = 0;
+  	uint8_t x0, y0;
+
+  	switch(pt)
+  	{
+  	 case 14:
+  		begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
+  		width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
+  		height = 3;
+  		break;
+  	case 8:
+  		begin_bitmap = timesNewRoman_8ptDescriptors[out_char -' '][1];
+  		width_bitmap = timesNewRoman_8ptDescriptors[out_char -' '][0];
+  		height = 2;
+  		break;
+  	case 10:
+  		begin_bitmap = timesNewRoman_10ptDescriptors[out_char -' '][1];
+  		width_bitmap = timesNewRoman_10ptDescriptors[out_char -' '][0];
+  		height = 2;
+  		break;
+  	case 16:
+  	  	begin_bitmap = timesNewRoman_16ptDescriptors[out_char -' '][1];
+  	  	width_bitmap = timesNewRoman_16ptDescriptors[out_char -' '][0];
+  	  	height = 3;
+  	  	break;
+  	}
+  	/*begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
+  	width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
+  	height = 3;*/
+
+  	/* getting bytes horizontally */
+  	for(x0 = 1; x0 <= width_bitmap; x0++)
+  	{
+  		// writing 3 vertical bytes into one (24-bit)
+  		for(uint8_t i  = 0; i < height; i++)
+  		{
+  			if(pt == 14){b = timesNewRoman_14ptBitmaps[begin_bitmap + i];}
+  			else if(pt == 8){b = timesNewRoman_8ptBitmaps[begin_bitmap + i];}
+  			else if(pt == 10){b = timesNewRoman_10ptBitmaps[begin_bitmap + i];}
+  			else if(pt == 16){b = timesNewRoman_16ptBitmaps[begin_bitmap + i];}
+  			//b = timesNewRoman_10ptBitmaps[begin_bitmap + i];
+  			//uint8_t h = height - 1;
+  			a |= b << (((height - 1) - i) * 8);
+  			//HAL_Delay(100);
+  		}
+  		/* writing height byte pixels */
+		for (y0 = 0; y0 < height * 8; y0++)
 		{
 			if ((a >> y0) & 1)
 			{
@@ -329,13 +396,34 @@ SSD1309_t SSD1309;
 
   	while (*string != 0)
   	{
-  		if (*string < 0xFF)
+  		if (*string < 0x100) // 256
   		{
   			Output_Char_14pt(*string);
   		}
   		string++;
   	}
   }
+
+  /*----------------------------------------------------------------------------------
+     * Function:		Output_String
+     *----------------------------------------------------------------------------------
+     * description:		- const char *string
+     * parameters:		-
+     *
+     * on return:			-
+     ------------------------------------------------------------------------------------*/
+    void Output_String_TimesNewRoman(const char *string)
+    {
+
+    	while (*string != 0)
+    	{
+    		if (*string < 0x100) // 256
+    		{
+    			Output_Char(*string);
+    		}
+    		string++;
+    	}
+    }
   /*----------------------------------------------------------------------------------
    * Function:		SSD1309_DrawFilledRect
    *----------------------------------------------------------------------------------

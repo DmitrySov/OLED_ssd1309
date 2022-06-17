@@ -15,7 +15,8 @@
  #include <stdbool.h>
  #include <string.h>
  #include "font_16.h"
- #include "font_14.h"
+ #include "font_Times_New_Roman.h"
+// #include "font_14.h"
  #include "font_8.h"
  #include "fonts.h"
 
@@ -47,9 +48,7 @@ typedef struct {
  void Init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
  void Output_Char_16pt(uint8_t out_char);
  void Output_Char_14pt(char out_char);
- /***Test******/
- void Output_Char_14pt_Test_russian(uint8_t out_char);
- /************/
+
  void Output_Char_8pt(uint8_t out_char);
  void Output_String_16pt(const char *string);
  void Output_String_14pt(const char *string);
@@ -66,4 +65,6 @@ typedef struct {
 
  void ssd1309_DrawCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r);
 
+ //void Output_Char_TimesNewRoman(char out_char, TimNewRom PtType);
+ void Output_Char_TimesNewRoman(char out_char, uint8_t pt);
  #endif /* SSD_1309_SSD_1309_H_ */

@@ -25,7 +25,8 @@
 #include "stdio.h"
 #include "font_16.h"
 #include "font_8.h"
-#include "font_14.h"
+//#include "font_14.h"
+#include "font_Times_New_Roman.h"
 #include "fonts.h"
 #include "ssd_1309.h"
 
@@ -111,11 +112,10 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
-  SSD1309_init();
+ SSD1309_init();
  SSD1309_GotoXY(0, 10);
- Output_String_14pt("Привет, мир!");
+ Output_Char_TimesNewRoman('1', 8);
  SSD1309_UpdateScreen();
-
 	/* USER CODE END 2 */
 
   /* Infinite loop */
