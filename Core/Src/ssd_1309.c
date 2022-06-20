@@ -253,7 +253,7 @@ SSD1309_t SSD1309;
   }
 
  //void Output_Char_TimesNewRoman(char out_char, TimNewRom PtType)
- void Output_Char_TimesNewRoman(char out_char, uint8_t pt)
+   void Output_Char_TimesNewRoman(char out_char, uint8_t pt)
   {
   	uint16_t width_bitmap, height, begin_bitmap;
   	uint8_t b;
@@ -297,10 +297,7 @@ SSD1309_t SSD1309;
   			else if(pt == 8){b = timesNewRoman_8ptBitmaps[begin_bitmap + i];}
   			else if(pt == 10){b = timesNewRoman_10ptBitmaps[begin_bitmap + i];}
   			else if(pt == 16){b = timesNewRoman_16ptBitmaps[begin_bitmap + i];}
-  			//b = timesNewRoman_10ptBitmaps[begin_bitmap + i];
-  			//uint8_t h = height - 1;
   			a |= b << (((height - 1) - i) * 8);
-  			//HAL_Delay(100);
   		}
   		/* writing height byte pixels */
 		for (y0 = 0; y0 < height * 8; y0++)
@@ -312,10 +309,10 @@ SSD1309_t SSD1309;
 		}
 		a = 0;
 		/* character interval */
-		begin_bitmap = begin_bitmap + 3;
+		begin_bitmap = begin_bitmap + height;
   	}
   	/* Increase pointer */
-  	  SSD1309.CurrentX += width_bitmap+1;
+  	  SSD1309.CurrentX += width_bitmap + 1;
   }
  /*----------------------------------------------------------------------------------
   * Function:		Output_Char_8pt(uint8_t out_char)
@@ -412,14 +409,14 @@ SSD1309_t SSD1309;
      *
      * on return:			-
      ------------------------------------------------------------------------------------*/
-    void Output_String_TimesNewRoman(const char *string)
+    void Output_String_TimesNewRoman(const char *string, uint8_t pt)
     {
 
     	while (*string != 0)
     	{
     		if (*string < 0x100) // 256
     		{
-    			Output_Char(*string);
+    			Output_Char_TimesNewRoman(*string, pt);
     		}
     		string++;
     	}

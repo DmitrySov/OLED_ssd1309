@@ -114,7 +114,7 @@ int main(void)
 
  SSD1309_init();
  SSD1309_GotoXY(0, 10);
- Output_Char_TimesNewRoman('1', 8);
+ Output_String_TimesNewRoman("< Á á >", 14);
  SSD1309_UpdateScreen();
 	/* USER CODE END 2 */
 
