@@ -183,74 +183,26 @@ SSD1309_t SSD1309;
 	 SendCommand(y1);
 	 SendCommand(y2);
  }
+
  /*----------------------------------------------------------------------------------
-  * Function:		Output_Char_16pt
-  *----------------------------------------------------------------------------------
-  * description:	- uint8_t out_char
-  * parameters:		-
-  *
-  * on return:		-
-  ------------------------------------------------------------------------------------*/
- void Output_Char_16pt(uint8_t out_char)
- {
- 	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
-
- 	begin_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][1];
- 	width_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][0];
- 	end_bitmap = begin_bitmap + width_bitmap * 3;
-
- 	for (i = begin_bitmap; i < end_bitmap; i++)
- 	{
- 		SendData(microsoftSansSerif_16ptBitmaps[i]);
- 	}
- 	for (i = 0; i < 12; i++)
- 	{
- 		SendData(0x00);
- 	}
- }
- /*----------------------------------------------------------------------------------
-  * Function:		Output_Char_14pt(uint8_t out_char)
-  *----------------------------------------------------------------------------------
-  * description:	- uint8_t out_char
-  * parameters:		-
-  *
-  * on return:		-
-  ------------------------------------------------------------------------------------*/
- void Output_Char_14pt(char out_char)
-  {
-  	uint16_t width_bitmap, height, begin_bitmap;
-  	uint8_t b;
-  	uint32_t a = 0;
-  	uint8_t x0, y0;
-
-  	begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
-  	width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
-  	height = 3;
-
-  	/* getting bytes horizontally */
-  	for(x0 = 1; x0 <= width_bitmap; x0++)
-  	{
-  		// writing 3 vertical bytes into one (24-bit)
-  		for(uint8_t i  = 0; i < height; i++)
-  		{
-  			b = timesNewRoman_14ptBitmaps[begin_bitmap + i];
-  			a |= b << ((2 - i) * 8);
-  		}
-  		/* writing 24-bit pixels */
-		for (y0 = 0; y0 < 24; y0++)
-		{
-			if ((a >> y0) & 1)
-			{
-				SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
-			}
-		}
-		a = 0;
-		/* character interval */
-		begin_bitmap = begin_bitmap + 3;
-  	}
-  	/* Increase pointer */
-  	  SSD1309.CurrentX += width_bitmap+1;
-  }
+     * Function:		Output_String_TimesNewRoman
+     *----------------------------------------------------------------------------------
+     * description:		- const char *string
+     * parameters:		-
+     *
+     * on return:			-
+     ------------------------------------------------------------------------------------*/
+   void Output_String_TimesNewRoman(const char *string, uint8_t pt)
+   {
+    	while (*string != 0)
+     {
+    	if (*string < 0x100) // 256
+    	{
+    		Output_Char_TimesNewRoman(*string, pt);
+    	}
+    		string++;
+    	}
+    }
 
  //void Output_Char_TimesNewRoman(char out_char, TimNewRom PtType)
    void Output_Char_TimesNewRoman(char out_char, uint8_t pt)
@@ -283,14 +235,10 @@ SSD1309_t SSD1309;
   	  	height = 3;
   	  	break;
   	}
-  	/*begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
-  	width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
-  	height = 3;*/
-
   	/* getting bytes horizontally */
   	for(x0 = 1; x0 <= width_bitmap; x0++)
   	{
-  		// writing 3 vertical bytes into one (24-bit)
+  		// writing vertical bytes into one
   		for(uint8_t i  = 0; i < height; i++)
   		{
   			if(pt == 14){b = timesNewRoman_14ptBitmaps[begin_bitmap + i];}
@@ -308,37 +256,13 @@ SSD1309_t SSD1309;
 			}
 		}
 		a = 0;
-		/* character interval */
+		/* begin next vertical bytes */
 		begin_bitmap = begin_bitmap + height;
   	}
   	/* Increase pointer */
   	  SSD1309.CurrentX += width_bitmap + 1;
   }
- /*----------------------------------------------------------------------------------
-  * Function:		Output_Char_8pt(uint8_t out_char)
-  *----------------------------------------------------------------------------------
-  * description:	- uint8_t out_char
-  * parameters:		-
-  *
-  * on return:		-
-  ------------------------------------------------------------------------------------*/
- void Output_Char_8pt(uint8_t out_char)
-  {
-  	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
-  	begin_bitmap = microsoftSansSerif_8ptDescriptors[out_char -' '][1];
-  	width_bitmap = microsoftSansSerif_8ptDescriptors[out_char -' '][0];
-  	end_bitmap = begin_bitmap + width_bitmap * 2;
-
-  	for (i = begin_bitmap; i < end_bitmap; i++)
-  	{
-  		SendData(microsoftSansSerif_8ptBitmaps[i]);
-  	}
-  	for (i = 0; i < 2*2; i++)
-  	{
-  		SendData(0x00);
-  	}
-  }
 
  /*----------------------------------------------------------------------------------
   * Function:		Output_String_16pt
@@ -361,83 +285,29 @@ SSD1309_t SSD1309;
  	}
  }
  /*----------------------------------------------------------------------------------
-  * Function:		Output_String_8pt
-  *----------------------------------------------------------------------------------
-  * description:	- const char *string
-  * parameters:		-
-  *
-  * on return:		-
-  ------------------------------------------------------------------------------------*/
- void Output_String_8pt(const char *string)
- {
-
- 	while (*string != 0)
- 	{
- 		if (*string < 0x7F)
- 		{
- 			Output_Char_8pt(*string);
- 		}
- 		string++;
- 	}
- }
- /*----------------------------------------------------------------------------------
-   * Function:		Output_String_14pt
+   * Function:		Output_Char_16pt
    *----------------------------------------------------------------------------------
-   * description:		- const char *string
+   * description:	- uint8_t out_char
    * parameters:		-
    *
-   * on return:			-
+   * on return:		-
    ------------------------------------------------------------------------------------*/
-  void Output_String_14pt(const char *string)
+  void Output_Char_16pt(uint8_t out_char)
   {
+  	uint16_t begin_bitmap, end_bitmap, width_bitmap, i;
 
-  	while (*string != 0)
+  	begin_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][1];
+  	width_bitmap = microsoftSansSerif_16ptDescriptors[out_char -' '][0];
+  	end_bitmap = begin_bitmap + width_bitmap * 3;
+
+  	for (i = begin_bitmap; i < end_bitmap; i++)
   	{
-  		if (*string < 0x100) // 256
-  		{
-  			Output_Char_14pt(*string);
-  		}
-  		string++;
+  		SendData(microsoftSansSerif_16ptBitmaps[i]);
   	}
-  }
-
-  /*----------------------------------------------------------------------------------
-     * Function:		Output_String
-     *----------------------------------------------------------------------------------
-     * description:		- const char *string
-     * parameters:		-
-     *
-     * on return:			-
-     ------------------------------------------------------------------------------------*/
-    void Output_String_TimesNewRoman(const char *string, uint8_t pt)
-    {
-
-    	while (*string != 0)
-    	{
-    		if (*string < 0x100) // 256
-    		{
-    			Output_Char_TimesNewRoman(*string, pt);
-    		}
-    		string++;
-    	}
-    }
-  /*----------------------------------------------------------------------------------
-   * Function:		SSD1309_DrawFilledRect
-   *----------------------------------------------------------------------------------
-   * description:		- x and y axis coordinates
-   * parameters:		-
-   *
-   * on return:			-
-   ------------------------------------------------------------------------------------*/
-  void SSD1309_DrawFilledRect(uint8_t xStart, uint8_t xEnd, uint8_t yStart, uint8_t yEnd)
-  {
-    for (uint8_t i = xStart; i < xEnd; i++)
-    {
-      for (uint8_t j = yStart; j <  yEnd; j++)
-      {
-        SetPixel(i, j);
-      }
-    }
+  	for (i = 0; i < 12; i++)
+  	{
+  		SendData(0x00);
+  	}
   }
   /*----------------------------------------------------------------------------------
    * Function:		SSD1309_GotoXY
@@ -585,6 +455,24 @@ SSD1309_t SSD1309;
 	/* Return character written */
 	return ch;
 }
+  /*----------------------------------------------------------------------------------
+   * Function:		SSD1309_DrawFilledRect
+   *----------------------------------------------------------------------------------
+   * description:		- x and y axis coordinates
+   * parameters:		-
+   *
+   * on return:			-
+   ------------------------------------------------------------------------------------*/
+  void SSD1309_DrawFilledRect(uint8_t xStart, uint8_t xEnd, uint8_t yStart, uint8_t yEnd)
+  {
+    for (uint8_t i = xStart; i < xEnd; i++)
+    {
+      for (uint8_t j = yStart; j <  yEnd; j++)
+      {
+        SetPixel(i, j);
+      }
+    }
+  }
   /*----------------------------------------------------------------------------------
     * Function:		ssd1309_DrawCircle
     *----------------------------------------------------------------------------------
