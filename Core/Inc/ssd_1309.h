@@ -42,9 +42,7 @@ typedef struct {
  void Reset_ssd1309(void);
  void SendCommand(uint8_t Data);
  void SendData (uint8_t Data);
- void Clear_Screen(void);
 
- void Clear_Sector_x_y(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
  void Init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
 
  void SSD1309_ClearScreen(void);
@@ -67,7 +65,7 @@ typedef struct {
  void SSD1309_DrawFilledRect(uint8_t xStart, uint8_t xEnd, uint8_t yStart, uint8_t yEnd);
  void ssd1309_DrawCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r);
 
- //void Output_Char_TimesNewRoman(char out_char, TimNewRom PtType);
- void Output_Char_TimesNewRoman(char out_char, uint8_t pt);
+ void Output_Char_TimesNewRoman(char out_char, TimesNewRoman PtType);
+ //void Output_Char_TimesNewRoman(char out_char, uint8_t pt);
  void Output_String_TimesNewRoman(const char *string, uint8_t pt);
  #endif /* SSD_1309_SSD_1309_H_ */

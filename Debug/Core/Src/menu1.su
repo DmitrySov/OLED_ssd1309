@@ -1,0 +1,2 @@
+menu1.c:14:8:start_menu	8	static
+menu1.c:56:8:button_rat_GPIO_A0	8	static

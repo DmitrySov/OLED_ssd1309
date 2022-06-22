@@ -25,14 +25,12 @@
 #include "stdio.h"
 #include "font_16.h"
 #include "font_8.h"
-//#include "font_14.h"
 #include "font_Times_New_Roman.h"
 #include "fonts.h"
 #include "ssd_1309.h"
 
-
+#include "menu1.h"
 //#include "menu.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -113,17 +111,18 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
  SSD1309_init();
- SSD1309_GotoXY(0, 10);
- Output_Char_TimesNewRoman('<', 14);
- SSD1309_UpdateScreen();
+ SSD1309_ClearScreen();
+ /*SSD1309_GotoXY(0, 0);
+ Output_String_TimesNewRoman("Накопленный объем:", pt10);
+ SSD1309_UpdateScreen();*/
 	/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //main_menu1();
-
+	  start_menu();
+	 // main_menu1();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

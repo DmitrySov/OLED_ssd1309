@@ -1,4 +1,24 @@
 Core/Src/fonts.o: ../Core/Src/fonts.c ../Core/Inc/fonts.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/stdint.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/_default_types.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/features.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_newlib_version.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_intsup.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_stdint.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/string.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_ansi.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/newlib.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/config.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/ieeefp.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/reent.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_ansi.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_types.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/_types.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/lock.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/cdefs.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/xlocale.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/strings.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/string.h \
  ../Core/Inc/ssd_1309.h ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
@@ -34,6 +54,46 @@ Core/Src/fonts.o: ../Core/Src/fonts.c ../Core/Inc/fonts.h \
  ../Core/Inc/main.h ../Core/Inc/font_8.h ../Core/Inc/fonts.h
 
 ../Core/Inc/fonts.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/stdint.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/_default_types.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/features.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_newlib_version.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_intsup.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_stdint.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/string.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_ansi.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/newlib.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/config.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/ieeefp.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/reent.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_ansi.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_types.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/_types.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/lock.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/cdefs.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/xlocale.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/strings.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/string.h:
 
 ../Core/Inc/ssd_1309.h:
 

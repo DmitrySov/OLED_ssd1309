@@ -7,6 +7,12 @@ Core/Src/font_Times_New_Roman.o: ../Core/Src/font_Times_New_Roman.c \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/stdint.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/_default_types.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/features.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_newlib_version.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_intsup.h \
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_stdint.h \
  ../Drivers/CMSIS/Include/cmsis_version.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
  ../Drivers/CMSIS/Include/cmsis_gcc.h \
@@ -49,6 +55,18 @@ Core/Src/font_Times_New_Roman.o: ../Core/Src/font_Times_New_Roman.c \
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h:
 
 ../Drivers/CMSIS/Include/core_cm4.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/stdint.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/_default_types.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/features.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/_newlib_version.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_intsup.h:
+
+C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_stdint.h:
 
 ../Drivers/CMSIS/Include/cmsis_version.h:
 

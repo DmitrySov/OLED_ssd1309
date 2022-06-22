@@ -4,6 +4,7 @@
 "./Core/Src/fonts.o"
 "./Core/Src/main.o"
 "./Core/Src/menu.o"
+"./Core/Src/menu1.o"
 "./Core/Src/ssd_1309.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_it.o"

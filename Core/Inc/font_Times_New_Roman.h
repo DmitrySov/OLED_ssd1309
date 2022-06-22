@@ -14,18 +14,12 @@
 
  typedef enum
 {
-	 pt8 = 0,
-	 pt10,
-	 pt14,
-	 pt16,
-}TimNewRom;
+	 pt8 = 8,
+	 pt10 = 10,
+	 pt14 = 14,
+	 pt16 = 16,
+}TimesNewRoman;
 
-typedef struct{
-	uint16_t a;
-
-};
-
-//extern typePt_t type_Pt;
 /* Font data for Times New Roman 8pt */
 extern const uint8_t timesNewRoman_8ptBitmaps[];
 extern const uint16_t timesNewRoman_8ptDescriptors[226][2];

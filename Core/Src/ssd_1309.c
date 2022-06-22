@@ -15,7 +15,7 @@ static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
 static void SetPixel(uint8_t x, uint8_t y);
 
 /* Private variable -----------------------------------------------------------------*/
-SSD1309_t SSD1309;
+ SSD1309_t SSD1309;
 
 /*----------------------------------------------------------------------------------
  * Function:		SSD1309_init
@@ -91,7 +91,7 @@ SSD1309_t SSD1309;
  /*----------------------------------------------------------------------------------
   * Function:		SendCommand
   *----------------------------------------------------------------------------------
-  * description:	Сommands are sent with the corresponding command table 9-1 (datasheet)
+  * description:	Commands are sent with the corresponding command table 9-1 (datasheet)
   * parameters:		-uint8_t Command
   *
   * on return:		-
@@ -118,54 +118,6 @@ SSD1309_t SSD1309;
  	LL_GPIO_WriteOutputPort(GPIOD, Data);
  	HAL_GPIO_WritePin(WR_GPIO_Port, WR_Pin, GPIO_PIN_SET);
  }
- /*----------------------------------------------------------------------------------
-   * Function:		Clear_Screen
-   *----------------------------------------------------------------------------------
-   * description:	Сleaning the full display(vertically), pages are cleared first,
-   * 				then columns
-   * parameters:	-
-   *
-   * on return:		-
-   ------------------------------------------------------------------------------------*/
- void Clear_Screen(void)
- {
-	  uint8_t i = 0;
-	 for(uint8_t j =0; j < 128; j++)
-	     {
-	 	  SendCommand(0xB0+i);
-	 	  for (uint8_t i = 0; i < 8; i++)
-	 	  	{
-	 		  SendData(0x00);
-	 	  	}
-	     }
- }
- /*----------------------------------------------------------------------------------
-   * Function:		Clear_Sector_x_y
-   *----------------------------------------------------------------------------------
-   * description:	Clearing the display by coordinates (vertically),
-   * 				pages are cleared first, then columns
-   * parameters:	-uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2
-   *
-   * on return:		-
-   ------------------------------------------------------------------------------------*/
-  void Clear_Sector_x_y(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2)
-   {
-  	 SendCommand(0x21);			//  Область вывода - от 0 до 127 столбца;
-  	 SendCommand(x1);
-  	 SendCommand(x2);
-  	 SendCommand(0x22);			//  Область вывода - от  до  строки;
-  	 SendCommand(y1);
-  	 SendCommand(y2);
-
-  	 for(uint8_t j = x1; j <= x2; j++)
-  	     {
-  	 	  for (uint8_t i = y1; i <= y2; i++)
-  	 	  	{
-  	 		  SendData(0x0);
-  	 		  SendCommand(0xB0+i);
-  	 	  	}
-  	     }
-   }
 /*----------------------------------------------------------------------------------
  * Function:		init_sector
  *----------------------------------------------------------------------------------
@@ -184,52 +136,58 @@ SSD1309_t SSD1309;
 	 SendCommand(y2);
  }
 
- /*----------------------------------------------------------------------------------
-     * Function:		Output_String_TimesNewRoman
-     *----------------------------------------------------------------------------------
-     * description:		- const char *string
-     * parameters:		-
-     *
-     * on return:			-
-     ------------------------------------------------------------------------------------*/
-   void Output_String_TimesNewRoman(const char *string, uint8_t pt)
+/*----------------------------------------------------------------------------------
+ * Function:		Output_String_TimesNewRoman
+ *----------------------------------------------------------------------------------
+ * description:		- writing a string Times New Roman
+ * parameters:		- const char *string
+ *
+ * on return:		-
+ ------------------------------------------------------------------------------------*/
+   void Output_String_TimesNewRoman(const char *string, TimesNewRoman PtType)
    {
     	while (*string != 0)
      {
     	if (*string < 0x100) // 256
     	{
-    		Output_Char_TimesNewRoman(*string, pt);
+    		Output_Char_TimesNewRoman(*string, PtType);
     	}
     		string++;
     	}
     }
-
- //void Output_Char_TimesNewRoman(char out_char, TimNewRom PtType)
-   void Output_Char_TimesNewRoman(char out_char, uint8_t pt)
+/*----------------------------------------------------------------------------------
+ * Function:		Output_Char_TimesNewRoman
+ *----------------------------------------------------------------------------------
+ * description:		- writing a char Times New Roman
+ * parameters:		- char out_char
+ *
+ * on return:			-
+ ------------------------------------------------------------------------------------*/
+   void Output_Char_TimesNewRoman(char out_char, TimesNewRoman PtType)
   {
   	uint16_t width_bitmap, height, begin_bitmap;
   	uint8_t b;
   	uint32_t a = 0;
   	uint8_t x0, y0;
 
-  	switch(pt)
+  	switch(PtType)
   	{
-  	 case 14:
-  		begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
-  		width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
-  		height = 3;
-  		break;
-  	case 8:
+  	case pt8:
   		begin_bitmap = timesNewRoman_8ptDescriptors[out_char -' '][1];
   		width_bitmap = timesNewRoman_8ptDescriptors[out_char -' '][0];
   		height = 2;
   		break;
-  	case 10:
+  	case pt10:
   		begin_bitmap = timesNewRoman_10ptDescriptors[out_char -' '][1];
   		width_bitmap = timesNewRoman_10ptDescriptors[out_char -' '][0];
   		height = 2;
   		break;
-  	case 16:
+    case pt14:
+  	  	begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
+  	  	width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
+  	  	height = 3;
+  	  	break;
+  	case pt16:
   	  	begin_bitmap = timesNewRoman_16ptDescriptors[out_char -' '][1];
   	  	width_bitmap = timesNewRoman_16ptDescriptors[out_char -' '][0];
   	  	height = 3;
@@ -241,10 +199,10 @@ SSD1309_t SSD1309;
   		// writing vertical bytes into one
   		for(uint8_t i  = 0; i < height; i++)
   		{
-  			if(pt == 14){b = timesNewRoman_14ptBitmaps[begin_bitmap + i];}
-  			else if(pt == 8){b = timesNewRoman_8ptBitmaps[begin_bitmap + i];}
-  			else if(pt == 10){b = timesNewRoman_10ptBitmaps[begin_bitmap + i];}
-  			else if(pt == 16){b = timesNewRoman_16ptBitmaps[begin_bitmap + i];}
+  			if(PtType == 14){b = timesNewRoman_14ptBitmaps[begin_bitmap + i];}
+  			else if(PtType == 8){b = timesNewRoman_8ptBitmaps[begin_bitmap + i];}
+  			else if(PtType == 10){b = timesNewRoman_10ptBitmaps[begin_bitmap + i];}
+  			else if(PtType == 16){b = timesNewRoman_16ptBitmaps[begin_bitmap + i];}
   			a |= b << (((height - 1) - i) * 8);
   		}
   		/* writing height byte pixels */
