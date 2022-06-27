@@ -19,6 +19,7 @@ typedef enum {
   MENU_1_START = 0,
   MENU_1_MAIN,
   MENU_1_WAIT,
+  MENU_2_WAIT,
 }MENU1_StateTypeDef;
 
 void start_menu (void);

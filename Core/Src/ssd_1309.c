@@ -32,7 +32,7 @@ static void SetPixel(uint8_t x, uint8_t y);
     Reset_ssd1309();
 	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, GPIO_PIN_RESET);  // CS = 0
 	SendCommand(0xAE);	// display off
-	//Clear_Screen();
+	SSD1309_ClearScreen();
 
 	SendCommand(0xB0);
 	SendCommand(0x81);
@@ -338,7 +338,7 @@ static void SetPixel(uint8_t x, uint8_t y);
     ------------------------------------------------------------------------------------*/
   void Cursor_Screen(void)
   {
- 	  uint8_t i = 0;
+ 	  /*uint8_t i = 0;
  	 for(uint8_t j =0; j < 2; j++)
  	     {
  	 	  SendCommand(0xB5+i);
@@ -346,7 +346,16 @@ static void SetPixel(uint8_t x, uint8_t y);
  	 	  	{
  	 		  SendData(0x03);
  	 	  	}
- 	     }
+ 	     }*/
+	uint8_t i = 0;
+	for (uint8_t j = 0; j < 128; j++)
+	{
+		SendCommand(0xB0 + i);
+		for (uint8_t i = 0; i < 8; i++)
+		{
+			SendData(0x0);
+		}
+	}
   }
   /*----------------------------------------------------------------------------------
     * Function:		SSD1309_WriteString
