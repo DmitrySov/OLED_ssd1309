@@ -14,6 +14,7 @@
 #include "ssd_1309.h"
 #include "string.h"
 #include "stdio.h"
+#include "MY_LIS3DSH.h"
 
 typedef enum {
   MENU_1_START = 0,

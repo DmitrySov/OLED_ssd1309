@@ -9,6 +9,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include MY_LIS3DSH/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -61,7 +62,7 @@ main-build: OLED_ssd1309.elf secondary-outputs
 
 # Tool invocations
 OLED_ssd1309.elf: $(OBJS) $(USER_OBJS) C:\Users\sovetnikov\STM32CubeIDE\workspace_1.8.0\OLED_ssd1309\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "OLED_ssd1309.elf" @"objects.list" $(USER_OBJS) -Wl,--start-group $(LIBS) -Wl,--end-group -mcpu=cortex-m4 -T"C:\Users\sovetnikov\STM32CubeIDE\workspace_1.8.0\OLED_ssd1309\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="OLED_ssd1309.map" -Wl,--gc-sections -static -u _printf_floa --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "OLED_ssd1309.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\sovetnikov\STM32CubeIDE\workspace_1.8.0\OLED_ssd1309\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="OLED_ssd1309.map" -Wl,--gc-sections -static -u _printf_floa --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

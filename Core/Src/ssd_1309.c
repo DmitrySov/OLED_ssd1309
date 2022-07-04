@@ -43,7 +43,7 @@ static void SetPixel(uint8_t x, uint8_t y);
 	SendCommand(0x10); //---set high column address
 	/////////////////
 	SendCommand(0xAF);
-	HAL_Delay(100);
+	//HAL_Delay(100);
 
 	SendCommand(0x20);
 	SendCommand(0x00);			//  Horizontal Addressing Mode;
@@ -328,6 +328,27 @@ static void SetPixel(uint8_t x, uint8_t y);
 		  SendData(pixelBuffer[i]);
 	  }
   }
+
+/*  void SSD1309_UpdateScreen_1(void)
+    {
+  	  for(uint8_t m = 0; m < SSD1309_HEIGHT/8; i++)
+  	  {
+  		  SendCommand(0xB0 + m);
+  		  SendCommand(0x00 + SSD1306_X_OFFSET_LOWER);
+  		  SendCommand(0x10 + SSD1306_X_OFFSET_UPPER);
+  		  	 for(uint8_t i = 0; i < 128; i++)
+  		  	 {
+				//dt[i+1] = data[i];
+  		  		SendData(pixelBuffer[i*m]);
+  		  	 }
+  	  }
+    }*/
+
+  /*for(uint8_t i = 0; i < SSD1306_HEIGHT/8; i++) {
+          ssd1306_WriteCommand(0xB0 + i); // Set the current RAM page address.
+          ssd1306_WriteCommand(0x00 + SSD1306_X_OFFSET_LOWER);
+          ssd1306_WriteCommand(0x10 + SSD1306_X_OFFSET_UPPER);
+          ssd1306_WriteData(&SSD1306_Buffer[SSD1309_WIDTH *i],SSD1306_WIDTH);}*/
   /*----------------------------------------------------------------------------------
     * Function:		SSD1309_UpdateScreen
     *----------------------------------------------------------------------------------

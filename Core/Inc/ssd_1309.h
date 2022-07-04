@@ -29,6 +29,9 @@
 
  #define SSD1309_WIDTH            128
  #define SSD1309_HEIGHT           64
+
+ #define SSD1306_X_OFFSET_LOWER 0
+ #define SSD1306_X_OFFSET_UPPER 0
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Private SSD1309 structure */
 typedef struct {
@@ -47,7 +50,7 @@ typedef struct {
 
  void SSD1309_ClearScreen(void);
  void SSD1309_UpdateScreen(void);
- void SSD1309_UpdateScreen_new(void);
+ void SSD1309_UpdateScreen_1(void);
  void Cursor_Screen(void);
 
  void Output_Char_16pt(uint8_t out_char);
@@ -55,8 +58,7 @@ typedef struct {
 
  void SSD1309_ClearScreen(void);
  void SSD1309_UpdateScreen(void);
- void SSD1309_UpdateScreen_new(void);
- void Cursor_Screen(void);
+ void SSD1309_UpdateScreen_new(void); void Cursor_Screen(void);
 
  char SSD1309_WriteString(char* str, FontDef_t* Font);
  char SSD1309_WriteChar(char ch, FontDef_t* Font);
