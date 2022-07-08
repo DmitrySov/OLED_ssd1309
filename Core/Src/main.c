@@ -141,7 +141,7 @@ int main(void)
 	LIS3DSH_X_calibrate(-1000.0, 980.0);
 	LIS3DSH_Y_calibrate(-1020.0, 1040.0);
 	LIS3DSH_Z_calibrate(-920.0, 1040.0);
-
+    uint8_t a = 100;
 
   /* USER CODE END 2 */
 
@@ -190,10 +190,11 @@ int main(void)
 	  		SSD1309_GotoXY(0, 0);
 	  		Output_String_Arial("Изменения по Х:", pt12);
 	  		SSD1309_GotoXY(10, 12);
-	  		sprintf(buffer1, "%2.4f", x_axis);
+	  		sprintf(buffer1, "%d", a);
 	  		Output_String_Arial(buffer1, pt12);
 	  		SSD1309_UpdateScreen_1();
 	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+	  		a++;
   }
   /* USER CODE END 3 */
 }

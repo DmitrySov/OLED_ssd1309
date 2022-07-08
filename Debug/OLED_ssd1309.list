@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  000201f0  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00015e5e  00000000  00000000  00020220  2**0
+ 13 .debug_info   00015e6b  00000000  00000000  00020220  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00002d45  00000000  00000000  0003607e  2**0
+ 14 .debug_abbrev 00002d56  00000000  00000000  0003608b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00001160  00000000  00000000  00038dc8  2**3
+ 15 .debug_aranges 00001160  00000000  00000000  00038de8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000231f4  00000000  00000000  00039f28  2**0
+ 16 .debug_macro  000231f4  00000000  00000000  00039f48  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00013222  00000000  00000000  0005d11c  2**0
+ 17 .debug_line   00013228  00000000  00000000  0005d13c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000d45d0  00000000  00000000  0007033e  2**0
+ 18 .debug_str    000d45d0  00000000  00000000  00070364  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  0014490e  2**0
+ 19 .comment      00000053  00000000  00000000  00144934  2**0
                   CONTENTS, READONLY
- 20 .debug_ranges 00001040  00000000  00000000  00144968  2**3
+ 20 .debug_ranges 00001040  00000000  00000000  00144988  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_frame  00005e48  00000000  00000000  001459a8  2**2
+ 21 .debug_frame  00005e48  00000000  00000000  001459c8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1405,104 +1405,107 @@ int main(void)
  800104c:	eddf 0a31 	vldr	s1, [pc, #196]	; 8001114 <main+0x128>
  8001050:	ed9f 0a32 	vldr	s0, [pc, #200]	; 800111c <main+0x130>
  8001054:	f004 f944 	bl	80052e0 <LIS3DSH_Z_calibrate>
+    uint8_t a = 100;
+ 8001058:	2364      	movs	r3, #100	; 0x64
+ 800105a:	71fb      	strb	r3, [r7, #7]
 	{
 		menu_display();
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
 	}*/
 
 	if (drdyFlag == 1)
- 8001058:	4b31      	ldr	r3, [pc, #196]	; (8001120 <main+0x134>)
- 800105a:	781b      	ldrb	r3, [r3, #0]
- 800105c:	2b01      	cmp	r3, #1
- 800105e:	d109      	bne.n	8001074 <main+0x88>
+ 800105c:	4b30      	ldr	r3, [pc, #192]	; (8001120 <main+0x134>)
+ 800105e:	781b      	ldrb	r3, [r3, #0]
+ 8001060:	2b01      	cmp	r3, #1
+ 8001062:	d109      	bne.n	8001078 <main+0x8c>
 	{
 		drdyFlag = 0;
- 8001060:	4b2f      	ldr	r3, [pc, #188]	; (8001120 <main+0x134>)
- 8001062:	2200      	movs	r2, #0
- 8001064:	701a      	strb	r2, [r3, #0]
+ 8001064:	4b2e      	ldr	r3, [pc, #184]	; (8001120 <main+0x134>)
+ 8001066:	2200      	movs	r2, #0
+ 8001068:	701a      	strb	r2, [r3, #0]
 		x_axis = LIS3DSH_GetDataScaled_x();
- 8001066:	f004 f8ad 	bl	80051c4 <LIS3DSH_GetDataScaled_x>
- 800106a:	eef0 7a40 	vmov.f32	s15, s0
- 800106e:	4b2d      	ldr	r3, [pc, #180]	; (8001124 <main+0x138>)
- 8001070:	edc3 7a00 	vstr	s15, [r3]
+ 800106a:	f004 f8ab 	bl	80051c4 <LIS3DSH_GetDataScaled_x>
+ 800106e:	eef0 7a40 	vmov.f32	s15, s0
+ 8001072:	4b2c      	ldr	r3, [pc, #176]	; (8001124 <main+0x138>)
+ 8001074:	edc3 7a00 	vstr	s15, [r3]
 	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 	  HAL_Delay(1000);
- 8001074:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
- 8001078:	f001 f876 	bl	8002168 <HAL_Delay>
+ 8001078:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+ 800107c:	f001 f874 	bl	8002168 <HAL_Delay>
 	  SendCommand(0xC8);
- 800107c:	20c8      	movs	r0, #200	; 0xc8
- 800107e:	f000 fb73 	bl	8001768 <SendCommand>
+ 8001080:	20c8      	movs	r0, #200	; 0xc8
+ 8001082:	f000 fb71 	bl	8001768 <SendCommand>
 	  		SendCommand(0x20);
- 8001082:	2020      	movs	r0, #32
- 8001084:	f000 fb70 	bl	8001768 <SendCommand>
+ 8001086:	2020      	movs	r0, #32
+ 8001088:	f000 fb6e 	bl	8001768 <SendCommand>
 	  		SendCommand(0x00);
- 8001088:	2000      	movs	r0, #0
- 800108a:	f000 fb6d 	bl	8001768 <SendCommand>
+ 800108c:	2000      	movs	r0, #0
+ 800108e:	f000 fb6b 	bl	8001768 <SendCommand>
 	  		SendCommand(0x21);
- 800108e:	2021      	movs	r0, #33	; 0x21
- 8001090:	f000 fb6a 	bl	8001768 <SendCommand>
+ 8001092:	2021      	movs	r0, #33	; 0x21
+ 8001094:	f000 fb68 	bl	8001768 <SendCommand>
 	  		SendCommand(0x00);
- 8001094:	2000      	movs	r0, #0
- 8001096:	f000 fb67 	bl	8001768 <SendCommand>
+ 8001098:	2000      	movs	r0, #0
+ 800109a:	f000 fb65 	bl	8001768 <SendCommand>
 	  		SendCommand(0x7F);
- 800109a:	207f      	movs	r0, #127	; 0x7f
- 800109c:	f000 fb64 	bl	8001768 <SendCommand>
+ 800109e:	207f      	movs	r0, #127	; 0x7f
+ 80010a0:	f000 fb62 	bl	8001768 <SendCommand>
 	  		SendCommand(0x22);
- 80010a0:	2022      	movs	r0, #34	; 0x22
- 80010a2:	f000 fb61 	bl	8001768 <SendCommand>
+ 80010a4:	2022      	movs	r0, #34	; 0x22
+ 80010a6:	f000 fb5f 	bl	8001768 <SendCommand>
 	  		SendCommand(0x00);
- 80010a6:	2000      	movs	r0, #0
- 80010a8:	f000 fb5e 	bl	8001768 <SendCommand>
+ 80010aa:	2000      	movs	r0, #0
+ 80010ac:	f000 fb5c 	bl	8001768 <SendCommand>
 	  		SendCommand(0x07);
- 80010ac:	2007      	movs	r0, #7
- 80010ae:	f000 fb5b 	bl	8001768 <SendCommand>
+ 80010b0:	2007      	movs	r0, #7
+ 80010b2:	f000 fb59 	bl	8001768 <SendCommand>
 	  		//SSD1309_init();
 	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
- 80010b2:	2201      	movs	r2, #1
- 80010b4:	2108      	movs	r1, #8
- 80010b6:	481c      	ldr	r0, [pc, #112]	; (8001128 <main+0x13c>)
- 80010b8:	f001 fe12 	bl	8002ce0 <HAL_GPIO_WritePin>
+ 80010b6:	2201      	movs	r2, #1
+ 80010b8:	2108      	movs	r1, #8
+ 80010ba:	481b      	ldr	r0, [pc, #108]	; (8001128 <main+0x13c>)
+ 80010bc:	f001 fe10 	bl	8002ce0 <HAL_GPIO_WritePin>
 	  		//SSD1309_ClearScreen();
 	  		SSD1309_Clear();
- 80010bc:	f000 fcf6 	bl	8001aac <SSD1309_Clear>
+ 80010c0:	f000 fcf4 	bl	8001aac <SSD1309_Clear>
 	  		SSD1309_GotoXY(0, 0);
- 80010c0:	2100      	movs	r1, #0
- 80010c2:	2000      	movs	r0, #0
- 80010c4:	f000 fc9e 	bl	8001a04 <SSD1309_GotoXY>
+ 80010c4:	2100      	movs	r1, #0
+ 80010c6:	2000      	movs	r0, #0
+ 80010c8:	f000 fc9c 	bl	8001a04 <SSD1309_GotoXY>
 	  		Output_String_Arial("Изменения по Х:", pt12);
- 80010c8:	210c      	movs	r1, #12
- 80010ca:	4818      	ldr	r0, [pc, #96]	; (800112c <main+0x140>)
- 80010cc:	f000 fb90 	bl	80017f0 <Output_String_Arial>
+ 80010cc:	210c      	movs	r1, #12
+ 80010ce:	4817      	ldr	r0, [pc, #92]	; (800112c <main+0x140>)
+ 80010d0:	f000 fb8e 	bl	80017f0 <Output_String_Arial>
 	  		SSD1309_GotoXY(10, 12);
- 80010d0:	210c      	movs	r1, #12
- 80010d2:	200a      	movs	r0, #10
- 80010d4:	f000 fc96 	bl	8001a04 <SSD1309_GotoXY>
-	  		sprintf(buffer1, "%2.4f", x_axis);
- 80010d8:	4b12      	ldr	r3, [pc, #72]	; (8001124 <main+0x138>)
- 80010da:	681b      	ldr	r3, [r3, #0]
- 80010dc:	4618      	mov	r0, r3
- 80010de:	f7ff fa33 	bl	8000548 <__aeabi_f2d>
- 80010e2:	4602      	mov	r2, r0
- 80010e4:	460b      	mov	r3, r1
- 80010e6:	4912      	ldr	r1, [pc, #72]	; (8001130 <main+0x144>)
- 80010e8:	4812      	ldr	r0, [pc, #72]	; (8001134 <main+0x148>)
- 80010ea:	f004 ffe7 	bl	80060bc <siprintf>
+ 80010d4:	210c      	movs	r1, #12
+ 80010d6:	200a      	movs	r0, #10
+ 80010d8:	f000 fc94 	bl	8001a04 <SSD1309_GotoXY>
+	  		sprintf(buffer1, "%d", a);
+ 80010dc:	79fb      	ldrb	r3, [r7, #7]
+ 80010de:	461a      	mov	r2, r3
+ 80010e0:	4913      	ldr	r1, [pc, #76]	; (8001130 <main+0x144>)
+ 80010e2:	4814      	ldr	r0, [pc, #80]	; (8001134 <main+0x148>)
+ 80010e4:	f004 ffea 	bl	80060bc <siprintf>
 	  		Output_String_Arial(buffer1, pt12);
- 80010ee:	210c      	movs	r1, #12
- 80010f0:	4810      	ldr	r0, [pc, #64]	; (8001134 <main+0x148>)
- 80010f2:	f000 fb7d 	bl	80017f0 <Output_String_Arial>
+ 80010e8:	210c      	movs	r1, #12
+ 80010ea:	4812      	ldr	r0, [pc, #72]	; (8001134 <main+0x148>)
+ 80010ec:	f000 fb80 	bl	80017f0 <Output_String_Arial>
 	  		SSD1309_UpdateScreen_1();
- 80010f6:	f000 fcdf 	bl	8001ab8 <SSD1309_UpdateScreen_1>
+ 80010f0:	f000 fce2 	bl	8001ab8 <SSD1309_UpdateScreen_1>
 	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
- 80010fa:	2200      	movs	r2, #0
- 80010fc:	2108      	movs	r1, #8
- 80010fe:	480a      	ldr	r0, [pc, #40]	; (8001128 <main+0x13c>)
- 8001100:	f001 fdee 	bl	8002ce0 <HAL_GPIO_WritePin>
+ 80010f4:	2200      	movs	r2, #0
+ 80010f6:	2108      	movs	r1, #8
+ 80010f8:	480b      	ldr	r0, [pc, #44]	; (8001128 <main+0x13c>)
+ 80010fa:	f001 fdf1 	bl	8002ce0 <HAL_GPIO_WritePin>
+	  		a++;
+ 80010fe:	79fb      	ldrb	r3, [r7, #7]
+ 8001100:	3301      	adds	r3, #1
+ 8001102:	71fb      	strb	r3, [r7, #7]
 	if (drdyFlag == 1)
- 8001104:	e7a8      	b.n	8001058 <main+0x6c>
+ 8001104:	e7aa      	b.n	800105c <main+0x70>
  8001106:	bf00      	nop
  8001108:	20000758 	.word	0x20000758
  800110c:	44750000 	.word	0x44750000
@@ -3028,14 +3031,14 @@ void Output_Char_Arial(char out_char, fontSize PtType)
  80019da:	3718      	adds	r7, #24
  80019dc:	46bd      	mov	sp, r7
  80019de:	bd80      	pop	{r7, pc}
- 80019e0:	0800a1cc 	.word	0x0800a1cc
- 80019e4:	0800abd0 	.word	0x0800abd0
- 80019e8:	0800baf4 	.word	0x0800baf4
- 80019ec:	0800cca8 	.word	0x0800cca8
- 80019f0:	0800be7c 	.word	0x0800be7c
- 80019f4:	08009c20 	.word	0x08009c20
- 80019f8:	0800a554 	.word	0x0800a554
- 80019fc:	0800af58 	.word	0x0800af58
+ 80019e0:	0800a1c8 	.word	0x0800a1c8
+ 80019e4:	0800abcc 	.word	0x0800abcc
+ 80019e8:	0800baf0 	.word	0x0800baf0
+ 80019ec:	0800cca4 	.word	0x0800cca4
+ 80019f0:	0800be78 	.word	0x0800be78
+ 80019f4:	08009c1c 	.word	0x08009c1c
+ 80019f8:	0800a550 	.word	0x0800a550
+ 80019fc:	0800af54 	.word	0x0800af54
  8001a00:	20000870 	.word	0x20000870
 
 08001a04 <SSD1309_GotoXY>:
@@ -5928,7 +5931,7 @@ static uint32_t DMA_CalcBaseAndBitshift(DMA_HandleTypeDef *hdma)
  80028a4:	4770      	bx	lr
  80028a6:	bf00      	nop
  80028a8:	aaaaaaab 	.word	0xaaaaaaab
- 80028ac:	0800d048 	.word	0x0800d048
+ 80028ac:	0800d044 	.word	0x0800d044
 
 080028b0 <DMA_CheckFifoParam>:
   * @param  hdma       pointer to a DMA_HandleTypeDef structure that contains
@@ -7929,7 +7932,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  80033ea:	bf00      	nop
  80033ec:	40023c00 	.word	0x40023c00
  80033f0:	40023800 	.word	0x40023800
- 80033f4:	0800d030 	.word	0x0800d030
+ 80033f4:	0800d02c 	.word	0x0800d02c
  80033f8:	20000000 	.word	0x20000000
  80033fc:	20000004 	.word	0x20000004
 
@@ -8198,7 +8201,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  80035f8:	4618      	mov	r0, r3
  80035fa:	bd80      	pop	{r7, pc}
  80035fc:	40023800 	.word	0x40023800
- 8003600:	0800d040 	.word	0x0800d040
+ 8003600:	0800d03c 	.word	0x0800d03c
 
 08003604 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -8224,7 +8227,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8003620:	4618      	mov	r0, r3
  8003622:	bd80      	pop	{r7, pc}
  8003624:	40023800 	.word	0x40023800
- 8003628:	0800d040 	.word	0x0800d040
+ 8003628:	0800d03c 	.word	0x0800d03c
 
 0800362c <HAL_RCCEx_PeriphCLKConfig>:
   *        domain (RTC and RCC_BDCR register expect BKPSRAM) will be reset
@@ -13512,11 +13515,11 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  80057d4:	e7ee      	b.n	80057b4 <_printf_float+0x2b8>
  80057d6:	bf00      	nop
  80057d8:	7fefffff 	.word	0x7fefffff
- 80057dc:	0800d054 	.word	0x0800d054
- 80057e0:	0800d058 	.word	0x0800d058
- 80057e4:	0800d060 	.word	0x0800d060
- 80057e8:	0800d05c 	.word	0x0800d05c
- 80057ec:	0800d064 	.word	0x0800d064
+ 80057dc:	0800d050 	.word	0x0800d050
+ 80057e0:	0800d054 	.word	0x0800d054
+ 80057e4:	0800d05c 	.word	0x0800d05c
+ 80057e8:	0800d058 	.word	0x0800d058
+ 80057ec:	0800d060 	.word	0x0800d060
  80057f0:	9a0a      	ldr	r2, [sp, #40]	; 0x28
  80057f2:	6da3      	ldr	r3, [r4, #88]	; 0x58
  80057f4:	429a      	cmp	r2, r3
@@ -14007,8 +14010,8 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  8005c80:	f104 0619 	add.w	r6, r4, #25
  8005c84:	e7f5      	b.n	8005c72 <_printf_i+0x22e>
  8005c86:	bf00      	nop
- 8005c88:	0800d066 	.word	0x0800d066
- 8005c8c:	0800d077 	.word	0x0800d077
+ 8005c88:	0800d062 	.word	0x0800d062
+ 8005c8c:	0800d073 	.word	0x0800d073
 
 08005c90 <_scanf_float>:
  8005c90:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -14402,7 +14405,7 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  80060a2:	2500      	movs	r5, #0
  80060a4:	e635      	b.n	8005d12 <_scanf_float+0x82>
  80060a6:	bf00      	nop
- 80060a8:	0800d088 	.word	0x0800d088
+ 80060a8:	0800d084 	.word	0x0800d084
  80060ac:	0800d4a0 	.word	0x0800d4a0
 
 080060b0 <nanf>:
@@ -14742,7 +14745,7 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  80063d2:	f04f 0c01 	mov.w	ip, #1
  80063d6:	e7f6      	b.n	80063c6 <_strtod_l+0x28e>
  80063d8:	0800d2e0 	.word	0x0800d2e0
- 80063dc:	0800d090 	.word	0x0800d090
+ 80063dc:	0800d08c 	.word	0x0800d08c
  80063e0:	7ff00000 	.word	0x7ff00000
  80063e4:	9b1d      	ldr	r3, [sp, #116]	; 0x74
  80063e6:	1c59      	adds	r1, r3, #1
@@ -15027,9 +15030,9 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  80066c0:	f04f 0b00 	mov.w	fp, #0
  80066c4:	6023      	str	r3, [r4, #0]
  80066c6:	e789      	b.n	80065dc <_strtod_l+0x4a4>
- 80066c8:	0800d061 	.word	0x0800d061
- 80066cc:	0800d0a4 	.word	0x0800d0a4
- 80066d0:	0800d059 	.word	0x0800d059
+ 80066c8:	0800d05d 	.word	0x0800d05d
+ 80066cc:	0800d0a0 	.word	0x0800d0a0
+ 80066d0:	0800d055 	.word	0x0800d055
  80066d4:	0800d1e4 	.word	0x0800d1e4
  80066d8:	0800d4a0 	.word	0x0800d4a0
  80066dc:	0800d380 	.word	0x0800d380
@@ -16156,7 +16159,7 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  8007280:	7ff00000 	.word	0x7ff00000
  8007284:	0800d1ea 	.word	0x0800d1ea
  8007288:	0800d1e1 	.word	0x0800d1e1
- 800728c:	0800d065 	.word	0x0800d065
+ 800728c:	0800d061 	.word	0x0800d061
  8007290:	3ff80000 	.word	0x3ff80000
  8007294:	0800d380 	.word	0x0800d380
  8007298:	0800d264 	.word	0x0800d264
@@ -17037,7 +17040,7 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  8007b48:	4683      	mov	fp, r0
  8007b4a:	e7eb      	b.n	8007b24 <_dtoa_r+0xba4>
  8007b4c:	0800d264 	.word	0x0800d264
- 8007b50:	0800d064 	.word	0x0800d064
+ 8007b50:	0800d060 	.word	0x0800d060
  8007b54:	0800d1e1 	.word	0x0800d1e1
 
 08007b58 <rshift>:
@@ -20116,7 +20119,7 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  800985a:	61a3      	str	r3, [r4, #24]
  800985c:	e7d2      	b.n	8009804 <__sinit+0xc>
  800985e:	bf00      	nop
- 8009860:	0800d050 	.word	0x0800d050
+ 8009860:	0800d04c 	.word	0x0800d04c
  8009864:	08009791 	.word	0x08009791
 
 08009868 <__sfp>:
@@ -20171,7 +20174,7 @@ void LIS3DSH_Z_calibrate(float z_min, float z_max)
  80098e6:	603b      	str	r3, [r7, #0]
  80098e8:	e7ee      	b.n	80098c8 <__sfp+0x60>
  80098ea:	bf00      	nop
- 80098ec:	0800d050 	.word	0x0800d050
+ 80098ec:	0800d04c 	.word	0x0800d04c
  80098f0:	ffff0001 	.word	0xffff0001
 
 080098f4 <_fwalk_reent>:
