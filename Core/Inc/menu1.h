@@ -14,16 +14,25 @@
 #include "ssd_1309.h"
 #include "string.h"
 #include "stdio.h"
-#include "MY_LIS3DSH.h"
 
 typedef enum {
-  MENU_1_START = 0,
-  MENU_1_MAIN,
-  MENU_1_WAIT,
-  MENU_2_WAIT,
-}MENU1_StateTypeDef;
+  AXIS_1_MAIN = 0,
+  AXIS_1_WAIT,
+}AXIS_StateTypeDef;
 
+typedef enum {
+  DATA_1_MAIN = 0,
+  //DATA_1_WAIT,
+}DATA_StateTypeDef;
+
+typedef enum
+{
+	axis, data, temperature, humidity,
+} counter_button_t;
+
+
+void menu_display (void);
 void start_menu (void);
-void button_rat_GPIO_A0 (void);
+void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 
 #endif /* INC_MENU1_H_ */

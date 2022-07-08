@@ -51,8 +51,9 @@ Core/Src/ssd_1309.o: ../Core/Src/ssd_1309.c ../Core/Inc/ssd_1309.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/strings.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/string.h \
  ../Core/Inc/font_16.h ../Core/Inc/font_Times_New_Roman.h \
- ../Core/Inc/main.h ../Core/Inc/font_8.h ../Core/Inc/fonts.h \
- ../Core/Inc/fonts.h ../Core/Inc/font_Times_New_Roman.h
+ ../Core/Inc/main.h ../Core/Inc/font_Arial.h ../Core/Inc/font_8.h \
+ ../Core/Inc/fonts.h ../Core/Inc/fonts.h \
+ ../Core/Inc/font_Times_New_Roman.h
 
 ../Core/Inc/ssd_1309.h:
 
@@ -165,6 +166,8 @@ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-201
 ../Core/Inc/font_Times_New_Roman.h:
 
 ../Core/Inc/main.h:
+
+../Core/Inc/font_Arial.h:
 
 ../Core/Inc/font_8.h:
 

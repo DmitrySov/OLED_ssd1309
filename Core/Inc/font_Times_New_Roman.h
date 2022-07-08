@@ -12,14 +12,6 @@
 #include "font_Times_New_Roman.h"
 #include <stdint.h>
 
- typedef enum
-{
-	 pt8 = 8,
-	 pt10 = 10,
-	 pt14 = 14,
-	 pt16 = 16,
-}TimesNewRoman;
-
 /* Font data for Times New Roman 8pt */
 extern const uint8_t timesNewRoman_8ptBitmaps[];
 extern const uint16_t timesNewRoman_8ptDescriptors[226][2];
@@ -27,6 +19,10 @@ extern const uint16_t timesNewRoman_8ptDescriptors[226][2];
 /* Font data for Times New Roman 10pt */
 extern const uint8_t timesNewRoman_10ptBitmaps[];
 extern const uint16_t timesNewRoman_10ptDescriptors[226][2];
+
+/* Font data for Times New Roman 12pt */
+extern const uint8_t timesNewRoman_12ptBitmaps[];
+extern const uint16_t timesNewRoman_12ptDescriptors[226][2];
 
 /* Font data for Times New Roman 14pt */
 extern const uint8_t timesNewRoman_14ptBitmaps[];

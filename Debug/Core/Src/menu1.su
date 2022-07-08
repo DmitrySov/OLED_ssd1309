@@ -1,3 +1,4 @@
-menu1.c:28:8:start_menu	8	static
-menu1.c:114:8:button_rat_GPIO_A0	8	static
-menu1.c:133:8:HAL_GPIO_EXTI_Callback	16	static
+menu1.c:22:6:button_rattle_GPIO	16	static
+menu1.c:41:6:axis_menu	8	static
+menu1.c:78:7:data_menu	8	static
+menu1.c:115:7:menu_display	8	static

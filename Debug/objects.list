@@ -1,5 +1,4 @@
-"./Core/Src/font_16.o"
-"./Core/Src/font_8.o"
+"./Core/Src/font_Arial.o"
 "./Core/Src/font_Times_New_Roman.o"
 "./Core/Src/fonts.o"
 "./Core/Src/main.o"

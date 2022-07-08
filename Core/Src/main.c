@@ -30,7 +30,7 @@
 #include "ssd_1309.h"
 
 #include "menu1.h"
-//#include "MY_LIS3DSH.h"
+#include "MY_LIS3DSH.h"
 //#include "menu.h"
 /* USER CODE END Includes */
 
@@ -80,13 +80,18 @@ static void MX_UART4_Init(void);
 
 uint32_t val_timer;
 float time = 0.0;
-char buf[6];
+
 uint8_t tx_date = 1;
 uint8_t rx_buf [5];
 uint8_t flag_rx = 0;
 uint8_t drdyFlag = 0;
+float x_axis = 00.0000;
+extern uint8_t button_gpio;
+uint8_t flag_menu = 0;
+char buffer1 [16] = {0};
 //uint8_t TX_Data[] = {1, 2, 5, 7, 23, 16};
 
+ LIS3DSH_DataScaled myData;
 
 /**
   * @brief  The application entry point.
@@ -95,7 +100,7 @@ uint8_t drdyFlag = 0;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	LIS3DSH_InitTypeDef myAccConfigDef;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -123,17 +128,20 @@ int main(void)
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
 
- SSD1309_init();
- SSD1309_ClearScreen();
+  SSD1309_init();
+ // SSD1309_ClearScreen();
 
-// SSD1309_ClearScreen();
- /*SSD1309_GotoXY(0, 0);
- Output_String_TimesNewRoman("Накопленный объем:", pt10);
- SSD1309_UpdateScreen();*/
+    myAccConfigDef.dataRate = LIS3DSH_DATARATE_25;
+	myAccConfigDef.fullScale = LIS3DSH_FULLSCALE_4;
+	myAccConfigDef.antiAliasingBW = LIS3DSH_FILTER_BW_50;
+	myAccConfigDef.enableAxes = LIS3DSH_XYZ_ENABLE;
+	myAccConfigDef.interruptEnable = true;
+	LIS3DSH_Init(&hspi1, &myAccConfigDef);
 
- //HAL_SPI_Receive_DMA(&hspi1, rx_buf, sizeof(rx_buf));
+	LIS3DSH_X_calibrate(-1000.0, 980.0);
+	LIS3DSH_Y_calibrate(-1020.0, 1040.0);
+	LIS3DSH_Z_calibrate(-920.0, 1040.0);
 
- //HAL_SPI_Transmit(&hspi1, &tx_date, sizeof(tx_date), 100);
 
   /* USER CODE END 2 */
 
@@ -141,19 +149,51 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
   while (1)
-  {
-	  //HAL_Delay(300);
-	 // HAL_SPI_Transmit(&hspi1, &tx_date, sizeof(tx_date), 100);
-	  //HAL_SPI_Transmit_DMA(&hspi1, &tx_date, sizeof(tx_date));
-	  //HAL_SPI_Receive_DMA(&hspi1, rx_buf, sizeof(rx_buf));
-	 // HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+{
 
-	  start_menu();
-	 // main_menu1();
+	/*  button_rattle_GPIO (GPIOA, GPIO_PIN_0);
+	if (button_gpio == 1)
+	{
+		flag_menu = 1;
+		button_gpio = 0;*/
+		//counter++;
+		//menu_display();
+	/*}
+	if(flag_menu == 1)
+	{
+		menu_display();
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+	}*/
+
+	if (drdyFlag == 1)
+	{
+		drdyFlag = 0;
+		x_axis = LIS3DSH_GetDataScaled_x();
+	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
+	  HAL_Delay(1000);
+	  SendCommand(0xC8);
+	  		SendCommand(0x20);
+	  		SendCommand(0x00);
+	  		SendCommand(0x21);
+	  		SendCommand(0x00);
+	  		SendCommand(0x7F);
+	  		SendCommand(0x22);
+	  		SendCommand(0x00);
+	  		SendCommand(0x07);
+	  		//SSD1309_init();
+	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+	  		//SSD1309_ClearScreen();
+	  		SSD1309_Clear();
+	  		SSD1309_GotoXY(0, 0);
+	  		Output_String_Arial("Изменения по Х:", pt12);
+	  		/*SSD1309_GotoXY(10, 12);
+	  		sprintf(buffer1, "%2.4f", x_axis);
+	  		Output_String_Arial(buffer1, pt12);*/
+	  		SSD1309_UpdateScreen_1();
+	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
   }
   /* USER CODE END 3 */
 }
@@ -506,6 +546,17 @@ static void MX_GPIO_Init(void)
 		flag_rx = 1;
 }*/
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+   {
+     /* Prevent unused argument(s) compilation warning */
+     //UNUSED(GPIO_Pin);
+     /* NOTE: This function Should not be modified, when the callback is needed,
+              the HAL_GPIO_EXTI_Callback could be implemented in the user file
+      */
+
+   	drdyFlag = 1;
+   	//HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+   }
 /* USER CODE END 4 */
 
 /**

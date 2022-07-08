@@ -9,11 +9,13 @@
 #include "fonts.h"
 #include "font_Times_New_Roman.h"
 /* Declarations and definitions ----------------------------------------------*/
-static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE] = {0};
+static uint8_t pixelBuffer[SSD1309_BUFFER_SIZE];
 
 /* Functions -----------------------------------------------------------------*/
 static void SetPixel(uint8_t x, uint8_t y);
 
+/* SSD1306 data buffer */
+static uint8_t SSD1306_Buffer[SSD1309_WIDTH * SSD1309_HEIGHT / 8];
 /* Private variable -----------------------------------------------------------------*/
  SSD1309_t SSD1309;
 
@@ -32,7 +34,8 @@ static void SetPixel(uint8_t x, uint8_t y);
     Reset_ssd1309();
 	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, GPIO_PIN_RESET);  // CS = 0
 	SendCommand(0xAE);	// display off
-	SSD1309_ClearScreen();
+	//SSD1309_ClearScreen();
+	SSD1309_Clear();
 
 	SendCommand(0xB0);
 	SendCommand(0x81);
@@ -144,7 +147,7 @@ static void SetPixel(uint8_t x, uint8_t y);
  *
  * on return:		-
  ------------------------------------------------------------------------------------*/
-   void Output_String_TimesNewRoman(const char *string, TimesNewRoman PtType)
+   void Output_String_TimesNewRoman(const char *string, fontSize PtType)
    {
     	while (*string != 0)
      {
@@ -163,7 +166,7 @@ static void SetPixel(uint8_t x, uint8_t y);
  *
  * on return:			-
  ------------------------------------------------------------------------------------*/
-   void Output_Char_TimesNewRoman(char out_char, TimesNewRoman PtType)
+   void Output_Char_TimesNewRoman(char out_char, fontSize PtType)
   {
   	uint16_t width_bitmap, height, begin_bitmap;
   	uint8_t b;
@@ -182,6 +185,11 @@ static void SetPixel(uint8_t x, uint8_t y);
   		width_bitmap = timesNewRoman_10ptDescriptors[out_char -' '][0];
   		height = 2;
   		break;
+	case pt12:
+		begin_bitmap = timesNewRoman_12ptDescriptors[out_char - ' '][1];
+		width_bitmap = timesNewRoman_12ptDescriptors[out_char - ' '][0];
+		height = 3;
+		break;
     case pt14:
   	  	begin_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][1];
   	  	width_bitmap = timesNewRoman_14ptDescriptors[out_char -' '][0];
@@ -202,6 +210,7 @@ static void SetPixel(uint8_t x, uint8_t y);
   			if(PtType == 14){b = timesNewRoman_14ptBitmaps[begin_bitmap + i];}
   			else if(PtType == 8){b = timesNewRoman_8ptBitmaps[begin_bitmap + i];}
   			else if(PtType == 10){b = timesNewRoman_10ptBitmaps[begin_bitmap + i];}
+  			else if(PtType == 12){b = timesNewRoman_12ptBitmaps[begin_bitmap + i];}
   			else if(PtType == 16){b = timesNewRoman_16ptBitmaps[begin_bitmap + i];}
   			a |= b << (((height - 1) - i) * 8);
   		}
@@ -221,7 +230,111 @@ static void SetPixel(uint8_t x, uint8_t y);
   	  SSD1309.CurrentX += width_bitmap + 1;
   }
 
+/*----------------------------------------------------------------------------------
+ * Function:		Output_String_TimesNewRoman
+ *----------------------------------------------------------------------------------
+ * description:		- writing a string Times New Roman
+ * parameters:		- const char *string
+ *
+ * on return:		-
+ ------------------------------------------------------------------------------------*/
+void Output_String_Arial(const char *string, fontSize PtType)
+{
+	while (*string != 0)
+	{
+		if (*string < 0x100) // 256
+		{
+			Output_Char_Arial(*string, PtType);
+		}
+		string++;
+	}
+}
+/*----------------------------------------------------------------------------------
+ * Function:		Output_Char_TimesNewRoman
+ *----------------------------------------------------------------------------------
+ * description:		- writing a char Times New Roman
+ * parameters:		- char out_char
+ *
+ * on return:			-
+ ------------------------------------------------------------------------------------*/
+void Output_Char_Arial(char out_char, fontSize PtType)
+{
+	uint16_t width_bitmap, height, begin_bitmap;
+	uint8_t b;
+	uint32_t a = 0;
+	uint8_t x0, y0;
 
+	switch (PtType)
+	{
+	case pt8:
+		begin_bitmap = Arial_8ptDescriptors[out_char - ' '][1];
+		width_bitmap = Arial_8ptDescriptors[out_char - ' '][0];
+		height = 2;
+		break;
+	case pt10:
+		begin_bitmap = Arial_10ptDescriptors[out_char - ' '][1];
+		width_bitmap = Arial_10ptDescriptors[out_char - ' '][0];
+		height = 2;
+		break;
+	case pt12:
+		begin_bitmap = Arial_12ptDescriptors[out_char - ' '][1];
+		width_bitmap = Arial_12ptDescriptors[out_char - ' '][0];
+		height = 3;
+		break;
+	case pt14:
+		begin_bitmap = Arial_14ptDescriptors[out_char - ' '][1];
+		width_bitmap = Arial_14ptDescriptors[out_char - ' '][0];
+		height = 3;
+		break;
+	/*case pt16:
+		begin_bitmap = Arial_16ptDescriptors[out_char - ' '][1];
+		width_bitmap = Arial_16ptDescriptors[out_char - ' '][0];
+		height = 3;
+		break;*/
+	}
+	/* getting bytes horizontally */
+	for (x0 = 1; x0 <= width_bitmap; x0++)
+	{
+		// writing vertical bytes into one
+		for (uint8_t i = 0; i < height; i++)
+		{
+			if (PtType == 14)
+			{
+				b = Arial_14ptBitmaps[begin_bitmap + i];
+			}
+			else if (PtType == 8)
+			{
+				b = Arial_8ptBitmaps[begin_bitmap + i];
+			}
+			else if (PtType == 10)
+			{
+				b = Arial_10ptBitmaps[begin_bitmap + i];
+			}
+			else if (PtType == 12)
+			{
+				b = Arial_12ptBitmaps[begin_bitmap + i];
+			}
+			/*else if (PtType == 16)
+			{
+				b = Arial_16ptBitmaps[begin_bitmap + i];
+			}*/
+			a |= b << (((height - 1) - i) * 8);
+		}
+		/* writing height byte pixels */
+		for (y0 = 0; y0 < height * 8; y0++)
+		{
+			if ((a >> y0) & 1)
+			{
+				SetPixel(SSD1309.CurrentX + x0, SSD1309.CurrentY + y0);
+			}
+		}
+		a = 0;
+		/* begin next vertical bytes */
+		begin_bitmap = begin_bitmap + height;
+	}
+	/* Increase pointer */
+	SSD1309.CurrentX += width_bitmap + 2;
+}
  /*----------------------------------------------------------------------------------
   * Function:		Output_String_16pt
   *----------------------------------------------------------------------------------
@@ -313,6 +426,17 @@ static void SetPixel(uint8_t x, uint8_t y);
     }
     SSD1309_UpdateScreen();
   }
+
+  void SSD1309_Fill(void) {
+  	/* Set memory */
+  	memset(SSD1306_Buffer,  0x00, sizeof(SSD1306_Buffer));
+  }
+
+  void SSD1309_Clear (void)
+  {
+  	SSD1309_Fill();
+    SSD1309_UpdateScreen_1();
+  }
   /*----------------------------------------------------------------------------------
    * Function:		SSD1309_UpdateScreen
    *----------------------------------------------------------------------------------
@@ -329,20 +453,22 @@ static void SetPixel(uint8_t x, uint8_t y);
 	  }
   }
 
-/*  void SSD1309_UpdateScreen_1(void)
+   void SSD1309_UpdateScreen_1(void)
     {
-  	  for(uint8_t m = 0; m < SSD1309_HEIGHT/8; i++)
+  	  for(uint8_t m = 0; m < 8; m++)
   	  {
   		  SendCommand(0xB0 + m);
   		  SendCommand(0x00 + SSD1306_X_OFFSET_LOWER);
   		  SendCommand(0x10 + SSD1306_X_OFFSET_UPPER);
+  		  uint16_t a = m*128;
   		  	 for(uint8_t i = 0; i < 128; i++)
   		  	 {
+  		  		 a++;
 				//dt[i+1] = data[i];
-  		  		SendData(pixelBuffer[i*m]);
+  		  		SendData(pixelBuffer[a]);
   		  	 }
   	  }
-    }*/
+    }
 
   /*for(uint8_t i = 0; i < SSD1306_HEIGHT/8; i++) {
           ssd1306_WriteCommand(0xB0 + i); // Set the current RAM page address.

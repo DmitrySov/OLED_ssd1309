@@ -52,7 +52,7 @@ Core/Src/menu1.o: ../Core/Src/menu1.c ../Core/Inc/main.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/strings.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/string.h \
  ../Core/Inc/font_16.h ../Core/Inc/font_Times_New_Roman.h \
- ../Core/Inc/font_8.h ../Core/Inc/fonts.h \
+ ../Core/Inc/font_Arial.h ../Core/Inc/font_8.h ../Core/Inc/fonts.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/stdio.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/types.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/endian.h \
@@ -65,8 +65,7 @@ Core/Src/menu1.o: ../Core/Src/menu1.c ../Core/Inc/main.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_pthreadtypes.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/sched.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/types.h \
- C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/stdio.h \
- C:/Users/sovetnikov/STM32CubeIDE/workspace_1.8.0/OLED_ssd1309/MY_LIS3DSH/MY_LIS3DSH.h
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/stdio.h
 
 ../Core/Inc/main.h:
 
@@ -182,6 +181,8 @@ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-201
 
 ../Core/Inc/font_Times_New_Roman.h:
 
+../Core/Inc/font_Arial.h:
+
 ../Core/Inc/font_8.h:
 
 ../Core/Inc/fonts.h:
@@ -211,5 +212,3 @@ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-201
 C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/types.h:
 
 C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/stdio.h:
-
-C:/Users/sovetnikov/STM32CubeIDE/workspace_1.8.0/OLED_ssd1309/MY_LIS3DSH/MY_LIS3DSH.h:

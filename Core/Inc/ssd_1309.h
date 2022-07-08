@@ -16,11 +16,19 @@
  #include <string.h>
  #include "font_16.h"
  #include "font_Times_New_Roman.h"
+ #include "font_Arial.h"
 // #include "font_14.h"
  #include "font_8.h"
  #include "fonts.h"
 
-
+ typedef enum
+{
+	 pt8 = 8,
+	 pt10 = 10,
+	 pt12 = 12,
+	 pt14 = 14,
+	 pt16 = 16,
+}fontSize;
 
  /* Declarations and definitions ----------------------------------------------*/
  #define SSD1309_X_SIZE                                128
@@ -49,16 +57,15 @@ typedef struct {
  void Init_sector(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2);
 
  void SSD1309_ClearScreen(void);
+ void SSD1309_Fill(void);
+ void SSD1309_Clear(void);
+
  void SSD1309_UpdateScreen(void);
  void SSD1309_UpdateScreen_1(void);
  void Cursor_Screen(void);
 
  void Output_Char_16pt(uint8_t out_char);
  void Output_String_16pt(const char *string);
-
- void SSD1309_ClearScreen(void);
- void SSD1309_UpdateScreen(void);
- void SSD1309_UpdateScreen_new(void); void Cursor_Screen(void);
 
  char SSD1309_WriteString(char* str, FontDef_t* Font);
  char SSD1309_WriteChar(char ch, FontDef_t* Font);
@@ -67,7 +74,9 @@ typedef struct {
  void SSD1309_DrawFilledRect(uint8_t xStart, uint8_t xEnd, uint8_t yStart, uint8_t yEnd);
  void ssd1309_DrawCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r);
 
- void Output_Char_TimesNewRoman(char out_char, TimesNewRoman PtType);
- //void Output_Char_TimesNewRoman(char out_char, uint8_t pt);
- void Output_String_TimesNewRoman(const char *string, uint8_t pt);
+ void Output_Char_TimesNewRoman(char out_char, fontSize PtType);
+ void Output_String_TimesNewRoman(const char *string, fontSize PtType);
+
+ void Output_Char_Arial(char out_char, fontSize PtType);
+ void Output_String_Arial(const char *string, fontSize PtType);
  #endif /* SSD_1309_SSD_1309_H_ */
