@@ -429,13 +429,13 @@ void Output_Char_Arial(char out_char, fontSize PtType)
 
   void SSD1309_Fill(void) {
   	/* Set memory */
-  	memset(SSD1306_Buffer,  0x00, sizeof(SSD1306_Buffer));
+  	memset(pixelBuffer,  0x00, sizeof(pixelBuffer));
   }
 
   void SSD1309_Clear (void)
   {
   	SSD1309_Fill();
-    SSD1309_UpdateScreen_1();
+    //SSD1309_UpdateScreen_1();
   }
   /*----------------------------------------------------------------------------------
    * Function:		SSD1309_UpdateScreen

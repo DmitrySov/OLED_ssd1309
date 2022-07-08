@@ -189,9 +189,9 @@ int main(void)
 	  		SSD1309_Clear();
 	  		SSD1309_GotoXY(0, 0);
 	  		Output_String_Arial("Изменения по Х:", pt12);
-	  		/*SSD1309_GotoXY(10, 12);
+	  		SSD1309_GotoXY(10, 12);
 	  		sprintf(buffer1, "%2.4f", x_axis);
-	  		Output_String_Arial(buffer1, pt12);*/
+	  		Output_String_Arial(buffer1, pt12);
 	  		SSD1309_UpdateScreen_1();
 	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
   }
