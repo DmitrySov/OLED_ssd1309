@@ -174,7 +174,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  HAL_Delay(1000);
-	  SendCommand(0xC8);
+	 /* SendCommand(0xC8);
 	  		SendCommand(0x20);
 	  		SendCommand(0x00);
 	  		SendCommand(0x21);
@@ -182,7 +182,7 @@ int main(void)
 	  		SendCommand(0x7F);
 	  		SendCommand(0x22);
 	  		SendCommand(0x00);
-	  		SendCommand(0x07);
+	  		SendCommand(0x07);*/
 	  		//SSD1309_init();
 	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
 	  		//SSD1309_ClearScreen();
@@ -190,11 +190,11 @@ int main(void)
 	  		SSD1309_GotoXY(0, 0);
 	  		Output_String_Arial("Изменения по Х:", pt12);
 	  		SSD1309_GotoXY(10, 12);
-	  		sprintf(buffer1, "%d", a);
+	  		snprintf(buffer1, 16, "%2.4f", x_axis);
 	  		Output_String_Arial(buffer1, pt12);
 	  		SSD1309_UpdateScreen_1();
 	  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-	  		a++;
+	  		//a++;
   }
   /* USER CODE END 3 */
 }
