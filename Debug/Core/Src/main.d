@@ -68,6 +68,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/font_Times_New_Roman.h ../Core/Inc/fonts.h \
  ../Core/Inc/ssd_1309.h ../Core/Inc/main.h ../Core/Inc/font_Arial.h \
  ../Core/Inc/fonts.h ../Core/Inc/menu1.h ../Core/Inc/ssd_1309.h \
+ ../Core/Inc/printf.h \
  C:/Users/sovetnikov/STM32CubeIDE/workspace_1.8.0/OLED_ssd1309/MY_LIS3DSH/MY_LIS3DSH.h \
  ../Core/Inc/printf.h
 
@@ -226,6 +227,8 @@ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-201
 ../Core/Inc/menu1.h:
 
 ../Core/Inc/ssd_1309.h:
+
+../Core/Inc/printf.h:
 
 C:/Users/sovetnikov/STM32CubeIDE/workspace_1.8.0/OLED_ssd1309/MY_LIS3DSH/MY_LIS3DSH.h:
 

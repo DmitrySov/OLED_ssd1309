@@ -439,7 +439,6 @@ void Output_Char_Arial(char out_char, fontSize PtType)
   void SSD1309_Clear (void)
   {
   	SSD1309_Fill();
-    //SSD1309_UpdateScreen_1();
   }
   /*----------------------------------------------------------------------------------
    * Function:		SSD1309_UpdateScreen

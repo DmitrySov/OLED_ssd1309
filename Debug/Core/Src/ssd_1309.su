@@ -15,10 +15,10 @@ ssd_1309.c:408:15:SetPixel	16	static
 ssd_1309.c:425:8:SSD1309_ClearScreen	16	static
 ssd_1309.c:434:8:SSD1309_Fill	8	static
 ssd_1309.c:439:8:SSD1309_Clear	8	static
-ssd_1309.c:452:8:SSD1309_UpdateScreen	16	static
-ssd_1309.c:460:9:SSD1309_UpdateScreen_1	16	static
-ssd_1309.c:490:8:Cursor_Screen	16	static
-ssd_1309.c:519:8:SSD1309_WriteString	16	static
-ssd_1309.c:546:8:SSD1309_WriteChar	24	static
-ssd_1309.c:584:8:SSD1309_DrawFilledRect	32	static
-ssd_1309.c:602:10:ssd1309_DrawCircle	32	static
+ssd_1309.c:451:8:SSD1309_UpdateScreen	16	static
+ssd_1309.c:459:9:SSD1309_UpdateScreen_1	16	static
+ssd_1309.c:489:8:Cursor_Screen	16	static
+ssd_1309.c:518:8:SSD1309_WriteString	16	static
+ssd_1309.c:545:8:SSD1309_WriteChar	24	static
+ssd_1309.c:583:8:SSD1309_DrawFilledRect	32	static
+ssd_1309.c:601:10:ssd1309_DrawCircle	32	static

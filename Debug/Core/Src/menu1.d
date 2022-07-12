@@ -65,7 +65,8 @@ Core/Src/menu1.o: ../Core/Src/menu1.c ../Core/Inc/main.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/_pthreadtypes.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/sched.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/types.h \
- C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/stdio.h
+ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/stdio.h \
+ ../Core/Inc/printf.h
 
 ../Core/Inc/main.h:
 
@@ -212,3 +213,5 @@ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-201
 C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/types.h:
 
 C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/stdio.h:
+
+../Core/Inc/printf.h:
