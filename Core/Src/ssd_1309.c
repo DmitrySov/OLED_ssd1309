@@ -259,8 +259,8 @@ void Output_String_Arial(const char *string, fontSize PtType)
  ------------------------------------------------------------------------------------*/
 void Output_Char_Arial(char out_char, fontSize PtType)
 {
-	uint16_t width_bitmap, height, begin_bitmap;
-	uint8_t b;
+	uint16_t begin_bitmap;
+	uint8_t b, offset, height, width_bitmap;
 	uint32_t a = 0;
 	uint8_t x0, y0;
 
@@ -270,21 +270,25 @@ void Output_Char_Arial(char out_char, fontSize PtType)
 		begin_bitmap = Arial_8ptDescriptors[out_char - ' '][1];
 		width_bitmap = Arial_8ptDescriptors[out_char - ' '][0];
 		height = 2;
+		offset = 2;
 		break;
 	case pt10:
 		begin_bitmap = Arial_10ptDescriptors[out_char - ' '][1];
 		width_bitmap = Arial_10ptDescriptors[out_char - ' '][0];
 		height = 2;
+		offset = 2;
 		break;
 	case pt12:
 		begin_bitmap = Arial_12ptDescriptors[out_char - ' '][1];
 		width_bitmap = Arial_12ptDescriptors[out_char - ' '][0];
-		height = 3;
+		height = 2;
+		offset = 3;
 		break;
 	case pt14:
 		begin_bitmap = Arial_14ptDescriptors[out_char - ' '][1];
 		width_bitmap = Arial_14ptDescriptors[out_char - ' '][0];
 		height = 3;
+		offset = 3;
 		break;
 	/*case pt16:
 		begin_bitmap = Arial_16ptDescriptors[out_char - ' '][1];
@@ -330,7 +334,7 @@ void Output_Char_Arial(char out_char, fontSize PtType)
 		}
 		a = 0;
 		/* begin next vertical bytes */
-		begin_bitmap = begin_bitmap + height;
+		begin_bitmap = begin_bitmap + offset;
 	}
 	/* Increase pointer */
 	SSD1309.CurrentX += width_bitmap + 2;

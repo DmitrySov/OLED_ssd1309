@@ -11,6 +11,7 @@ C_SRCS += \
 ../Core/Src/main.c \
 ../Core/Src/menu.c \
 ../Core/Src/menu1.c \
+../Core/Src/printf.c \
 ../Core/Src/ssd_1309.c \
 ../Core/Src/stm32f4xx_hal_msp.c \
 ../Core/Src/stm32f4xx_it.c \
@@ -25,6 +26,7 @@ OBJS += \
 ./Core/Src/main.o \
 ./Core/Src/menu.o \
 ./Core/Src/menu1.o \
+./Core/Src/printf.o \
 ./Core/Src/ssd_1309.o \
 ./Core/Src/stm32f4xx_hal_msp.o \
 ./Core/Src/stm32f4xx_it.o \
@@ -39,6 +41,7 @@ C_DEPS += \
 ./Core/Src/main.d \
 ./Core/Src/menu.d \
 ./Core/Src/menu1.d \
+./Core/Src/printf.d \
 ./Core/Src/ssd_1309.d \
 ./Core/Src/stm32f4xx_hal_msp.d \
 ./Core/Src/stm32f4xx_it.d \
@@ -54,7 +57,7 @@ Core/Src/%.o: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/font_Arial.d ./Core/Src/font_Arial.o ./Core/Src/font_Times_New_Roman.d ./Core/Src/font_Times_New_Roman.o ./Core/Src/fonts.d ./Core/Src/fonts.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/menu.d ./Core/Src/menu.o ./Core/Src/menu1.d ./Core/Src/menu1.o ./Core/Src/ssd_1309.d ./Core/Src/ssd_1309.o ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o
+	-$(RM) ./Core/Src/font_Arial.d ./Core/Src/font_Arial.o ./Core/Src/font_Times_New_Roman.d ./Core/Src/font_Times_New_Roman.o ./Core/Src/fonts.d ./Core/Src/fonts.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/menu.d ./Core/Src/menu.o ./Core/Src/menu1.d ./Core/Src/menu1.o ./Core/Src/printf.d ./Core/Src/printf.o ./Core/Src/ssd_1309.d ./Core/Src/ssd_1309.o ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o
 
 .PHONY: clean-Core-2f-Src
 
