@@ -52,19 +52,24 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
   {
 	case DATA_TIME_MAIN:
 	{
+		//data_time_switch = DATA_TIME_1_WAIT;
 		SSD1309_Clear();
-		SSD1309_GotoXY(0, 0);
-		Output_String_Arial("Дата", pt12);
-		SSD1309_GotoXY(10, 12);
+		SSD1309_GotoXY(40, 10);
+		Output_String_Arial("12:59:00", pt12);
+		SSD1309_GotoXY(25, 32);
 		Output_String_Arial("07-07-2022", pt12);
 		SSD1309_UpdateScreen_1();
 		break;
 	}
-	/*case DATA_1_WAIT:
+	/*case DATA_TIME_1_WAIT:
 
-		if ((HAL_GetTick() - timer) > 1000)
+		if ((HAL_GetTick() - timer) > 6000)
 		{
-			axis_switch = DATA_1_MAIN;
+			data_time_switch = DATA_TIME_MAIN;
+			flag_menu = 0;
+			a = 0;
+			SSD1309_Clear();
+			SSD1309_UpdateScreen_1();
 			timer = HAL_GetTick();
 			break;
 		}*/
@@ -79,11 +84,13 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  	{
  		SSD1309_Clear();
  		SSD1309_GotoXY(0, 0);
- 		Output_String_Arial("Текущие параметры:", pt12);
- 		SSD1309_GotoXY(10, 14);
- 		Output_String_Arial("Расход Q [м3/ч]", pt12);
- 		SSD1309_GotoXY(10, 24);
- 		Output_String_Arial("8436485,25", pt12);
+ 		Output_String_Arial("Текущие параметры:", pt10);
+ 		SSD1309_GotoXY(5, 20);
+ 		Output_String_Arial("Расход Q [м /ч]", pt12);
+ 		SSD1309_GotoXY(88, 15);
+ 		Output_String_Arial("3", pt8);
+ 		SSD1309_GotoXY(10, 40);
+ 		Output_String_Arial("  0000000,00", pt12);
  		SSD1309_UpdateScreen_1();
  		break;
  	}
@@ -106,11 +113,13 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 	{
 		SSD1309_Clear();
 		SSD1309_GotoXY(0, 0);
-		Output_String_Arial("Текущие параметры:", pt12);
-		SSD1309_GotoXY(10, 14);
-		Output_String_Arial("Накопленный объем [м3]", pt12);
-		SSD1309_GotoXY(10, 24);
-		Output_String_Arial("8436485,25", pt12);
+		Output_String_Arial("Текущие параметры:", pt10);
+		SSD1309_GotoXY(5, 20);
+		Output_String_Arial("Объем накоп. [м ]", pt12);
+		SSD1309_GotoXY(113, 15);
+		Output_String_Arial("3", pt8);
+		SSD1309_GotoXY(10, 40);
+		Output_String_Arial("  0000000,00", pt12);
 		SSD1309_UpdateScreen_1();
 		break;
 	}
@@ -133,11 +142,12 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 	{
 		SSD1309_Clear();
 		SSD1309_GotoXY(0, 0);
-		Output_String_Arial("Текущие параметры:", pt12);
-		SSD1309_GotoXY(10, 14);
-		Output_String_Arial("T =", pt12);
-		SSD1309_GotoXY(10, 24);
-		Output_String_Arial("P =", pt12);
+		Output_String_Arial("Текущие параметры:", pt10);
+		SSD1309_GotoXY(3, 20);
+		Output_String_Arial("Темп. +27,5  С", pt12);
+		ssd1309_DrawCircle(89, 21, 2);
+		SSD1309_GotoXY(3, 40);
+		Output_String_Arial("Давл. 105,35 кПа", pt12);
 		SSD1309_UpdateScreen_1();
 		break;
 	}
@@ -161,10 +171,10 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 		SSD1309_Clear();
 		SSD1309_GotoXY(0, 0);
 		Output_String_Arial("Состояние ЭП:", pt12);
-		SSD1309_GotoXY(10, 14);
-		Output_String_Arial("Основная =", pt12);
-		SSD1309_GotoXY(10, 24);
-		Output_String_Arial("Резервная =", pt12);
+		SSD1309_GotoXY(5, 20);
+		Output_String_Arial("Основ.      75%", pt12);
+		SSD1309_GotoXY(5, 40);
+		Output_String_Arial("Доп.         100%", pt12);
 		SSD1309_UpdateScreen_1();
 		break;
 	}
@@ -218,19 +228,19 @@ void axis_menu (void)
 	{
 		data_time();
 	}
-	if ((flag_menu == 1) && (a == 2))
+	else if ((flag_menu == 1) && (a == 2))
 	{
 		volume();
 	}
-	if ((flag_menu == 1) && (a == 3))
+	else if ((flag_menu == 1) && (a == 3))
 	{
 		expenses();
 	}
-	if ((flag_menu == 1) && (a == 4))
+	else if ((flag_menu == 1) && (a == 4))
 	{
 		temp_press();
 	}
-	if ((flag_menu == 1) && (a == 5))
+	else if ((flag_menu == 1) && (a == 5))
 	{
 		battery_status();
 		a = 0;

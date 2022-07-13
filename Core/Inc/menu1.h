@@ -18,7 +18,7 @@
 
 typedef enum {
   DATA_TIME_MAIN = 0,
-  //DATA_1_WAIT,
+  DATA_TIME_1_WAIT,
 }DATA_TIME_StateTypeDef;
 
 typedef enum{

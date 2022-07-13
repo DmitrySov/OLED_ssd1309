@@ -1,8 +1,8 @@
 menu1.c:30:6:button_rattle_GPIO	16	static
 menu1.c:49:8:data_time	8	static
-menu1.c:74:8:volume	8	static
-menu1.c:101:8:expenses	8	static
-menu1.c:128:8:temp_press	8	static
-menu1.c:155:8:battery_status	8	static
-menu1.c:182:6:axis_menu	8	static
-menu1.c:208:9:menu_display	8	static
+menu1.c:79:8:volume	8	static
+menu1.c:108:8:expenses	8	static
+menu1.c:137:8:temp_press	8	static
+menu1.c:165:8:battery_status	8	static
+menu1.c:192:6:axis_menu	8	static
+menu1.c:218:9:menu_display	8	static
