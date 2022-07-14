@@ -23,7 +23,7 @@ typedef enum {
 
 typedef enum{
   VOLUME_MAIN = 0,
-  //VOLUME_WAIT,
+  VOLUME_WAIT,
 }VOLUME_StateTypeDef;
 
 typedef enum{

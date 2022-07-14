@@ -12,6 +12,7 @@
 uint32_t value = 245678;
 char buff_1 [16] = {0};
 uint32_t timer = 0;
+uint32_t timer1 = 0;
 uint8_t button_gpio = 0;
 extern float x_axis;
 
@@ -45,14 +46,13 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 	 	   flag_key1_press = 1;
 	 	 }
  }
-
   void data_time (void)
 {
  switch (data_time_switch)
   {
 	case DATA_TIME_MAIN:
 	{
-		//data_time_switch = DATA_TIME_1_WAIT;
+		data_time_switch = DATA_TIME_1_WAIT;
 		SSD1309_Clear();
 		SSD1309_GotoXY(40, 10);
 		Output_String_Arial("12:59:00", pt12);
@@ -61,27 +61,32 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 		SSD1309_UpdateScreen_1();
 		break;
 	}
-	/*case DATA_TIME_1_WAIT:
+	case DATA_TIME_1_WAIT:
 
+		//data_time_switch = DATA_TIME_MAIN;
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 		if ((HAL_GetTick() - timer) > 6000)
 		{
-			data_time_switch = DATA_TIME_MAIN;
 			flag_menu = 0;
 			a = 0;
 			SSD1309_Clear();
 			SSD1309_UpdateScreen_1();
 			timer = HAL_GetTick();
+			data_time_switch = DATA_TIME_MAIN;
 			break;
-		}*/
+		}
+	   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
   }
 }
-
   void volume (void)
  {
  	switch (volume_switch)
  	{
  	case VOLUME_MAIN:
  	{
+ 		data_time_switch = DATA_TIME_MAIN;
+ 		//volume_switch = VOLUME_WAIT;
+ 		timer = HAL_GetTick();
  		SSD1309_Clear();
  		SSD1309_GotoXY(0, 0);
  		Output_String_Arial("Текущие параметры:", pt10);
@@ -94,23 +99,26 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  		SSD1309_UpdateScreen_1();
  		break;
  	}
- 		/*case DATA_1_WAIT:
-
- 		 if ((HAL_GetTick() - timer) > 1000)
- 		 {
- 		 axis_switch = DATA_1_MAIN;
- 		 timer = HAL_GetTick();
- 		 break;
- 		 }*/
+ 	case VOLUME_WAIT:
+ 		//volume_switch = VOLUME_MAIN;
+		if ((HAL_GetTick() - timer1) > 3000)
+		{
+			flag_menu = 1;
+			a = 1;
+			SSD1309_Clear();
+			SSD1309_UpdateScreen_1();
+			timer1 = HAL_GetTick();
+			break;
+		}
  	}
  }
-
   void expenses (void)
 {
 	switch (expenses_switch)
 	{
 	case EXPENSES_MAIN:
 	{
+		timer1 = HAL_GetTick();
 		SSD1309_Clear();
 		SSD1309_GotoXY(0, 0);
 		Output_String_Arial("Текущие параметры:", pt10);
@@ -242,8 +250,8 @@ void axis_menu (void)
 	}
 	else if ((flag_menu == 1) && (a == 5))
 	{
-		battery_status();
 		a = 0;
+		battery_status();
 	}
 }
 
