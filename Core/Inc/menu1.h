@@ -28,17 +28,17 @@ typedef enum{
 
 typedef enum{
   EXPENSES_MAIN = 0,
-  //EXPENSES_WAIT,
+  EXPENSES_WAIT,
 }EXPENSES_StateTypeDef;
 
 typedef enum {
   TEMP_PRESS_MAIN = 0,
-  //TEMP_PRESS_WAIT,
+  TEMP_PRESS_WAIT,
 }TEMP_PRESS_StateTypeDef;
 
 typedef enum {
    BATT_STATUS_MAIN = 0,
-  //BATT_STATUS_WAIT,
+   BATT_STATUS_WAIT,
 }BATT_STATUS_StateTypeDef;
 
 typedef enum {
