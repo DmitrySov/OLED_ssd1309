@@ -17,7 +17,7 @@ uint32_t timer1 = 0;
 uint8_t button_gpio = 0;
 extern float x_axis;
 
-uint8_t flag_menu = 0;
+uint8_t flag_tick = 0;
 uint8_t a = 0;
 
 DATA_TIME_StateTypeDef data_time_switch = DATA_TIME_MAIN;
@@ -27,6 +27,7 @@ TEMP_PRESS_StateTypeDef temp_press_switch = TEMP_PRESS_MAIN;
 BATT_STATUS_StateTypeDef battery_status_switch = BATT_STATUS_MAIN;
 
 extern RTC_HandleTypeDef hrtc;
+//extern TIM_HandleTypeDef htim6;
 
 AXIS_StateTypeDef axis_switch = AXIS_1_MAIN;
 counter_button_t counter_button = axis;
@@ -66,8 +67,10 @@ void data_time (void)
   {
 	case DATA_TIME_MAIN:
 	{
+		if (flag_tick == 1){timer = HAL_GetTick();
+			flag_tick = 0;}
 		get_time();
-		battery_status_switch = BATT_STATUS_MAIN;
+		//battery_status_switch = BATT_STATUS_MAIN;
 		//data_time_switch = DATA_TIME_1_WAIT;
 		SSD1309_Clear();
 		SSD1309_GotoXY(40, 10);
@@ -75,10 +78,9 @@ void data_time (void)
 		SSD1309_GotoXY(25, 32);
 		Output_String_Arial(buff_date, pt12);
 		SSD1309_UpdateScreen_1();
-		timer = HAL_GetTick();
 		break;
 	}
-	case DATA_TIME_1_WAIT:
+	/*case DATA_TIME_1_WAIT:
 		if ((HAL_GetTick() - timer) > 6000)
 		{
 			flag_menu = 0;
@@ -88,7 +90,7 @@ void data_time (void)
 			timer = HAL_GetTick();
 			data_time_switch = DATA_TIME_MAIN;
 			break;
-		}
+		}*/
    }
 }
  void volume (void)
@@ -97,9 +99,12 @@ void data_time (void)
    {
  	case VOLUME_MAIN:
  	{
- 		data_time_switch = DATA_TIME_MAIN;
- 		volume_switch = VOLUME_WAIT;
- 		timer = HAL_GetTick();
+ 		if (flag_tick == 1)
+ 			{timer = HAL_GetTick();
+ 			flag_tick = 0;}
+ 		//data_time_switch = DATA_TIME_MAIN;
+ 		//volume_switch = VOLUME_WAIT;
+ 		//timer = HAL_GetTick();
  		SSD1309_Clear();
  		SSD1309_GotoXY(0, 0);
  		Output_String_Arial("Текущие параметры:", pt10);
@@ -112,7 +117,7 @@ void data_time (void)
  		SSD1309_UpdateScreen_1();
  		break;
  	}
- 	case VOLUME_WAIT:
+ 	/*case VOLUME_WAIT:
 		if ((HAL_GetTick() - timer) > 6000)
 		{
 			flag_menu = 0;
@@ -122,7 +127,7 @@ void data_time (void)
 			volume_switch = VOLUME_MAIN;
 			timer = HAL_GetTick();
 			break;
-		}
+		}*/
  	}
  }
   void expenses (void)
@@ -131,9 +136,12 @@ void data_time (void)
 	{
 	case EXPENSES_MAIN:
 	{
-		volume_switch = VOLUME_MAIN;
-		expenses_switch = EXPENSES_WAIT;
-		timer = HAL_GetTick();
+		if (flag_tick == 1)
+			{timer = HAL_GetTick();
+			flag_tick = 0;}
+		//volume_switch = VOLUME_MAIN;
+		//expenses_switch = EXPENSES_WAIT;
+		//timer = HAL_GetTick();
 		SSD1309_Clear();
 		SSD1309_GotoXY(0, 0);
 		Output_String_Arial("Текущие параметры:", pt10);
@@ -146,7 +154,7 @@ void data_time (void)
 		SSD1309_UpdateScreen_1();
 		break;
 	}
-	case EXPENSES_WAIT:
+	/*case EXPENSES_WAIT:
 			if ((HAL_GetTick() - timer) > 6000)
 		{
 			flag_menu = 0;
@@ -156,7 +164,7 @@ void data_time (void)
 			expenses_switch = EXPENSES_MAIN;
 			timer = HAL_GetTick();
 			break;
-		}
+		}*/
 	}
 }
 
@@ -166,9 +174,12 @@ void data_time (void)
 	{
 	case TEMP_PRESS_MAIN:
 	{
-		expenses_switch = EXPENSES_MAIN;
-		temp_press_switch = TEMP_PRESS_WAIT;
-		timer = HAL_GetTick();
+		if (flag_tick == 1)
+			{timer = HAL_GetTick();
+			flag_tick = 0;}
+		//expenses_switch = EXPENSES_MAIN;
+		//temp_press_switch = TEMP_PRESS_WAIT;
+		//timer = HAL_GetTick();
 		SSD1309_Clear();
 		SSD1309_GotoXY(0, 0);
 		Output_String_Arial("Текущие параметры:", pt10);
@@ -180,7 +191,7 @@ void data_time (void)
 		SSD1309_UpdateScreen_1();
 		break;
 	}
-	case TEMP_PRESS_WAIT:
+	/*case TEMP_PRESS_WAIT:
 		if ((HAL_GetTick() - timer) > 6000)
 		{
 			flag_menu = 0;
@@ -190,7 +201,7 @@ void data_time (void)
 			temp_press_switch = TEMP_PRESS_MAIN;
 			timer = HAL_GetTick();
 			break;
-		}
+		}*/
 	}
 }
 void battery_status (void)
@@ -199,9 +210,12 @@ void battery_status (void)
 	{
 	case BATT_STATUS_MAIN:
 	{
-		temp_press_switch = TEMP_PRESS_MAIN;
-		battery_status_switch = BATT_STATUS_WAIT;
-		timer = HAL_GetTick();
+		if (flag_tick == 1)
+			{timer = HAL_GetTick();
+			flag_tick = 0;}
+		//temp_press_switch = TEMP_PRESS_MAIN;
+		//battery_status_switch = BATT_STATUS_WAIT;
+		//timer = HAL_GetTick();
 		SSD1309_Clear();
 		SSD1309_GotoXY(0, 0);
 		Output_String_Arial("Состояние ЭП:", pt12);
@@ -212,7 +226,7 @@ void battery_status (void)
 		SSD1309_UpdateScreen_1();
 		break;
 	}
-    case BATT_STATUS_WAIT:
+    /*case BATT_STATUS_WAIT:
 		 if ((HAL_GetTick() - timer) > 6000)
 		 {
 		 flag_menu = 0;
@@ -224,41 +238,50 @@ void battery_status (void)
 		 battery_status_switch = BATT_STATUS_MAIN;
 		 timer = HAL_GetTick();
 		 break;
-		}
+		}*/
 	}
 }
 
+ void tick_ms(void)
+{
+	 if ((HAL_GetTick() - timer) > 10000)
+	 	 {
+		 	 a = 0;
+	 		 SSD1309_Clear();
+	 		 SSD1309_UpdateScreen_1();
+	 		 flag_tick = 1;
+	 		 timer = HAL_GetTick();
+	 	}
+}
 
    void menu_display (void)
 {
 	button_rattle_GPIO(GPIOA, GPIO_PIN_0);
 	if (button_gpio == 1)
 	{
-		flag_menu = 1;
+		timer = HAL_GetTick();
 		button_gpio = 0;
 		a++;
 	}
-	if ((flag_menu == 1) && (a == 1))
+	if (a == 1)
 	{
-		// flag_menu = 0;
 		data_time();
 	}
-	else if ((flag_menu == 1) && (a == 2))
+	else if (a == 2)
 	{
 		volume();
 	}
-	else if ((flag_menu == 1) && (a == 3))
+	else if (a == 3)
 	{
 		expenses();
 	}
-	else if ((flag_menu == 1) && (a == 4))
+	else if (a == 4)
 	{
 		temp_press();
 	}
-	else if ((flag_menu == 1) && (a == 5))
+	else if (a == 5)
 	{
 		battery_status();
-		//a = 0;
 	}
 	if (a > 5) {a = 0; a++;}
 }
