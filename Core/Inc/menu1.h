@@ -57,6 +57,7 @@ void expenses (void);
 void temp_press(void);
 void battery_status (void);
 
+void get_time(void);
 void menu_display (void);
 void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 

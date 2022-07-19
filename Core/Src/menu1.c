@@ -10,7 +10,8 @@
 
 //double volume = 79831234.95;
 uint32_t value = 245678;
-char buff_1 [16] = {0};
+char buff_time [16] = {0};
+char buff_date [16] = {0};
 uint32_t timer = 0;
 uint32_t timer1 = 0;
 uint8_t button_gpio = 0;
@@ -24,6 +25,8 @@ EXPENSES_StateTypeDef expenses_switch = EXPENSES_MAIN;
 VOLUME_StateTypeDef volume_switch = VOLUME_MAIN;
 TEMP_PRESS_StateTypeDef temp_press_switch = TEMP_PRESS_MAIN;
 BATT_STATUS_StateTypeDef battery_status_switch = BATT_STATUS_MAIN;
+
+extern RTC_HandleTypeDef hrtc;
 
 AXIS_StateTypeDef axis_switch = AXIS_1_MAIN;
 counter_button_t counter_button = axis;
@@ -46,19 +49,31 @@ void button_rattle_GPIO (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 	 	   flag_key1_press = 1;
 	 	 }
  }
-  void data_time (void)
+void get_time(void)
+{
+	RTC_TimeTypeDef sTime = {0};
+	RTC_DateTypeDef sDate = {0};
+
+	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN); // RTC_FORMAT_BIN , RTC_FORMAT_BCD
+    snprintf(buff_time, 15, "%02d:%02d:%02d", sTime.Hours, sTime.Minutes, sTime.Seconds);
+
+    HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+    snprintf(buff_date, 15, "%02d-%02d-%d", sDate.Date, sDate.Month, 2000 + sDate.Year);
+}
+void data_time (void)
 {
  switch (data_time_switch)
   {
 	case DATA_TIME_MAIN:
 	{
+		get_time();
 		battery_status_switch = BATT_STATUS_MAIN;
-		data_time_switch = DATA_TIME_1_WAIT;
+		//data_time_switch = DATA_TIME_1_WAIT;
 		SSD1309_Clear();
 		SSD1309_GotoXY(40, 10);
-		Output_String_Arial("12:59:00", pt12);
+		Output_String_Arial(buff_time, pt12);
 		SSD1309_GotoXY(25, 32);
-		Output_String_Arial("07-07-2022", pt12);
+		Output_String_Arial(buff_date, pt12);
 		SSD1309_UpdateScreen_1();
 		timer = HAL_GetTick();
 		break;
@@ -213,32 +228,7 @@ void battery_status (void)
 	}
 }
 
-void axis_menu (void)
-{
-  switch (axis_switch)
-   {
-	case AXIS_1_MAIN:
-	{
-		axis_switch = AXIS_1_WAIT;
-		SSD1309_Clear();
-		SSD1309_GotoXY(0, 0);
-		Output_String_Arial("Изменения по Х:", pt12);
-		SSD1309_GotoXY(10, 12);
-		sprintf(buff_1, "%2.4f", x_axis);
-		Output_String_Arial(buff_1, pt12);
-		SSD1309_UpdateScreen_1();
-		break;
-	}
-	case AXIS_1_WAIT:
 
-		if ((HAL_GetTick() - timer) > 1000)
-		{
-			axis_switch = AXIS_1_MAIN;
-			timer = HAL_GetTick();
-			break;
-		}
-   }
-}
    void menu_display (void)
 {
 	button_rattle_GPIO(GPIOA, GPIO_PIN_0);
