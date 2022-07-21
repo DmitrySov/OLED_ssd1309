@@ -51,8 +51,7 @@ Core/Src/menu1.o: ../Core/Src/menu1.c ../Core/Inc/main.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/xlocale.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/strings.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/string.h \
- ../Core/Inc/font_16.h ../Core/Inc/font_Times_New_Roman.h \
- ../Core/Inc/font_Arial.h ../Core/Inc/font_8.h ../Core/Inc/fonts.h \
+ ../Core/Inc/font_Times_New_Roman.h ../Core/Inc/font_Arial.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/stdio.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/types.h \
  C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/machine/endian.h \
@@ -178,15 +177,9 @@ C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-201
 
 C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/sys/string.h:
 
-../Core/Inc/font_16.h:
-
 ../Core/Inc/font_Times_New_Roman.h:
 
 ../Core/Inc/font_Arial.h:
-
-../Core/Inc/font_8.h:
-
-../Core/Inc/fonts.h:
 
 C:/Users/sovetnikov/Downloads/GNU\ MCU\ Eclipse/ARM\ Embedded\ GCC/8.2.1-1.4-20190214-0604/arm-none-eabi/include/stdio.h:
 

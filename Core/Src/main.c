@@ -23,10 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "string.h"
 #include "stdio.h"
-#include "font_16.h"
-#include "font_8.h"
 #include "font_Times_New_Roman.h"
-#include "fonts.h"
 #include "ssd_1309.h"
 
 #include "menu1.h"
@@ -126,7 +123,6 @@ int main(void)
   while (1)
 {
 	  menu_display();
-	  //data_time();
 	  tick_ms();
     /* USER CODE END WHILE */
 
