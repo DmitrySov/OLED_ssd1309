@@ -23,10 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "string.h"
 #include "stdio.h"
-#include "font_16.h"
-#include "font_8.h"
 #include "font_Times_New_Roman.h"
-#include "fonts.h"
 #include "ssd_1309.h"
 
 #include "menu1.h"
@@ -78,17 +75,8 @@ static void MX_UART4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-uint32_t val_timer;
-float time = 0.0;
-
-uint8_t tx_date = 1;
-uint8_t rx_buf [5];
-uint8_t flag_rx = 0;
-uint8_t drdyFlag = 0;
-float x_axis = 00.0000;
-extern uint8_t button_gpio;
-char buffer1 [16] = {0};
+uint8_t f_tim = 0;
+/* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
@@ -127,7 +115,6 @@ int main(void)
   SSD1309_init();
   SSD1309_Clear();
   SSD1309_UpdateScreen_1();
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -136,7 +123,9 @@ int main(void)
   while (1)
 {
 	  menu_display();
+	  tick_ms();
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -178,7 +167,7 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
@@ -305,9 +294,9 @@ static void MX_TIM6_Init(void)
 
   /* USER CODE END TIM6_Init 1 */
   htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 8400;
+  htim6.Init.Prescaler = 4200;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 30000;
+  htim6.Init.Period = 50000;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {

@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define __WR_GPIO(GPIO, PIN, STATE) (HAL_GPIO_WritePin(GPIO, PIN, STATE))
+
 #define D0_Pin GPIO_PIN_0
 #define D0_GPIO_Port GPIOD
 #define D1_Pin GPIO_PIN_1

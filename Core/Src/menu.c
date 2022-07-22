@@ -39,7 +39,7 @@ void main_menu1(void)
 				SendCommand(0x07);
 			SSD1309_ClearScreen();
 			SSD1309_GotoXY(0, 0);
-			SSD1309_WriteString("Russia", &Font_7x10);
+			//SSD1309_WriteString("Russia", &Font_7x10);
 			SSD1309_UpdateScreen();
 			break;
 		/******************************************************/
@@ -80,7 +80,7 @@ void NextMenuProcess2(void)
 
 		ssd1309_DrawCircle(3, 3, 2);
 		SSD1309_GotoXY(10, 0);
-		SSD1309_WriteString("Moscow", &Font_7x10);
+		/*SSD1309_WriteString("Moscow", &Font_7x10);
 		SSD1309_GotoXY(10, 10);
 		SSD1309_WriteString("Saint Petersburg", &Font_7x10);
 		SSD1309_GotoXY(10, 20);
@@ -88,7 +88,7 @@ void NextMenuProcess2(void)
 		SSD1309_GotoXY(10, 30);
 		SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 		SSD1309_GotoXY(10, 40);
-		SSD1309_WriteString("Syzran", &Font_7x10);
+		SSD1309_WriteString("Syzran", &Font_7x10);*/
 		SSD1309_UpdateScreen();
 		button_set_gpio_A0 = 0;
 		break;
@@ -116,7 +116,7 @@ void NextMenuProcess2(void)
 			     else{i = 3;}
 			ssd1309_DrawCircle(3, i, 2);
 			SSD1309_GotoXY(10, 0);
-			SSD1309_WriteString("Moscow", &Font_7x10);
+		/*	SSD1309_WriteString("Moscow", &Font_7x10);
 			SSD1309_GotoXY(10, 10);
 			SSD1309_WriteString("Saint Petersburg", &Font_7x10);
 			SSD1309_GotoXY(10, 20);
@@ -124,7 +124,7 @@ void NextMenuProcess2(void)
 			SSD1309_GotoXY(10, 30);
 			SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 			SSD1309_GotoXY(10, 40);
-			SSD1309_WriteString("Syzran", &Font_7x10);
+			SSD1309_WriteString("Syzran", &Font_7x10);*/
 			SSD1309_UpdateScreen();
 			button_set_gpio_E7 = 0;
 		}
@@ -145,7 +145,7 @@ void NextMenuProcess2(void)
 					{i = 43;}
 					ssd1309_DrawCircle(3, i, 2); //  Cursor shift up by i-10, range 3 to 43
 				SSD1309_GotoXY(10, 0);
-				SSD1309_WriteString("Moscow", &Font_7x10);
+			/*	SSD1309_WriteString("Moscow", &Font_7x10);
 				SSD1309_GotoXY(10, 10);
 				SSD1309_WriteString("Saint Petersburg", &Font_7x10);
 				SSD1309_GotoXY(10, 20);
@@ -153,7 +153,7 @@ void NextMenuProcess2(void)
 				SSD1309_GotoXY(10, 30);
 				SSD1309_WriteString("Ekaterinburg", &Font_7x10);
 				SSD1309_GotoXY(10, 40);
-				SSD1309_WriteString("Syzran", &Font_7x10);
+				SSD1309_WriteString("Syzran", &Font_7x10);*/
 				SSD1309_UpdateScreen();
 				button_set_gpio_E8 = 0;
 		}
@@ -232,13 +232,13 @@ void NextMenuProcess3_0(void)
 
 	ssd1309_DrawCircle(3, 3, 2);
 	SSD1309_GotoXY(10, 0);
-	SSD1309_WriteString("Arbat", &Font_7x10);
+/*	SSD1309_WriteString("Arbat", &Font_7x10);
 	SSD1309_GotoXY(10, 10);
 	SSD1309_WriteString("Tverskaya", &Font_7x10);
 	SSD1309_GotoXY(10, 20);
 	SSD1309_WriteString("Bolotnaya", &Font_7x10);
 	SSD1309_GotoXY(10, 30);
-	SSD1309_WriteString("Pyatnitskaya", &Font_7x10);
+	SSD1309_WriteString("Pyatnitskaya", &Font_7x10);*/
 	SSD1309_UpdateScreen();
 
 	   break;
@@ -279,13 +279,13 @@ void NextMenuProcess3_1(void)
 
 	ssd1309_DrawCircle(3, 3, 2);
 	SSD1309_GotoXY(10, 0);
-	SSD1309_WriteString("Nevsky", &Font_7x10);
+	/*SSD1309_WriteString("Nevsky", &Font_7x10);
 	SSD1309_GotoXY(10, 10);
 	SSD1309_WriteString("Gorokhovaya", &Font_7x10);
 	SSD1309_GotoXY(10, 20);
 	SSD1309_WriteString("Kazanskaya", &Font_7x10);
 	SSD1309_GotoXY(10, 30);
-	SSD1309_WriteString("Sadovaya", &Font_7x10);
+	SSD1309_WriteString("Sadovaya", &Font_7x10);*/
 	SSD1309_UpdateScreen();
 
 	   break;
@@ -325,12 +325,12 @@ void NextMenuProcess3_2(void)
   	SSD1309_ClearScreen();
 
   	ssd1309_DrawCircle(3, 3, 2);
-  	SSD1309_GotoXY(10, 0);
+  	/*SSD1309_GotoXY(10, 0);
   	SSD1309_WriteString("Bauman", &Font_7x10);
   	SSD1309_GotoXY(10, 10);
   	SSD1309_WriteString("Tatarstan", &Font_7x10);
   	SSD1309_GotoXY(10, 20);
-  	SSD1309_WriteString("Ershova", &Font_7x10);
+  	SSD1309_WriteString("Ershova", &Font_7x10);*/
   	SSD1309_UpdateScreen();
   	break;
   /*	case MENU_3_2_STATE_WAIT:
@@ -369,12 +369,12 @@ void NextMenuProcess3_3(void)
     	SSD1309_ClearScreen();
 
     	ssd1309_DrawCircle(3, 3, 2);
-    	SSD1309_GotoXY(10, 0);
+    	/*SSD1309_GotoXY(10, 0);
     	SSD1309_WriteString("Chelyuskintsev", &Font_7x10);
     	SSD1309_GotoXY(10, 10);
     	SSD1309_WriteString("East", &Font_7x10);
     	SSD1309_GotoXY(10, 20);
-    	SSD1309_WriteString("Repina", &Font_7x10);
+    	SSD1309_WriteString("Repina", &Font_7x10);*/
     	SSD1309_UpdateScreen();
     	break;
     /*	case MENU_3_3_STATE_WAIT:
@@ -414,12 +414,12 @@ void NextMenuProcess3_4(void)
 
       	ssd1309_DrawCircle(3, 3, 2);
       	SSD1309_GotoXY(10, 0);
-      	SSD1309_WriteString("Uritsky", &Font_7x10);
+      	/*SSD1309_WriteString("Uritsky", &Font_7x10);
       	SSD1309_GotoXY(10, 10);
       	SSD1309_WriteString("Chapaeva", &Font_7x10);
       	SSD1309_GotoXY(10, 20);
       	SSD1309_WriteString("Sovetskaya", &Font_7x10);
-      	SSD1309_UpdateScreen();
+      	SSD1309_UpdateScreen();*/
       	break;
       /*	case MENU_3_4_STATE_WAIT:
       			button_rattle_GPIO_E9();							// button click processing
