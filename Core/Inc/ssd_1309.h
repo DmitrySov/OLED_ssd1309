@@ -75,9 +75,8 @@
 #define RES_Pin 					GPIO_PIN_7
 #define RES_GPIO_Port 				GPIOB
 
-
 #define __WRITE_GPIO(__GPIOx__, __PIN__, __STATE__)	(HAL_GPIO_WritePin(__GPIOx__, __PIN__, __STATE__))
-
+#define __READ_GPIO(__GPIOx__, __PIN__) HAL_GPIO_ReadPin(__GPIOx__, __PIN__)
 // writing the value to bits 0 - 7
 #define __WRITE_bits_0_7(__GPIO__, __Value__)  WRITE_REG(__GPIO__->ODR, __Value__);
 /* Private SSD1309 structure */
@@ -99,11 +98,7 @@ typedef struct {
  void SSD1309_Clear(void);
 
  void SSD1309_UpdateScreen(void);
- void SSD1309_UpdateScreen_1(void);
  void Cursor_Screen(void);
-
- void Output_Char_16pt(uint8_t out_char);
- void Output_String_16pt(const char *string);
 
  void SSD1309_GotoXY(uint16_t x, uint16_t y);
 

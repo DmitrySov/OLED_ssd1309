@@ -131,7 +131,7 @@ static void SetPixel(uint8_t x, uint8_t y)
  *
  * on return:			-
  ------------------------------------------------------------------------------------*/
- void SSD1309_UpdateScreen_1(void)
+ void SSD1309_UpdateScreen(void)
   {
 	  for(uint8_t m = 0; m < 8; m++)
 	  {

@@ -75,7 +75,7 @@ static void MX_UART4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t f_tim = 0;
+
 /* USER CODE END 0 */
 
 /**
@@ -114,7 +114,7 @@ int main(void)
 
   SSD1309_init();
   SSD1309_Clear();
-  SSD1309_UpdateScreen_1();
+  SSD1309_UpdateScreen();
   /* USER CODE END 2 */
 
   /* Infinite loop */

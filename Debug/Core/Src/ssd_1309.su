@@ -3,7 +3,7 @@ ssd_1309.c:41:7:SendCommand	16	static
 ssd_1309.c:58:7:SendData	16	static
 ssd_1309.c:76:6:SSD1309_init	8	static
 ssd_1309.c:117:13:SetPixel	16	static
-ssd_1309.c:134:7:SSD1309_UpdateScreen_1	16	static
+ssd_1309.c:134:7:SSD1309_UpdateScreen	16	static
 ssd_1309.c:157:6:SSD1309_Clear	8	static
 ssd_1309.c:169:6:SSD1309_GotoXY	16	static
 ssd_1309.c:183:9:Output_String_TimesNewRoman	16	static

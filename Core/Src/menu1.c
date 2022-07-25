@@ -12,22 +12,23 @@
 uint32_t value = 245678;
 char buff_time [16] = {0};
 char buff_date [16] = {0};
-uint32_t timer = 0;
+uint32_t timer;
 uint32_t timer1 = 0;
 uint8_t button_gpio = 0;
 
 uint8_t flag_tick = 0;
 uint8_t a = 0;
+uint8_t status = 1;
 
 extern RTC_HandleTypeDef hrtc;
-//extern TIM_HandleTypeDef htim6;
 
 void button_rattle_GPIO(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 {
 	static uint8_t flag_key1_press = 1;
+	static uint8_t flag_key1_wait = 1;
 	static uint32_t time_key1_press = 0;
 
-	if (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_SET && flag_key1_press)
+	/*if (__READ_GPIO(GPIOx, GPIO_Pin) == 1 && flag_key1_press)
 	{
 		flag_key1_press = 0;
 		// Click Action
@@ -38,6 +39,30 @@ void button_rattle_GPIO(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	if (!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
 	{
 		flag_key1_press = 1;
+	}*/
+	if(__READ_GPIO(GPIOx, GPIO_Pin) == 1 && flag_key1_press) // подставить свой пин
+	{
+	        flag_key1_press = 0;
+	        flag_key1_wait = 0;
+	        time_key1_press = HAL_GetTick();
+	}
+
+	if(!flag_key1_wait && (HAL_GetTick() - time_key1_press) > 100)
+	{
+	        if(__READ_GPIO(GPIOx, GPIO_Pin) == 1)
+	        {
+	                flag_key1_wait = 1;
+	        }
+	        else
+	        {
+	                flag_key1_wait = 1;
+	                flag_key1_press = 1;
+	        }
+	}
+
+	if(!flag_key1_press && (HAL_GetTick() - time_key1_press) > 300)
+	{
+	        flag_key1_press = 1;
 	}
 }
 void get_time(void)
@@ -57,26 +82,16 @@ void get_time(void)
 }
 void data_time (void)
 {
-	if (flag_tick == 1)
-	{
-		timer = HAL_GetTick();
-		flag_tick = 0;
-	}
 	get_time();
 	SSD1309_Clear();
 	SSD1309_GotoXY(40, 10);
 	Output_String_Arial(buff_time, pt12);
 	SSD1309_GotoXY(25, 32);
 	Output_String_Arial(buff_date, pt12);
-	SSD1309_UpdateScreen_1();
+	SSD1309_UpdateScreen();
 }
  void volume (void)
 {
-	if (flag_tick == 1)
-	{
-		timer = HAL_GetTick();
-		flag_tick = 0;
-	}
 	SSD1309_Clear();
 	SSD1309_GotoXY(0, 0);
 	Output_String_Arial("Текущие параметры:", pt10);
@@ -86,15 +101,10 @@ void data_time (void)
 	Output_String_Arial("3", pt8);
 	SSD1309_GotoXY(10, 40);
 	Output_String_Arial("  0000000,00", pt12);
-	SSD1309_UpdateScreen_1();
+	SSD1309_UpdateScreen();
 }
   void expenses (void)
 {
-	if (flag_tick == 1)
-	{
-		timer = HAL_GetTick();
-		flag_tick = 0;
-	}
 	SSD1309_Clear();
 	SSD1309_GotoXY(0, 0);
 	Output_String_Arial("Текущие параметры:", pt10);
@@ -104,16 +114,11 @@ void data_time (void)
 	Output_String_Arial("3", pt8);
 	SSD1309_GotoXY(10, 40);
 	Output_String_Arial("  0000000,00", pt12);
-	SSD1309_UpdateScreen_1();
+	SSD1309_UpdateScreen();
 }
 
   void temp_press(void)
 {
-	if (flag_tick == 1)
-	{
-		timer = HAL_GetTick();
-		flag_tick = 0;
-	}
 	SSD1309_Clear();
 	SSD1309_GotoXY(0, 0);
 	Output_String_Arial("Текущие параметры:", pt10);
@@ -122,15 +127,10 @@ void data_time (void)
 	ssd1309_DrawCircle(89, 21, 2);
 	SSD1309_GotoXY(3, 40);
 	Output_String_Arial("Давл. 105,35 кПа", pt12);
-	SSD1309_UpdateScreen_1();
+	SSD1309_UpdateScreen();
 }
 void battery_status (void)
 {
-	if (flag_tick == 1)
-	{
-		timer = HAL_GetTick();
-		flag_tick = 0;
-	}
 	SSD1309_Clear();
 	SSD1309_GotoXY(0, 0);
 	Output_String_Arial("Состояние ЭП:", pt12);
@@ -138,7 +138,7 @@ void battery_status (void)
 	Output_String_Arial("Основ.      75%", pt12);
 	SSD1309_GotoXY(5, 40);
 	Output_String_Arial("Доп.         100%", pt12);
-	SSD1309_UpdateScreen_1();
+	SSD1309_UpdateScreen();
 }
 
  void tick_ms(void)
@@ -147,85 +147,55 @@ void battery_status (void)
 	 	 {
 		 	 a = 0;
 	 		 SSD1309_Clear();
-	 		 SSD1309_UpdateScreen_1();
+	 		 SSD1309_UpdateScreen();
 	 		 flag_tick = 1;
 	 		 timer = HAL_GetTick();
 	 	}
 }
 
- /*  void menu_display (void)
+  void menu_display (void)
 {
 	button_rattle_GPIO(GPIOA, GPIO_PIN_0);
-	if (button_gpio == 1)
+	if ( (button_gpio == 1) && (status >= 3) )
 	{
+		status = 1;
 		timer = HAL_GetTick();
 		button_gpio = 0;
-		a++;
 	}
-	if (a == 1)
-	{
-		data_time();
-	}
-	else if (a == 2)
-	{
-		volume();
-	}
-	else if (a == 3)
-	{
-		expenses();
-	}
-	else if (a == 4)
-	{
-		temp_press();
-	}
-	else if (a == 5)
-	{
-		battery_status();
-	}
-	if (a > 5) {a = 0; a++;}
-}*/
+	if ( (button_gpio == 1) && (status < 3) )
+		{
+			status++;
+			timer = HAL_GetTick();
+			button_gpio = 0;
+		}
 
- void menu_display (void)
-{
-	 button_rattle_GPIO(GPIOA, GPIO_PIN_0);
-	 	if (button_gpio == 1)
-	 	{
-	 		timer = HAL_GetTick();
-	 		button_gpio = 0;
-	 		a++;
-	 	}
-  switch(a)
+  switch(status)
   {
-    case 1:
-     {
-    	 data_time();
-    	 break;
-     }
-    case 2:
-     {
-    	 volume();
-    	 break;
-     }
-    case 3:
-     {
-    	 expenses();
-    	 break;
-     }
-    case 4:
-     {
-    	 temp_press();
-    	 break;
-     }
-    case 5:
-     {
-    	 battery_status();
-    	 break;
-     }
-     if (a > 5) {a = 0; a++;}
-    //default  : a = 0;
-  // a++;
-    //break;
+	case 0 :
+	    {
+	    	SSD1309_Clear();
+	        SSD1309_UpdateScreen();
+	        timer = HAL_GetTick();
+	        break;
+	    }
+	case 1 :
+		{
+			volume();
+			break;
+		}
+	case 2 :
+		{
+			temp_press();
+			break;
+		}
+	case 3 :
+		{
+			data_time();
+			break;
+		}
   }
+   	   if( (status>0) && ((HAL_GetTick() - timer) > 30000) )
+   	   {status = 0;}
 }
 
 
